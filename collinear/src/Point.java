@@ -113,7 +113,7 @@ public class Point implements Comparable<Point> {
         }
 
         @Override
-        public int compare(Point q1, Point q2)  {
+        public int compare(Point q1, Point q2) {
 
             double s1 = point.slopeTo(q1);
             double s2 = point.slopeTo(q2);
@@ -125,29 +125,7 @@ public class Point implements Comparable<Point> {
                 return 0;
             }
         }
-
     }
-
-    /*private static class PointOrder implements Comparator<Point> {
-
-        @Override
-        public int compare(Point p0, Point p1) {
-            if (p0.y < p1.y) {
-                return -1;
-            } else if (p0.y > p1.y) {
-                return 1;
-            } else {
-                if (p0.x < p1.x) {
-                    return -1;
-                } else if (p0.x > p1.x) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-        }
-    }*/
-
 
     /**
      * Returns a string representation of this point. This method is provide for debugging; your program should not rely
@@ -158,13 +136,6 @@ public class Point implements Comparable<Point> {
     public String toString() {
         /* DO NOT MODIFY */
         return "(" + x + ", " + y + ")";
-    }
-
-    public static int ccw(Point a, Point b, Point c) {
-        double area = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
-        if (area < 0) return -1; // clockwise turn
-        else if (area > 0) return 1; // counter-clockwise turn
-        else return 0; // collinear
     }
 
     /**

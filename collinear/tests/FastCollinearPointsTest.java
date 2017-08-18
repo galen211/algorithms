@@ -82,9 +82,27 @@ public class FastCollinearPointsTest {
 
         LineSegment[] lineSegments = fc.segments();
 
+        for (int i = 0; i < lineSegments.length; i++) {
+            StdOut.println(lineSegments[i].toString());
+        }
+
         assert lineSegments.length == fc.numberOfSegments();
     }
 
+    @Test
+    public void testInput6() {
+        Point[] points = FileTester.getTest("input6.txt");
+
+        FastCollinearPoints fc = new FastCollinearPoints(points);
+
+        LineSegment[] lineSegments = fc.segments();
+
+        for (int i = 0; i < lineSegments.length; i++) {
+            StdOut.println(lineSegments[i].toString());
+        }
+
+        assert lineSegments.length == fc.numberOfSegments();
+    }
 
     @Test
     public void testInput_400() {

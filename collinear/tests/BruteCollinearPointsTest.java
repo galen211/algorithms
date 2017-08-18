@@ -14,7 +14,32 @@ import static org.junit.Assert.*;
 public class BruteCollinearPointsTest {
 
     @Test
-    public void testSlope() {
+    public void testManual() {
+
+        int i = 1;
+        int j = 5;
+        Point[] points = new Point[j * 2 - 1];
+        int counter = 0;
+        while (i<=j){
+            if (i==j){
+                points[counter++] = new Point(i,j);
+            } else {
+                points[counter++] = new Point(i,i);
+                points[counter++] = new Point(i,j);
+                points[counter++] = new Point(j,i);
+                points[counter++] = new Point(j,j);
+            }
+            i++;
+            j--;
+        }
+
+        BruteCollinearPoints brute = new BruteCollinearPoints(points);
+
+        LineSegment[] segments = brute.segments();
+
+        for (LineSegment segment : segments) {
+            StdOut.println(segment);
+        }
     }
 
     @Test
