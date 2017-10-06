@@ -66,3 +66,72 @@ public Item dequeue() {
 *Comments*: Tough assignment where the trick is to figure out how to input the maximal line segment without duplicates.  The trick is figuring out how to implement a private `sort(Point[] p, Comparator<Point> c)` method in `FastCollinearPoints`.  You can use the `Sample` client code in `tests` to generate visualizations of the collinear lines.
 
 ![collinear_points](img/collinear.png)
+
+### Assignment 4: 8 Puzzle
+*Score*: 84%
+
+*Example*: `> java PuzzleChecker puzzle08.txt`
+
+*Comments*: The key to understanding how to solve the 8 puzzle is to recognize that one and only one of an 8 puzzle and it's 'twin' can be solved.  This property yields an interesting method for implementing the `Solver` class.  With two separate priority queues, an 8 puzzle's twin is solved simultaneously with the original puzzle.  If the twin is solved, then the puzzle is unsolvable.  This optimization prevents endless repetition of moves that do not solve the puzzle, a key problem when employing the A* search method.  The private `simultaneousSolution` method is shown below:
+
+```java
+private SearchNode simultaneousSolution() {
+
+        SearchNode origSearchNode = new SearchNode(original, 0, null);
+        SearchNode twinSearchNode = new SearchNode(twin, 0, null);
+
+        pqOrig.insert(origSearchNode);
+        pqTwin.insert(twinSearchNode);
+
+        while (!origSearchNode.isSolved() && !twinSearchNode.isSolved()) {
+            origSearchNode = nextSearchNode(pqOrig);
+            twinSearchNode = nextSearchNode(pqTwin);
+        }
+
+        return origSearchNode;
+}
+```
+
+![8_puzzle](img/8puzzle.png)
+
+### Assignment 5: KD Tree
+*Score*: 95%
+
+*Example*: `> java KdTreeGenerator input80K.txt`
+
+*Comments*: This assignment uses Kd-Trees to implement a 2d range search.  In a search for a 2d point, the search function will traverse through nodes, alternating the axis on which a vertical or horizontal linear split occurs.  Points are bounded by rectangles that are the composite of splits occurring until the Point is located or a leaf node is created.  Since the rectangles themselves are not a guarantee of a nearest neighbor for a particular search point, nearby nodes need to be searched as well, creating an opportunity to implement an optimized search algorithm.  My implementation of the `nearest` method is shown below:
+
+```java
+private void nearest(Node x, Point2D p, boolean orientation) {
+
+        if (x == null) return;
+
+        if (minDist < x.rect.distanceSquaredTo(p)) {
+            return; // no need to continue searching node or subtrees
+        } else {
+            // search the node
+            if (x.p.distanceSquaredTo(p) < minDist) {
+                min = x.p;
+                minDist = min.distanceSquaredTo(p);
+            }
+            // choose which subtree to search first if both available to search
+            if (x.lb != null && x.rt != null) {
+                Comparator<Point2D> comparator = orientation ? Point2D.X_ORDER : Point2D.Y_ORDER;
+                int cmp = comparator.compare(p, x.p);
+                if (cmp < 0) {
+                    nearest(x.lb, p, !orientation); // search left first
+                    if (x.rt.rect.distanceSquaredTo(p) < minDist) nearest(x.rt, p, !orientation); // search right second
+                } else {
+                    nearest(x.rt, p, !orientation);
+                    if (x.lb.rect.distanceSquaredTo(p) < minDist) nearest(x.lb, p, !orientation); // search left second
+                }
+            } else if (x.lb == null) { // only right subtree can be searched
+                nearest(x.rt, p, !orientation);
+            } else { // only left subtree can be searched
+                nearest(x.lb, p, !orientation);
+            }
+      }
+}
+```
+
+![kdtree](img/kdtree.png)

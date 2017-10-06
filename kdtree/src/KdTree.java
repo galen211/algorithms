@@ -1,5 +1,4 @@
 import edu.princeton.cs.algs4.Point2D;
-import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.RectHV;
 import edu.princeton.cs.algs4.StdDraw;
 
@@ -229,31 +228,32 @@ public class KdTree {
         if (x == null) return;
 
         if (minDist < x.rect.distanceSquaredTo(p)) {
-            return;
+            return; // no need to continue searching node or subtrees
         } else {
             // search the node
             if (x.p.distanceSquaredTo(p) < minDist) {
                 min = x.p;
                 minDist = min.distanceSquaredTo(p);
             }
-            // choose which subtree to search first
+            // choose which subtree to search first if both available to search
             if (x.lb != null && x.rt != null) {
                 Comparator<Point2D> comparator = orientation ? Point2D.X_ORDER : Point2D.Y_ORDER;
                 int cmp = comparator.compare(p, x.p);
                 if (cmp < 0) {
-                    nearest(x.lb, p, !orientation);
-                    nearest(x.rt, p, !orientation);
+                    nearest(x.lb, p, !orientation); // search left first
+                    if (x.rt.rect.distanceSquaredTo(p) < minDist) nearest(x.rt, p, !orientation); // search right second
                 } else {
                     nearest(x.rt, p, !orientation);
-                    nearest(x.lb, p, !orientation);
+                    if (x.lb.rect.distanceSquaredTo(p) < minDist) nearest(x.lb, p, !orientation); // search left second
                 }
-            } else if (x.lb == null) {
+            } else if (x.lb == null) { // only right subtree can be searched
                 nearest(x.rt, p, !orientation);
-            } else {
+            } else { // only left subtree can be searched
                 nearest(x.lb, p, !orientation);
             }
         }
     }
+
 
     /**
      * unit testing of the methods (optional)
