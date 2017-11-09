@@ -1,14 +1,17 @@
-import edu.princeton.cs.algs4.*;
+import edu.princeton.cs.algs4.Bag;
+import edu.princeton.cs.algs4.Digraph;
+import edu.princeton.cs.algs4.DirectedCycle;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.ST;
 
-import java.io.File;
 import java.util.StringTokenizer;
 
 public class WordNet {
 
-    Digraph digraph;
-    ST<String, Bag<Integer>> nounToVertex; // nouns and the vertices in which they are contained
-    ST<Integer, String> vertexToSynset; // vertices and their synsets
-    SAP sap;
+    private final Digraph digraph;
+    private final ST<String, Bag<Integer>> nounToVertex; // nouns and the vertices in which they are contained
+    private final ST<Integer, String> vertexToSynset; // vertices and their synsets
+    private final SAP sap;
 
     /**
      * constructor takes the name of the two input files
@@ -21,22 +24,18 @@ public class WordNet {
             throw new IllegalArgumentException("Constructor arguments must not be null");
         }
 
-        File inputFile;
-
         nounToVertex = new ST<>();
         vertexToSynset = new ST<>();
 
         // construct the hash tables
-        inputFile = new File(synsets);
-        In in = new In(inputFile);
+        In in = new In(synsets);
         String line;
         StringTokenizer st;
-        Integer value;
         int lineCount = 0;
         while ((line = in.readLine()) != null) {
             lineCount++;
             st = new StringTokenizer(line, ",");
-            value = Integer.parseInt(st.nextToken());
+            Integer value = Integer.parseInt(st.nextToken());
             String words = st.nextToken();
             Bag<Integer> bag = new Bag<>();
             for (String word : words.split(" ")) {
@@ -55,8 +54,7 @@ public class WordNet {
         digraph = new Digraph(lineCount);
 
         // create the digraph
-        inputFile = new File(hypernyms);
-        in = new In(inputFile);
+        in = new In(hypernyms);
         int v;
         int w;
         while ((line = in.readLine()) != null) {
@@ -119,7 +117,8 @@ public class WordNet {
     }
 
     /**
-     * a synset (second field of synsets.txt) that is the common ancestor of nounA and nounB in a shortest ancestral path (defined below)
+     * a synset (second field of synsets.txt) that is the common ancestor of nounA and nounB in a shortest ancestral
+     * path (defined below)
      *
      * @param nounA
      * @param nounB

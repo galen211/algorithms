@@ -4,9 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.FilenameFilter;
-import java.util.List;
-import java.util.StringTokenizer;
 
 public class SAPTest {
 
@@ -166,22 +163,41 @@ public class SAPTest {
         int ancestor;
 
         length = sap.length(8,0);
-        Assert.assertTrue(length == 3);
+        Assert.assertEquals(length, 3);
 
         ancestor = sap.ancestor(8, 0);
-        Assert.assertTrue(ancestor == 8);
+        Assert.assertEquals(length, 3);
 
         length = sap.length(1,8);
-        Assert.assertTrue(length == -1);
+        Assert.assertEquals(length, -1);
 
         ancestor = sap.ancestor(1, 8);
-        Assert.assertTrue(ancestor == -1);
+        Assert.assertEquals(length, -1);
 
         length = sap.length(13,12);
-        Assert.assertTrue(length == 4);
+        Assert.assertEquals(length, 4);
 
         ancestor = sap.ancestor(13, 12);
-        Assert.assertTrue(ancestor == 12);
+        Assert.assertEquals(length, 4);
+
+    }
+
+    @Test
+    public void failedTest_1() {
+
+        SAP sap = setupSAP("digraph-wordnet");
+
+        int length = sap.length(64451, 25327);
+
+        Assert.assertEquals(15, length);
+
+    }
+
+
+    private SAP setupSAP(String digraphName) {
+        Digraph dg = digraphs.get(digraphName);
+
+        return new SAP(dg);
     }
 
 }

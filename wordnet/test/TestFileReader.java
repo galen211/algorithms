@@ -38,5 +38,10 @@ public class TestFileReader {
         while (!fileStack.isEmpty()) {
             StdOut.println(fileStack.pop().getName());
         }
+
+        fileStack = getFiles("outcast");
+        while (!fileStack.isEmpty()) {
+            StdOut.println(fileStack.pop().getName());
+        }
     }
 }

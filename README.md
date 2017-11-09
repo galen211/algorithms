@@ -135,3 +135,12 @@ private void nearest(Node x, Point2D p, boolean orientation) {
 ```
 
 ![kdtree](img/kdtree.png)
+
+## Coursera Algorithms, Princeton University (Part II)
+
+### Assignment 1: WordNet
+*Score*: 95%
+
+*Example*: `> java WordNet input80K.txt`
+
+*Comments*: This assignment uses Kd-Trees to implement a 2d range search.  In a search for a 2d point, the search function will traverse through nodes, alternating the axis on which a vertical or horizontal linear split occurs.  Points are bounded by rectangles that are the composite of splits occurring until the Point is located or a leaf node is created.  Since the rectangles themselves are not a guarantee of a nearest neighbor for a particular search point, nearby nodes need to be searched as well, creating an opportunity to implement an optimized search algorithm.  My implementation of the `nearest` method is shown below:
