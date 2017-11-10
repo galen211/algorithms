@@ -159,27 +159,29 @@ public class SAPTest {
 
         SAP sap = saps.get("digraph3");
 
-        int length;
-        int ancestor;
+        int actualLength;
+        int actualAncestor;
 
-        length = sap.length(8,0);
-        Assert.assertEquals(length, 3);
+        // 8, 0
+        actualLength = sap.length(8,0);
+        Assert.assertEquals(3, actualLength);
 
-        ancestor = sap.ancestor(8, 0);
-        Assert.assertEquals(length, 3);
+        actualAncestor = sap.ancestor(8, 0);
+        Assert.assertEquals(8, actualAncestor);
 
-        length = sap.length(1,8);
-        Assert.assertEquals(length, -1);
+        // 1, 8
+        actualLength = sap.length(1,8);
+        Assert.assertEquals(-1, actualLength);
 
-        ancestor = sap.ancestor(1, 8);
-        Assert.assertEquals(length, -1);
+        actualAncestor = sap.ancestor(1, 8);
+        Assert.assertEquals(-1, actualAncestor);
 
-        length = sap.length(13,12);
-        Assert.assertEquals(length, 4);
+        // 13, 12
+        actualLength = sap.length(13,12);
+        Assert.assertEquals(4, actualLength);
 
-        ancestor = sap.ancestor(13, 12);
-        Assert.assertEquals(length, 4);
-
+        actualAncestor = sap.ancestor(13, 12);
+        Assert.assertEquals(12, actualAncestor);
     }
 
     @Test
@@ -192,7 +194,6 @@ public class SAPTest {
         Assert.assertEquals(15, length);
 
     }
-
 
     private SAP setupSAP(String digraphName) {
         Digraph dg = digraphs.get(digraphName);

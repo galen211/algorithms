@@ -1,8 +1,4 @@
-import edu.princeton.cs.algs4.Bag;
-import edu.princeton.cs.algs4.Digraph;
-import edu.princeton.cs.algs4.DirectedCycle;
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.ST;
+import edu.princeton.cs.algs4.*;
 
 import java.util.StringTokenizer;
 
@@ -37,9 +33,9 @@ public class WordNet {
             st = new StringTokenizer(line, ",");
             Integer value = Integer.parseInt(st.nextToken());
             String words = st.nextToken();
+            vertexToSynset.put(value, words);
             Bag<Integer> bag = new Bag<>();
             for (String word : words.split(" ")) {
-                vertexToSynset.put(value, word);
                 if (nounToVertex.contains(word)) {
                     bag = nounToVertex.get(word);
                     bag.add(value);

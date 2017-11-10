@@ -1,6 +1,3 @@
-import edu.princeton.cs.algs4.Digraph;
-import edu.princeton.cs.algs4.DirectedCycle;
-import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.SET;
 import org.junit.Assert;
 import org.junit.Before;
@@ -115,5 +112,67 @@ public class WordNetTest {
         expected.add(70067);
 
         // need to finish
+    }
+
+    @Test
+    public void failedTest1() {
+
+        String nounA = "typeface";
+        String nounB = "know-it-all";
+
+        int dist = net.distance(nounA, nounB);
+
+        Assert.assertEquals(15, dist);
+    }
+
+    @Test
+    public void failedTest3() {
+
+        String nounA = "vena_trachealis";
+        String nounB = "pathway";
+
+        int dist = net.distance(nounA, nounB);
+
+        Assert.assertEquals(11, dist);
+    }
+
+    @Test
+    public void failedTest4() {
+
+        String nounA = "Procnias";
+        String nounB = "family_Piperaceae";
+
+        String sap = net.sap(nounA, nounB);
+
+        Assert.assertEquals("taxonomic_group taxonomic_category taxon", sap);
+    }
+
+    @Test
+    public void failedTest6() {
+
+        String nounA;
+        String nounB;
+        String sap;
+
+        nounA = "Ig";
+        nounB = "immunoglobulin_G";
+
+        sap = net.sap(nounA, nounB);
+
+        Assert.assertEquals("immunoglobulin Ig immune_serum_globulin immune_gamma_globulin immune_globulin", sap);
+
+        nounA = "bayberry_tallow";
+        nounB = "myoglobin";
+
+        sap = net.sap(nounA, nounB);
+
+        Assert.assertEquals("macromolecule supermolecule", sap);
+
+        nounA = "beta-lipoprotein";
+        nounB = "palm_oil";
+
+        sap = net.sap(nounA, nounB);
+
+        Assert.assertEquals("macromolecule supermolecule", sap);
     }
 }

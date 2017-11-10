@@ -1,6 +1,4 @@
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.MaxPQ;
-import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.*;
 
 public class Outcast {
 
@@ -23,9 +21,9 @@ public class Outcast {
      */
     public String outcast(String[] nouns) {
 
-        MaxPQ<OutcastNoun> outcastPQ = new MaxPQ<>(nouns.length);
-
         int dist;
+        int maxDist = Integer.MIN_VALUE;
+        String outlier = null;
         for (String v : nouns) {
             dist = 0;
             for (String w : nouns) {
@@ -34,12 +32,13 @@ public class Outcast {
                 if (d == -1) continue;
                 else dist += d;
             }
-            outcastPQ.insert(new OutcastNoun(v, dist));
+            if (dist > maxDist) {
+                maxDist = dist;
+                outlier = v;
+            }
+
         }
-
-        if (outcastPQ.isEmpty()) return null;
-
-        return outcastPQ.max().getNoun();
+        return outlier;
     }
 
     private class OutcastNoun implements Comparable<OutcastNoun> {
@@ -61,8 +60,8 @@ public class Outcast {
         }
 
         @Override
-        public int compareTo(OutcastNoun o) {
-            int cmp = this.dist - o.getDist();
+        public int compareTo(OutcastNoun that) {
+            int cmp = this.dist - that.getDist();
             if (cmp > 0) return 1;
             else if (cmp == 0) return 0;
             else return -1;

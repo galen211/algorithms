@@ -1,4 +1,7 @@
-import edu.princeton.cs.algs4.*;
+import edu.princeton.cs.algs4.Digraph;
+import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.SET;
+import edu.princeton.cs.algs4.ST;
 
 /**
  * SAP is used to calculate the shortest ancestral path between two vertices v and w in a digraph
@@ -6,7 +9,13 @@ import edu.princeton.cs.algs4.*;
 public class SAP {
 
     private final Digraph G;
-    // private ST<Integer, ST<Integer, Integer>> cache = new ST<>();
+
+    private Queue<Integer> visited;
+    private boolean[] marked;
+    private int[] distTo;
+
+    private ST<Integer, ST<Integer, Integer>> cache;
+    private final int MAX_CACHE_SIZE = 100;
 
     /**
      * constructor takes a digraph (not necessarily a DAG)
@@ -15,6 +24,12 @@ public class SAP {
      */
     public SAP(Digraph G) {
         this.G = new Digraph(G);
+
+        visited = new Queue<>();
+        marked = new boolean[G.V()];
+        distTo = new int[G.V()];
+
+        cache = new ST<>();
     }
 
     /**
@@ -29,53 +44,19 @@ public class SAP {
         validateVertex(w);
 
         int a = ancestor(v, w);
+
         if (a == -1) return -1;
 
-        BreadthFirstDirectedPaths bfsV = new BreadthFirstDirectedPaths(G, v);
-        BreadthFirstDirectedPaths bfsW = new BreadthFirstDirectedPaths(G, w);
+        assert cache.contains(v);
+        assert cache.contains(w);
 
-        int l1 = bfsV.distTo(a);
-        int l2 = bfsW.distTo(a);
+        ST<Integer, Integer> stV = cache.get(v);
+        ST<Integer, Integer> stW = cache.get(w);
 
-        assert l1 != -1 && l2 != -1;
+        int dV = stV.get(a);
+        int dW = stW.get(a);
 
-        return (l1 + l2);
-    }
-
-    // length from v to ancestor
-    private int lengthTo(int v, int w) {
-
-        if (v == w) return 0;
-
-        int[] distTo = new int[G.V()];
-        boolean[] marked = new boolean[G.V()];
-
-        Queue<Integer> queue = new Queue<>();
-        queue.enqueue(v);
-        while (!queue.isEmpty()) {
-            int x = queue.dequeue();
-            if (x == w) return distTo[x];
-            else if (marked[x]) continue;
-            else {
-                marked[x] = true;
-                for (Integer y : G.adj(x)) {
-                    distTo[y] = distTo[x] + 1;
-                    queue.enqueue(y);
-                }
-            }
-        }
-
-        assert queue.isEmpty();
-
-        return -1; // w is not an ancestor of v
-    }
-
-
-    // private method for validating arguments
-    private void validateVertex(int v) {
-        int V = G.V();
-        if (v < 0 || v >= V)
-            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
+        return (dV + dW);
     }
 
     /**
@@ -89,45 +70,87 @@ public class SAP {
         validateVertex(v);
         validateVertex(w);
 
-        boolean[] marked = new boolean[G.V()];
-        Queue<Integer> queue = new Queue<>();
-        queue.enqueue(v);
-        queue.enqueue(w);
+        // symbol table with vertices and their associated distances
+        ST<Integer, Integer> stV = dfs(v);
+        ST<Integer, Integer> stW = dfs(w);
 
-        Stack<Integer> stack = new Stack<>();
-        while (!queue.isEmpty()) {
-            int x = queue.dequeue();
-            if (marked[x]) {
-                stack.push(x);
-            } else {
-                marked[x] = true;
-                for (Integer y : G.adj(x)) {
-                    queue.enqueue(y);
-                }
+        // create a combined set of
+        SET<Integer> ancestors = new SET<>();
+        for (int key : stV.keys()) {
+            if (stW.contains(key)) {
+                ancestors.add(key);
             }
         }
 
-        if (stack.isEmpty()) return -1;
+        if (ancestors.isEmpty()) return -1;
 
-        BreadthFirstDirectedPaths bfsV = new BreadthFirstDirectedPaths(G, v);
-        BreadthFirstDirectedPaths bfsW = new BreadthFirstDirectedPaths(G, w);
-
+        // iterate over the ancestors to find the nearest ancestor
         int ancestor = -1;
         int dist;
         int minDist = Integer.MAX_VALUE;
-        while (!stack.isEmpty()) {
-            int x = stack.pop(); // possible ancestor
-            if (bfsV.hasPathTo(x) && bfsW.hasPathTo(x)) {
-                int dV = bfsV.distTo(x);
-                int dW = bfsW.distTo(x);
-                dist = dV + dW;
-                if (dist < minDist) {
-                    minDist = dist;
-                    ancestor = x;
+        for (int a : ancestors) {
+            int distV = stV.get(a);
+            int distW = stW.get(a);
+            dist = distV + distW;
+            if (dist < minDist) {
+                ancestor = a;
+                minDist = dist;
+            }
+        }
+        assert ancestor != -1;
+
+        if (cache.size() > MAX_CACHE_SIZE) {
+            clearCache();
+            cache.put(v, stV);
+            cache.put(w, stW);
+        }
+
+        return ancestor;
+    }
+
+    // depth first search
+    private ST<Integer,Integer> dfs(int v) {
+
+        if (cache.contains(v)) return cache.get(v);
+
+        assert visited.isEmpty();
+
+        ST<Integer, Integer> st = new ST<>();
+
+        Queue<Integer> queue = new Queue<>();
+        queue.enqueue(v);
+        visited.enqueue(v);
+        marked[v] = true;
+
+        while (!queue.isEmpty()) {
+            int x = queue.dequeue();
+            st.put(x, distTo[x]);
+            for (int y : G.adj(x)) {
+                if (!marked[y]) {
+                    distTo[y] = distTo[x] + 1;
+                    marked[y] = true;
+                    queue.enqueue(y);
+                    visited.enqueue(y);
                 }
             }
         }
-        return ancestor;
+        clearArraysSoft();
+
+        cache.put(v, st);
+
+        return st;
+    }
+
+    private void clearArraysSoft() {
+        while (!visited.isEmpty()) {
+            int i = visited.dequeue();
+            marked[i] = false;
+            distTo[i] = 0;
+        }
+    }
+
+    private void clearCache() {
+        cache = new ST<>();
     }
 
     /**
@@ -142,24 +165,19 @@ public class SAP {
             throw new IllegalArgumentException("Arguments to length() must not be null");
         }
 
-        Stack<Integer> lengths = new Stack<>();
-
-        int len;
-        for (Integer x : v) {
-            for (Integer y : w) {
-                len = length(x, y);
-                if (len == -1) continue;
-                else lengths.push(len);
+        int minDist = Integer.MAX_VALUE;
+        for (int i : v) {
+            int dist = 0;
+            for (int j : v) {
+                if (i == j) continue;
+                dist += length(i, j);
+            }
+            if (dist < minDist) {
+                minDist = dist;
             }
         }
-        if (lengths.isEmpty()) return -1;
 
-        int min = Integer.MAX_VALUE;
-        while (!lengths.isEmpty()) {
-            int x = lengths.pop();
-            if (x < min) min = x;
-        }
-        return min;
+        return minDist;
     }
 
     /**
@@ -174,25 +192,31 @@ public class SAP {
             throw new IllegalArgumentException("Arguments to ancestor() must not be null");
         }
 
-        ST<Integer, Integer> st = new ST<>();
+        int minDist = Integer.MAX_VALUE;
+        int minAnc = -1;
 
-        int len;
-        int anc;
-
-        for (Integer x : v) {
-            for (Integer y : w) {
-                if ((anc = ancestor(x, y)) == -1) {
-                    continue;
-                } else {
-                    len = length(x, y);
-                    st.put(len, anc);
-                }
+        for (int i : v) {
+            int dist = 0;
+            int anc = -1;
+            for (int j : v) {
+                if (i == j) return i; // an element of v also member of w
+                dist += length(i, j);
+                anc = ancestor(i, j);
+            }
+            if (dist < minDist) {
+                assert anc != -1;
+                minDist = dist;
+                minAnc = anc;
             }
         }
+        return minAnc;
+    }
 
-        if (st.isEmpty()) return -1;
-
-        return st.get(st.min());
+    // private method for validating arguments
+    private void validateVertex(int v) {
+        int V = G.V();
+        if (v < 0 || v >= V)
+            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
     }
 
     /**
