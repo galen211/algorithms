@@ -139,8 +139,55 @@ private void nearest(Node x, Point2D p, boolean orientation) {
 ## Coursera Algorithms, Princeton University (Part II)
 
 ### Assignment 1: WordNet
-*Score*: 95%
+*Score*: 100%
 
-*Example*: `> java WordNet input80K.txt`
+*Example*: `> java WordNet synsets.txt hypernyms.txt`
 
-*Comments*: This assignment uses Kd-Trees to implement a 2d range search.  In a search for a 2d point, the search function will traverse through nodes, alternating the axis on which a vertical or horizontal linear split occurs.  Points are bounded by rectangles that are the composite of splits occurring until the Point is located or a leaf node is created.  Since the rectangles themselves are not a guarantee of a nearest neighbor for a particular search point, nearby nodes need to be searched as well, creating an opportunity to implement an optimized search algorithm.  My implementation of the `nearest` method is shown below:
+*Comments*: This assignment is about finding shortest paths in a Directed Acyclic Graph (DAG).  The assignment is easy to solve using the `BreadthFirstDirectedPaths` class in `algs4.jar`, however the bigger challenge than arriving at a correct solution is speeding up the implementation.  I implemented a private `dfs` (depth first search) method in the `SAP` (shortest ancestral path) class which adds to a cache that can be used to skip over redundant calculations.  Additionally, I avoid the overhead associated with calls to `BreadthFirstDirectedPaths`, which initializes several G.V()-sized arrays on each instance, by keeping track of changes to the `marked` and `distTo` instance variables and re-initializing only the values that change on each function call to `dfs`.  The `dfs` method is shown below:
+
+```java
+private ST<Integer, Integer> dfs(int v) {
+
+        if (cache.contains(v)) return cache.get(v);
+
+        assert isArrayCleared();
+
+        ST<Integer, Integer> st = new ST<>();
+
+        Stack<Integer> visited = new Stack<>();
+
+        Queue<Integer> queue = new Queue<>();
+        marked[v] = true;
+        distTo[v] = 0;
+        st.put(v, distTo[v]);
+        queue.enqueue(v);
+        visited.push(v);
+
+        while (!queue.isEmpty()) {
+            int x = queue.dequeue();
+            for (int y : G.adj(x)) {
+                if (!marked[y]) {
+                    distTo[y] = distTo[x] + 1;
+                    marked[y] = true;
+                    st.put(y, distTo[y]);
+                    queue.enqueue(y);
+                    visited.push(y);
+                }
+            }
+        }
+        cache.put(v, st);
+
+        clearArraysSoft(visited);
+
+        return st;
+}
+```
+
+![wordnet](img/wordnet.png)
+
+### Assignment 2:
+*Score*: 100%
+
+*Example*: `> java  synsets.txt hypernyms.txt`
+
+*Comments*:

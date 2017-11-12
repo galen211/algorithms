@@ -1,4 +1,6 @@
-import edu.princeton.cs.algs4.*;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.ST;
+import edu.princeton.cs.algs4.StdOut;
 
 public class Outcast {
 
@@ -21,51 +23,21 @@ public class Outcast {
      */
     public String outcast(String[] nouns) {
 
-        int dist;
-        int maxDist = Integer.MIN_VALUE;
-        String outlier = null;
-        for (String v : nouns) {
-            dist = 0;
-            for (String w : nouns) {
-                if (v.equals(w)) continue;
-                int d = net.distance(v, w);
-                if (d == -1) continue;
-                else dist += d;
+        ST<Integer, String> distNoun = new ST<>();
+
+        for (String n : nouns) {
+            int dist = 0;
+            for (String c : nouns) {
+                if (n.equals(c)) continue;
+                int d = net.distance(n, c);
+                dist += d;
             }
-            if (dist > maxDist) {
-                maxDist = dist;
-                outlier = v;
-            }
-
-        }
-        return outlier;
-    }
-
-    private class OutcastNoun implements Comparable<OutcastNoun> {
-
-        private int dist;
-        private String noun;
-
-        public OutcastNoun(String noun, int distance) {
-            this.noun = noun;
-            this.dist = distance;
+            distNoun.put(dist, n);
         }
 
-        public int getDist() {
-            return this.dist;
-        }
+        int maxKey = distNoun.max();
 
-        public String getNoun() {
-            return this.noun;
-        }
-
-        @Override
-        public int compareTo(OutcastNoun that) {
-            int cmp = this.dist - that.getDist();
-            if (cmp > 0) return 1;
-            else if (cmp == 0) return 0;
-            else return -1;
-        }
+        return distNoun.get(maxKey);
     }
 
     /**

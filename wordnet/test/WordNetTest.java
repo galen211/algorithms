@@ -13,46 +13,26 @@ public class WordNetTest {
         this.net = new WordNet("testfiles/synsets.txt", "testfiles/hypernyms.txt");
     }
 
-    @Test
-    public void assertAcyclic() {
-
-        /*Digraph digraph = new Digraph(new In("testfiles/hypernyms.txt"));
-
-        DirectedCycle dc = new DirectedCycle(digraph);
-
-        Assert.assertFalse(dc.hasCycle());*/
+    @Test(expected = IllegalArgumentException.class)
+    public void throwErrorIfNotDAG() {
+        WordNet wn = new WordNet("testfiles/synsets3.txt", "testfiles/hypernyms3InvalidTwoRoots.txt");
     }
+
+    // must expose net.digraph to test (violates API)
+    /*@Test
+    public void testNumWordNetEdgesAndVertices() {
+
+        int vertices = net.digraph.V();
+        int edges = net.digraph.E();
+
+        Assert.assertEquals(82192, vertices);
+        Assert.assertEquals(84505, edges);
+    }
+*/
 
     @Test
     public void testMembership() {
         Assert.assertTrue(net.isNoun("giraffe"));
-    }
-
-    @Test
-    public void testNounIndexing() {
-        SET<Integer> expected = new SET<>();
-        expected.add(62);
-        expected.add(63);
-        expected.add(64);
-        expected.add(65);
-
-        /*Bag<Integer> bag = net.nounToVertex.get("Aberdeen");
-        Stack<Integer> stack = new Stack<>();
-        for (Integer integer : bag) {
-            stack.push(integer);
-        }
-
-        Assert.assertTrue(stack.size() == expected.size());
-
-        while (!stack.isEmpty()) {
-            int val = stack.pop();
-            Assert.assertTrue(expected.contains(val));
-        }*/
-    }
-
-    @Test
-    public void checkRoot() {
-        // check that root is 38003
     }
 
     @Test

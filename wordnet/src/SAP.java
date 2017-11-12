@@ -2,6 +2,7 @@ import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.SET;
 import edu.princeton.cs.algs4.ST;
+import edu.princeton.cs.algs4.Stack;
 
 /**
  * SAP is used to calculate the shortest ancestral path between two vertices v and w in a digraph
@@ -10,12 +11,14 @@ public class SAP {
 
     private final Digraph G;
 
-    private Queue<Integer> visited;
     private boolean[] marked;
     private int[] distTo;
 
     private ST<Integer, ST<Integer, Integer>> cache;
-    private final int MAX_CACHE_SIZE = 100;
+
+    private ST<Integer, Integer> iterableCache;
+
+    private final int MAX_CACHE_SIZE = 5000;
 
     /**
      * constructor takes a digraph (not necessarily a DAG)
@@ -25,11 +28,11 @@ public class SAP {
     public SAP(Digraph G) {
         this.G = new Digraph(G);
 
-        visited = new Queue<>();
         marked = new boolean[G.V()];
         distTo = new int[G.V()];
 
         cache = new ST<>();
+        iterableCache = new ST<>();
     }
 
     /**
@@ -74,7 +77,7 @@ public class SAP {
         ST<Integer, Integer> stV = dfs(v);
         ST<Integer, Integer> stW = dfs(w);
 
-        // create a combined set of
+        // figure out overlap between symbol tables
         SET<Integer> ancestors = new SET<>();
         for (int key : stV.keys()) {
             if (stW.contains(key)) {
@@ -109,44 +112,55 @@ public class SAP {
     }
 
     // depth first search
-    private ST<Integer,Integer> dfs(int v) {
+    private ST<Integer, Integer> dfs(int v) {
 
         if (cache.contains(v)) return cache.get(v);
 
-        assert visited.isEmpty();
+        assert isArrayCleared();
 
         ST<Integer, Integer> st = new ST<>();
 
+        Stack<Integer> visited = new Stack<>();
+
         Queue<Integer> queue = new Queue<>();
-        queue.enqueue(v);
-        visited.enqueue(v);
         marked[v] = true;
+        distTo[v] = 0;
+        st.put(v, distTo[v]);
+        queue.enqueue(v);
+        visited.push(v);
 
         while (!queue.isEmpty()) {
             int x = queue.dequeue();
-            st.put(x, distTo[x]);
             for (int y : G.adj(x)) {
                 if (!marked[y]) {
                     distTo[y] = distTo[x] + 1;
                     marked[y] = true;
+                    st.put(y, distTo[y]);
                     queue.enqueue(y);
-                    visited.enqueue(y);
+                    visited.push(y);
                 }
             }
         }
-        clearArraysSoft();
-
         cache.put(v, st);
+
+        clearArraysSoft(visited);
 
         return st;
     }
 
-    private void clearArraysSoft() {
+    private void clearArraysSoft(Stack<Integer> visited) {
         while (!visited.isEmpty()) {
-            int i = visited.dequeue();
+            int i = visited.pop();
             marked[i] = false;
             distTo[i] = 0;
         }
+    }
+
+    private boolean isArrayCleared() {
+        for (int i = 0; i < marked.length; i++) {
+            if (marked[i] || distTo[i] != 0) return false;
+        }
+        return true;
     }
 
     private void clearCache() {
@@ -162,22 +176,16 @@ public class SAP {
      */
     public int length(Iterable<Integer> v, Iterable<Integer> w) {
         if (v == null || w == null) {
-            throw new IllegalArgumentException("Arguments to length() must not be null");
+            throw new IllegalArgumentException("Null argument passed to iterable length()");
         }
+        validateVertex(v);
+        validateVertex(w);
 
-        int minDist = Integer.MAX_VALUE;
-        for (int i : v) {
-            int dist = 0;
-            for (int j : v) {
-                if (i == j) continue;
-                dist += length(i, j);
-            }
-            if (dist < minDist) {
-                minDist = dist;
-            }
-        }
+        ancestor(v, w);
 
-        return minDist;
+        if (iterableCache.isEmpty()) return -1;
+
+        return iterableCache.min();
     }
 
     /**
@@ -189,34 +197,39 @@ public class SAP {
      */
     public int ancestor(Iterable<Integer> v, Iterable<Integer> w) {
         if (v == null || w == null) {
-            throw new IllegalArgumentException("Arguments to ancestor() must not be null");
+            throw new IllegalArgumentException("Null argument passed to iterable ancestor()");
         }
+        validateVertex(v);
+        validateVertex(w);
 
-        int minDist = Integer.MAX_VALUE;
-        int minAnc = -1;
+        iterableCache = new ST<>();
 
-        for (int i : v) {
-            int dist = 0;
-            int anc = -1;
-            for (int j : v) {
-                if (i == j) return i; // an element of v also member of w
-                dist += length(i, j);
-                anc = ancestor(i, j);
-            }
-            if (dist < minDist) {
-                assert anc != -1;
-                minDist = dist;
-                minAnc = anc;
+        int minAncestor;
+        for (int x : v) {
+            for (int y : w) {
+                int ancestor = ancestor(x, y);
+                int length = length(x, y);
+                iterableCache.put(length, ancestor);
             }
         }
-        return minAnc;
+        if (iterableCache.isEmpty()) return -1;
+
+        minAncestor = iterableCache.min(); // there can be more than one, but it doesn't matter which one we pick
+        return iterableCache.get(minAncestor);
     }
 
     // private method for validating arguments
     private void validateVertex(int v) {
         int V = G.V();
-        if (v < 0 || v >= V)
+        if (v < 0 || v >= V) {
             throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
+        }
+    }
+
+    private void validateVertex(Iterable<Integer> v) {
+        for (int integer : v) {
+            validateVertex(integer);
+        }
     }
 
     /**

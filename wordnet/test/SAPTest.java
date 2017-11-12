@@ -29,6 +29,21 @@ public class SAPTest {
         }
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testAncestorIterableNullArgument() {
+
+        Digraph digraph = digraphs.get("digraph-wordnet");
+
+        Bag<Integer> v = new Bag<>();
+        v.add(5);
+        v.add(7);
+        v.add(8);
+
+        SAP sap = new SAP(digraph);
+
+        sap.ancestor(v, null);
+    }
+
     @Test
     public void digraph_functions() {
 
@@ -193,6 +208,106 @@ public class SAPTest {
 
         Assert.assertEquals(15, length);
 
+    }
+
+    @Test
+    public void failedTest_2() {
+
+        SAP sap = setupSAP("digraph-wordnet");
+
+        int length = sap.length(7093, 21191);
+
+        Assert.assertEquals(13, length);
+    }
+
+    @Test
+    public void testIterableLength_1() {
+
+        SAP sap = setupSAP("digraph-wordnet");
+
+        Bag<Integer> v = new Bag<>();
+        v.add(38687);
+        v.add(50710);
+
+        Bag<Integer> w = new Bag<>();
+        w.add(27570);
+
+        int length = sap.length(v, w);
+
+        Assert.assertEquals(13, length);
+    }
+
+    @Test
+    public void testIterableLength_2() {
+
+        SAP sap = setupSAP("digraph-wordnet");
+
+        Bag<Integer> v = new Bag<>();
+        v.add(18497);
+        v.add(42500);
+
+        Bag<Integer> w = new Bag<>();
+        w.add(28886);
+        w.add(48978);
+
+        int length = sap.length(v, w);
+
+        Assert.assertEquals(8, length);
+    }
+
+    @Test
+    public void testIterableLength_3() {
+
+        SAP sap = setupSAP("digraph-wordnet");
+
+        Bag<Integer> v = new Bag<>();
+        v.add(6);
+        v.add(10);
+        v.add(16);
+        v.add(19);
+
+        Bag<Integer> w = new Bag<>();
+        w.add(1);
+        w.add(6);
+        w.add(16);
+        w.add(17);
+
+        int ancestor = sap.ancestor(v, w);
+        Assert.assertEquals(6, ancestor);
+
+        int length = sap.length(v, w);
+        Assert.assertEquals(0, length);
+    }
+
+    @Test
+    public void testIterableLength_4() {
+
+        SAP sap = setupSAP("digraph-wordnet");
+
+        Bag<Integer> v = new Bag<>();
+        Bag<Integer> w = new Bag<>();
+
+        v.add(7093);
+        w.add(21191);
+
+        int length = sap.length(v, w);
+        Assert.assertEquals(13, length);
+    }
+
+    @Test
+    public void testIterableLength_5() {
+        SAP sap = setupSAP("digraph-wordnet");
+
+        Bag<Integer> v = new Bag<>();
+        Bag<Integer> w = new Bag<>();
+
+        v.add(6202);
+        w.add(60136);
+        w.add(77834);
+
+
+        int length = sap.length(v, w);
+        Assert.assertEquals(14, length);
     }
 
     private SAP setupSAP(String digraphName) {
