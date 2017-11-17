@@ -1,0 +1,257 @@
+import edu.princeton.cs.algs4.Picture;
+
+import java.awt.*;
+
+public class SeamCarver {
+
+    private Picture p; // client can mutate picture
+    private double[][] energy;
+
+    // color values
+    int[][] red;
+    int[][] green;
+    int[][] blue;
+
+    int width;
+    int height;
+
+    /**
+     * create a seam carver object based on the given picture
+     *
+     * @param picture
+     */
+    public SeamCarver(Picture picture) {
+        p = picture;
+        width = p.width();
+        height = p.height();
+
+        getImgColorValues();
+
+        energy = calculateEnergyArray(height, width); // original image position
+    }
+
+    private void getImgColorValues() {
+
+        // col, row orientation
+        red = new int[width][height]; // note orientation
+        green = new int[width][height];
+        blue = new int[width][height];
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                red[j][i] = p.get(j, i).getRed();
+                green[j][i] = p.get(j, i).getGreen();
+                blue[j][i] = p.get(j, i).getBlue();
+            }
+        }
+    }
+
+    private double[][] calculateEnergyArray(int col, int row) {
+
+        double[][] e = new double[width][height];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                e[j][i] = energy(j, i);
+            }
+        }
+        return e;
+    }
+
+    /**
+     * current picture
+     *
+     * @return
+     */
+    public Picture picture() {
+        if (p.width() != width || p.height() != height) {
+            refreshPicture();
+        }
+        return p;
+    }
+
+    private void refreshPicture() {
+        p = null;
+
+        p = new Picture(width, height);
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < height; j++) {
+                Color color = new Color(red[j][i], green[j][i], blue[j][i]);
+                p.set(j, i, color);
+            }
+        }
+    }
+
+    /**
+     * width of current picture
+     *
+     * @return
+     */
+    public int width() {
+        return width;
+    }
+
+    /**
+     * height of current picture
+     *
+     * @return
+     */
+    public int height() {
+        return height;
+    }
+
+    /**
+     * energy of pixel at column x and row y
+     *
+     * @param row
+     * @param col
+     * @return
+     */
+    public double energy(int col, int row) {
+        validateXYCoords(row, col);
+
+        if ((row == 0 || row == height - 1) || (col == 0 || col == width - 1)) return 1000.0;
+
+        double dX = chgX(col, row);
+        double dY = chgY(col, row);
+
+        return Math.sqrt(dX + dY);
+    }
+
+    /**
+     * Calculating Δx2 and Δy2 are very similar. Using two private methods will keep your code simple. To test that your
+     * code works, use the client PrintEnergy described in the testing section above.
+     *
+     * @return
+     */
+    private double chgX(int col, int row) {
+
+        double dX = 0.0;
+        dX += (red[col - 1][row] - red[col + 1][row]) * (red[col - 1][row] - red[col + 1][row]);
+        dX += (green[col - 1][row] - green[col + 1][row]) * (green[col - 1][row] - green[col + 1][row]);
+        dX += (blue[col - 1][row] - blue[col + 1][row]) * (blue[col - 1][row] - blue[col + 1][row]);
+
+        return dX;
+    }
+
+    private double chgY(int col, int row) {
+
+        double dY = 0.0;
+        dY += (red[col][row - 1] - red[col][row + 1]) * (red[col][row - 1] - red[col][row + 1]);
+        dY += (green[col][row - 1] - green[col][row + 1]) * (green[col][row - 1] - green[col][row + 1]);
+        dY += (blue[col][row - 1] - blue[col][row + 1]) * (blue[col][row - 1] - blue[col][row + 1]);
+
+        return dY;
+    }
+
+    /**
+     * sequence of indices for horizontal seam
+     *
+     * @return
+     */
+    public int[] findHorizontalSeam() {
+        /*
+        To write findHorizontalSeam(), transpose the image, call findVerticalSeam(), and transpose it back.
+         */
+
+        int[] horizontalseam;
+
+        horizontalseam = findVerticalSeam();
+
+        return horizontalseam;
+    }
+
+    /**
+     * sequence of indices for vertical seam
+     *
+     * @return
+     */
+    public int[] findVerticalSeam() {
+
+        int[] minPath = new int[]{};
+        double totalEnergy = Double.MAX_VALUE;
+        for (int col = 1; col < (width - 1); col++) {
+            int[] path = minPathColumn(col);
+            double energy = totalSeamEnergy(path);
+            if (energy < totalEnergy) {
+                minPath = path;
+            }
+        }
+        return minPath;
+    }
+
+    private double totalSeamEnergy(int[] path) {
+        double tot = 0;
+        for (int r = 0; r < path.length; r++) {
+            int c = path[r];
+            tot += energy[r][c];
+        }
+        return tot;
+    }
+
+    private int[] minPathColumn(int col) {
+
+        int[] bestMove = new int[height];
+        bestMove[0] = col;
+
+        int x = col;
+        for (int row = 1; row < (height - 1); row++) {
+            x = nextColumn(x, row);
+            bestMove[row] = x;
+        }
+
+        bestMove[height - 1] = x;
+
+        return bestMove;
+    }
+
+    // given a row and column position, finds the column in the next row that is 'lowest energy' move
+    private int nextColumn(int col, int row) {
+
+        double min = 1000.0;
+        int idx = -1;
+        for (int i = -1; i <= 1; i++) { // {-1, 0, 1}
+            if (energy[col + i][row] < min) {
+                min = energy[col + i][row];
+                idx = col + i;
+            }
+        }
+
+        assert min != 1000.0 && idx != -1;
+
+        return idx;
+    }
+
+    /**
+     * remove horizontal seam from current picture
+     *
+     * @param seam
+     */
+    public void removeHorizontalSeam(int[] seam) {
+        /*
+        To write removeHorizontalSeam(), transpose the image, call removeVerticalSeam(), and transpose it back.
+         */
+
+    }
+
+    /**
+     * remove vertical seam from current picture
+     *
+     * @param seam
+     */
+    public void removeVerticalSeam(int[] seam) {
+
+        for (int r = 0; r < height; r++) {
+            for (int c = 0; c < width; c++) {
+
+            }
+        }
+    }
+
+    private void validateXYCoords(int r, int c) {
+        if ((r < 0 || r >= height) || (c < 0 || c >= width)) {
+            throw new IllegalArgumentException("Invalid coordinates: picture size is " + height + "-x-" + width);
+        }
+    }
+
+}

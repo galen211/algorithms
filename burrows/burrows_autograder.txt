@@ -1,0 +1,1853 @@
+See the Assessment Guide for information on how to interpret this report.
+
+ASSESSMENT SUMMARY
+
+Compilation:  PASSED
+API:          PASSED
+
+Findbugs:     PASSED
+PMD:          PASSED
+Checkstyle:   FAILED (0 errors, 4 warnings)
+
+Correctness:  1/60 tests passed
+Memory:       10/10 tests passed
+Timing:       104/104 tests passed
+
+Aggregate score: 41.00%
+[Compilation: 5%, API: 5%, Findbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
+
+ASSESSMENT DETAILS
+
+The following files were submitted:
+----------------------------------
+ 547 Nov 12 18:39 BurrowsWheeler.java
+ 562 Nov 12 18:39 CircularSuffixArray.java
+ 536 Nov 12 18:39 MoveToFront.java
+
+
+********************************************************************************
+*  COMPILING
+********************************************************************************
+
+
+% javac CircularSuffixArray.java
+*-----------------------------------------------------------
+
+% javac BurrowsWheeler.java
+*-----------------------------------------------------------
+
+% javac MoveToFront.java
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+Checking the APIs of your programs.
+*-----------------------------------------------------------
+BurrowsWheeler:
+
+MoveToFront:
+
+================================================================
+
+
+********************************************************************************
+*  CHECKING STYLE AND COMMON BUG PATTERNS
+********************************************************************************
+
+
+% findbugs *.class
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+% pmd .
+*-----------------------------------------------------------
+BurrowsWheeler.java:6: The method body is empty. If this is your intent, document it with a comment. [UncommentedEmptyMethodBody]
+BurrowsWheeler.java:14: The method body is empty. If this is your intent, document it with a comment. [UncommentedEmptyMethodBody]
+BurrowsWheeler.java:23: The method body is empty. If this is your intent, document it with a comment. [UncommentedEmptyMethodBody]
+CircularSuffixArray.java:8: Avoid unused parameter variables, such as 's'. [UnusedFormalParameter]
+CircularSuffixArray.java:36: The method body is empty. If this is your intent, document it with a comment. [UncommentedEmptyMethodBody]
+MoveToFront.java:6: The method body is empty. If this is your intent, document it with a comment. [UncommentedEmptyMethodBody]
+MoveToFront.java:14: The method body is empty. If this is your intent, document it with a comment. [UncommentedEmptyMethodBody]
+MoveToFront.java:24: The method body is empty. If this is your intent, document it with a comment. [UncommentedEmptyMethodBody]
+PMD ends with 8 warnings.
+
+
+================================================================
+
+
+% checkstyle *.java
+*-----------------------------------------------------------
+
+% custom checkstyle checks for CircularSuffixArray.java
+*-----------------------------------------------------------
+
+% custom checkstyle checks for BurrowsWheeler.java
+*-----------------------------------------------------------
+[WARN] BurrowsWheeler.java:1: You must call either 'BinaryStdOut.flush()' or 'BinaryStdOut.close()' in 'decode()'. [MethodCallCount]
+[WARN] BurrowsWheeler.java:1: You must call either 'BinaryStdOut.flush()' or 'BinaryStdOut.close()' in 'encode()'. [MethodCallCount]
+Checkstyle ends with 0 errors and 2 warnings.
+
+% custom checkstyle checks for MoveToFront.java
+*-----------------------------------------------------------
+[WARN] MoveToFront.java:1: You must call either 'BinaryStdOut.flush()' or 'BinaryStdOut.close()' in 'decode()'. [MethodCallCount]
+[WARN] MoveToFront.java:1: You must call either 'BinaryStdOut.flush()' or 'BinaryStdOut.close()' in 'encode()'. [MethodCallCount]
+Checkstyle ends with 0 errors and 2 warnings.
+
+
+================================================================
+
+
+********************************************************************************
+*  TESTING CORRECTNESS
+********************************************************************************
+
+Testing correctness of CircularSuffixArray
+*-----------------------------------------------------------
+Running 15 total tests.
+
+Test 1: check index() and length() with random binary strings
+  * length = 10
+    "BBAAAABAAA"
+    - student   length() = -1
+    - reference length() = 10
+
+    - failed on trial 1 of 1000
+
+  * length = 100
+    "ABBBBBAABABAAAAABAAABAABBBAABAAAAAABAABBBBBBBBBBBABBBBBBAAAA..."
+    - student   length() = -1
+    - reference length() = 100
+
+    - failed on trial 1 of 1000
+
+  * length = 1000
+    "BAABABBAABAAABBBBAABAABBABBBBABAABAAABABBBAABAABBBAABAABBAAB..."
+    - student   length() = -1
+    - reference length() = 1000
+
+    - failed on trial 1 of 1000
+
+==> FAILED
+
+Test 2: check index() and length() with random uppercase strings
+  * length = 10
+    "HIMRNSQDPG"
+    - student   length() = -1
+    - reference length() = 10
+
+    - failed on trial 1 of 1000
+
+  * length = 100
+    "FMOIDLAPRORSTDEKHNUTHYZPKWXIUFAWXHSHAMSUXWDBOKCBIJDRPMBIOORG..."
+    - student   length() = -1
+    - reference length() = 100
+
+    - failed on trial 1 of 1000
+
+  * length = 1000
+    "IRGOQVXNZSWBDLQDPRQAFHBOLNAQLVYPNPDBOWOFHMHUUMUJLMNGDCYOWZZE..."
+    - student   length() = -1
+    - reference length() = 1000
+
+    - failed on trial 1 of 1000
+
+==> FAILED
+
+Test 3: check index() and length() with random ASCII strings
+  * length = 10
+    hex representation of extended ASCII string: 22 1f 1d 29 27 33 4f 54 73 6f
+    - student   length() = -1
+    - reference length() = 10
+
+    - failed on trial 1 of 1000
+
+  * length = 100
+    hex representation of extended ASCII string: 62 35 01 66 36 29 63 6e 6e 30 46 10 74 70 57 69 65 1b 2b 2b ...
+    - student   length() = -1
+    - reference length() = 100
+
+    - failed on trial 1 of 1000
+
+  * length = 1000
+    hex representation of extended ASCII string: 3a 2a 3f 07 2f 3a 39 4a 6f 02 4f 2c 67 73 53 30 6f 75 46 04 ...
+    - student   length() = -1
+    - reference length() = 1000
+
+    - failed on trial 1 of 1000
+
+==> FAILED
+
+Test 4: check index() and length() with random extended ASCII strings
+  * length = 10
+    hex representation of extended ASCII string: 06 f1 45 71 3b 62 8a 18 8d b5
+    - student   length() = -1
+    - reference length() = 10
+
+    - failed on trial 1 of 1000
+
+  * length = 100
+    hex representation of extended ASCII string: 38 d0 fa 6e d0 b6 ef 76 c7 e3 ec 02 99 39 e1 3a 34 13 c3 73 ...
+    - student   length() = -1
+    - reference length() = 100
+
+    - failed on trial 1 of 1000
+
+  * length = 1000
+    hex representation of extended ASCII string: 1d ba c8 64 52 24 24 e4 ff c3 c3 c5 7a 49 e6 66 1b 36 2a f6 ...
+    - student   length() = -1
+    - reference length() = 1000
+
+    - failed on trial 1 of 1000
+
+==> FAILED
+
+Test 5: check index() and length() with strings from text files
+  * cadabra.txt
+    "CADABRA!ABRA"
+    - student   length() = -1
+    - reference length() = 12
+
+  * amendments.txt
+    "Article I. Congress shall make no law respecting an establis..."
+    - student   length() = -1
+    - reference length() = 18369
+
+  * moby1.txt
+    "Call me Ishmael. Some years ago- never mind how long precise..."
+    - student   length() = -1
+    - reference length() = 12218
+
+  * dickens1000.txt
+    "It was the best of times, it was the worst of times, it was ..."
+    - student   length() = -1
+    - reference length() = 1000
+
+==> FAILED
+
+Test 6: check index() and length() with strings from binary files
+  * us.gif
+    hex representation of extended ASCII string: 47 49 46 38 39 61 8e 01 01 01 d5 00 00 94 18 29 06 02 03 84 ...
+    - student   length() = -1
+    - reference length() = 12400
+
+  * CS_bricks.jpg
+    hex representation of extended ASCII string: ff d8 ff e1 00 16 45 78 69 66 00 00 4d 4d 00 2a 00 00 00 08 ...
+    - student   length() = -1
+    - reference length() = 24567
+
+  * rand1K.bin
+    hex representation of extended ASCII string: 91 a6 be ff 17 30 3b c2 90 4c dc 6f 14 73 64 27 04 6b 87 8a ...
+    - student   length() = -1
+    - reference length() = 1000
+
+==> FAILED
+
+Test 7: check index() and length() with random strings of length 0, 1, and 2.
+  * length = 0
+    ""
+    - student   length() = -1
+    - reference length() = 0
+
+    - failed on trial 1 of 1
+
+  * length = 1
+    "G"
+    - student   length() = -1
+    - reference length() = 1
+
+    - failed on trial 1 of 10
+
+  * length = 2
+    "KO"
+    - student   length() = -1
+    - reference length() = 2
+
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 8: check that index() throws an exception when argument is out of bounds
+  *  string of length 10
+    - fails to throw an exception when calling index(-2)
+
+  *  string of length 100
+    - fails to throw an exception when calling index(-2)
+
+  *  string of length 2
+    - fails to throw an exception when calling index(-2)
+
+  *  string of length 1
+    - fails to throw an exception when calling index(-2)
+
+  *  string of length 0
+    - fails to throw an exception when calling index(-2)
+
+==> FAILED
+
+Test 9: check that constructor throws an exception when argument is null
+    - fails to throw an exception when calling constructor with a null argument
+
+==> FAILED
+
+Test 10: check that two CircularSuffixArray objects can be created at the same time
+  *  cadabra.txt and amendments.txt
+    "CADABRA!ABRA"
+    - student   length() = -1
+    - reference length() = 12
+
+    "Article I. Congress shall make no law respecting an establis..."
+    - student   length() = -1
+    - reference length() = 18369
+
+  *  amendments.txt and cadabra.txt
+    "Article I. Congress shall make no law respecting an establis..."
+    - student   length() = -1
+    - reference length() = 18369
+
+    "CADABRA!ABRA"
+    - student   length() = -1
+    - reference length() = 12
+
+  *  dickens1000.txt and cadabra.txt
+    "It was the best of times, it was the worst of times, it was ..."
+    - student   length() = -1
+    - reference length() = 1000
+
+    "CADABRA!ABRA"
+    - student   length() = -1
+    - reference length() = 12
+
+==> FAILED
+
+Test 11: check that CircularSuffixArray is immutable
+  *  string = "RNXHQSMMLREWETFKHTLXOQWWORWYGF"
+    java.lang.NegativeArraySizeException
+
+    TestCircularSuffixArray.testImmutable(TestCircularSuffixArray.java:374)
+    TestCircularSuffixArray.test11(TestCircularSuffixArray.java:400)
+    TestCircularSuffixArray.main(TestCircularSuffixArray.java:461)
+
+  *  string = "AAAABABAAAAAAABABBBABBBBAABABA"
+    java.lang.NegativeArraySizeException
+
+    TestCircularSuffixArray.testImmutable(TestCircularSuffixArray.java:374)
+    TestCircularSuffixArray.test11(TestCircularSuffixArray.java:401)
+    TestCircularSuffixArray.main(TestCircularSuffixArray.java:461)
+
+  *  string = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    java.lang.NegativeArraySizeException
+
+    TestCircularSuffixArray.testImmutable(TestCircularSuffixArray.java:374)
+    TestCircularSuffixArray.test11(TestCircularSuffixArray.java:402)
+    TestCircularSuffixArray.main(TestCircularSuffixArray.java:461)
+
+  *  string = hex representation of extended ASCII string: 32 df 48 f6 79 71 ee 95 dc c3 7c ee ba 7b ff
+    java.lang.NegativeArraySizeException
+
+    TestCircularSuffixArray.testImmutable(TestCircularSuffixArray.java:374)
+    TestCircularSuffixArray.test11(TestCircularSuffixArray.java:403)
+    TestCircularSuffixArray.main(TestCircularSuffixArray.java:461)
+
+==> FAILED
+
+Test 12: check index() and length() with corner-case strings
+  * a.txt
+    "a"
+    - student   length() = -1
+    - reference length() = 1
+
+  * nomatch.txt
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ12345678..."
+    - student   length() = -1
+    - reference length() = 73
+
+  * zebra.txt
+    "zebra"
+    - student   length() = -1
+    - reference length() = 5
+
+  * alphanum.txt
+    "abcdefghijklmnopqrstuvwxyz0123456789"
+    - student   length() = -1
+    - reference length() = 36
+
+==> FAILED
+
+Test 13: check index() and length() with strings that are nontrivial circular
+         that are nontrivial circular suffixes of themselves
+  * stars.txt
+    "*************"
+    - student   length() = -1
+    - reference length() = 13
+
+  * couscous.txt
+    "couscous"
+    - student   length() = -1
+    - reference length() = 8
+
+==> FAILED
+
+Test 14: check index() and length() with unary strings
+  *  length 10 string over unary alphabet
+    "AAAAAAAAAA"
+    - student   length() = -1
+    - reference length() = 10
+
+    - failed on trial 1 of 1
+
+  *  length 100 string over unary alphabet
+    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA..."
+    - student   length() = -1
+    - reference length() = 100
+
+    - failed on trial 1 of 1
+
+  *  length 1000 string over unary alphabet
+    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA..."
+    - student   length() = -1
+    - reference length() = 1000
+
+    - failed on trial 1 of 1
+
+==> FAILED
+
+Test 15: check index() and length() with random strings
+         that are nontrivial circular suffixes of themselves
+  *  length 2 string over binary alphabet, repeated 2 times
+    "AAAA"
+    - student   length() = -1
+    - reference length() = 4
+
+    - failed on trial 1 of 5
+
+  *  length 2 string over binary alphabet, repeated 10 times
+    "BABABABABABABABABABA"
+    - student   length() = -1
+    - reference length() = 20
+
+    - failed on trial 1 of 5
+
+  *  length 5 string over binary alphabet, repeated 2 times
+    "BBABABBABA"
+    - student   length() = -1
+    - reference length() = 10
+
+    - failed on trial 1 of 5
+
+  *  length 5 string over binary alphabet, repeated 3 times
+    "ABBBBABBBBABBBB"
+    - student   length() = -1
+    - reference length() = 15
+
+    - failed on trial 1 of 5
+
+  *  length 5 string over binary alphabet, repeated 5 times
+    "BAAABBAAABBAAABBAAABBAAAB"
+    - student   length() = -1
+    - reference length() = 25
+
+    - failed on trial 1 of 5
+
+  *  length 7 string over uppercase alphabet, repeated 2 times
+    "GGVBKZHGGVBKZH"
+    - student   length() = -1
+    - reference length() = 14
+
+    - failed on trial 1 of 5
+
+  *  length 7 string over uppercase alphabet, repeated 3 times
+    "UUZNNFVUUZNNFVUUZNNFV"
+    - student   length() = -1
+    - reference length() = 21
+
+    - failed on trial 1 of 5
+
+  *  length 7 string over uppercase alphabet, repeated 5 times
+    "HGAGGWBHGAGGWBHGAGGWBHGAGGWBHGAGGWB"
+    - student   length() = -1
+    - reference length() = 35
+
+    - failed on trial 1 of 5
+
+==> FAILED
+
+Total: 0/15 tests passed!
+
+
+================================================================
+Testing correctness of MoveToFront
+*-----------------------------------------------------------
+Running 20 total tests.
+
+Test 0: check main() on input text files
+  * java MoveToFront - < abra.txt
+    - student   length = 0
+    - reference length = 12
+    - student:
+    - reference: 41 42 52 02 44 01 45 01 04 04 02 26
+  * java MoveToFront - < zebra.txt
+    - student   length = 0
+    - reference length = 5
+    - student:
+    - reference: 7a 66 64 73 65
+  * java MoveToFront + < abra.txt.mtf
+    - student   length = 0
+    - reference length = 12
+    - student:
+    - reference: 41 42 52 41 43 41 44 41 42 52 41 21
+  * java MoveToFront + < zebra.txt.mtf
+    - student   length = 0
+    - reference length = 5
+    - student:
+    - reference: 7a 65 62 72 61
+==> FAILED
+
+Test 1: check encode() on text files
+  * abra.txt
+    - student   length = 0
+    - reference length = 12
+    - student:
+    - reference: 41 42 52 02 44 01 45 01 04 04 02 26
+  * zebra.txt
+    - student   length = 0
+    - reference length = 5
+    - student:
+    - reference: 7a 66 64 73 65
+  * amendments.txt
+    - student   length = 0
+    - reference length = 18369
+    - student:
+    - reference: 41 72 74 6b 66 6e 69 27 4f .. 04 0a 06 02 04 01 14 1b 0f
+  * aesop.txt
+    - student   length = 0
+    - reference length = 191943
+    - student:
+    - reference: 41 65 73 70 71 2c 03 26 4a .. 10 05 0b 0b 0f 02 36 1c 11
+  * stars.txt
+    - student   length = 0
+    - reference length = 13
+    - student:
+    - reference: 2a 00 00 00 00 00 00 00 00 00 00 00 00
+  * alphanum.txt
+    - student   length = 0
+    - reference length = 36
+    - student:
+    - reference: 61 62 63 64 65 66 67 68 69 .. 4b 4c 4d 4e 4f 50 51 52 53
+  * a.txt
+    - student   length = 0
+    - reference length = 1
+    - student:
+    - reference: 61
+==> FAILED
+
+Test 2: check decode() on move-to-front-encoded text files
+  * abra.txt.mtf
+    - student   length = 0
+    - reference length = 12
+    - student:
+    - reference: 41 42 52 41 43 41 44 41 42 52 41 21
+  * zebra.txt.mtf
+    - student   length = 0
+    - reference length = 5
+    - student:
+    - reference: 7a 65 62 72 61
+  * amendments.txt.mtf
+    - student   length = 0
+    - reference length = 18369
+    - student:
+    - reference: 41 72 74 69 63 6c 65 20 49 .. 65 72 76 65 6e 65 64 2e 0a
+  * aesop.txt.mtf
+    - student   length = 0
+    - reference length = 191943
+    - student:
+    - reference: 41 65 73 6f 70 27 73 20 46 .. 72 20 73 75 6e 73 3f 22 0a
+  * stars.txt.mtf
+    - student   length = 0
+    - reference length = 13
+    - student:
+    - reference: 2a 2a 2a 2a 2a 2a 2a 2a 2a 2a 2a 2a 2a
+  * alphanum.txt.mtf
+    - student   length = 0
+    - reference length = 36
+    - student:
+    - reference: 61 62 63 64 65 66 67 68 69 .. 31 32 33 34 35 36 37 38 39
+  * a.txt.mtf
+    - student   length = 0
+    - reference length = 1
+    - student:
+    - reference: 61
+==> FAILED
+
+Test 3: check whether decode(encode()) = original on text files
+  * abra.txt
+    - student   length = 0
+    - reference length = 12
+    - student:
+    - reference: 41 42 52 41 43 41 44 41 42 52 41 21
+  * zebra.txt
+    - student   length = 0
+    - reference length = 5
+    - student:
+    - reference: 7a 65 62 72 61
+  * amendments.txt
+    - student   length = 0
+    - reference length = 18369
+    - student:
+    - reference: 41 72 74 69 63 6c 65 20 49 .. 65 72 76 65 6e 65 64 2e 0a
+  * aesop.txt
+    - student   length = 0
+    - reference length = 191943
+    - student:
+    - reference: 41 65 73 6f 70 27 73 20 46 .. 72 20 73 75 6e 73 3f 22 0a
+  * stars.txt
+    - student   length = 0
+    - reference length = 13
+    - student:
+    - reference: 2a 2a 2a 2a 2a 2a 2a 2a 2a 2a 2a 2a 2a
+  * alphanum.txt
+    - student   length = 0
+    - reference length = 36
+    - student:
+    - reference: 61 62 63 64 65 66 67 68 69 .. 31 32 33 34 35 36 37 38 39
+  * a.txt
+    - student   length = 0
+    - reference length = 1
+    - student:
+    - reference: 61
+==> FAILED
+
+Test 4: check encode() on move-to-front-encoded binary files
+  * us.gif
+    - student   length = 0
+    - reference length = 12400
+    - student:
+    - reference: 47 49 48 3b 3c 61 8e 08 00 .. c3 1b 84 88 d3 d6 f3 00 77
+  * CS_bricks.jpg
+    - student   length = 0
+    - reference length = 24567
+    - student:
+    - reference: ff d9 01 e2 03 19 48 7b 6d .. 03 03 03 03 03 03 79 19 10
+  * rand10K.bin
+    - student   length = 0
+    - reference length = 10000
+    - student:
+    - reference: 1a de 9e f2 76 00 11 0b e2 .. 81 4f a3 46 76 9a 27 83 0f
+==> FAILED
+
+Test 5: check decode() on binary files
+  * us.gif.mtf
+    - student   length = 0
+    - reference length = 12400
+    - student:
+    - reference: 47 49 46 38 39 61 8e 01 01 .. 7f 03 1e 38 cc 41 00 00 3b
+  * CS_bricks.jpg.mtf
+    - student   length = 0
+    - reference length = 24567
+    - student:
+    - reference: ff d8 ff e1 00 16 45 78 69 .. 46 8d 01 a3 46 8d 07 ff d9
+  * rand10K.bin.mtf
+    - student   length = 0
+    - reference length = 10000
+    - student:
+    - reference: 1a de 9d f2 73 73 0c 05 e1 .. 46 04 ae 11 4f d4 bc 2d b4
+==> FAILED
+
+Test 6: check whether decode(encode()) = original on binary files
+  * us.gif
+    - student   length = 0
+    - reference length = 12400
+    - student:
+    - reference: 47 49 46 38 39 61 8e 01 01 .. 7f 03 1e 38 cc 41 00 00 3b
+  * CS_bricks.jpg
+    - student   length = 0
+    - reference length = 24567
+    - student:
+    - reference: ff d8 ff e1 00 16 45 78 69 .. 46 8d 01 a3 46 8d 07 ff d9
+  * rand10K.bin
+    - student   length = 0
+    - reference length = 10000
+    - student:
+    - reference: 1a de 9d f2 73 73 0c 05 e1 .. 46 04 ae 11 4f d4 bc 2d b4
+==> FAILED
+
+Test 7: check that encode() calls either close() or flush()
+  * amendments.txt
+    - student   length = 0
+    - reference length = 18369
+    - student:
+    - reference: 41 72 74 6b 66 6e 69 27 4f .. 04 0a 06 02 04 01 14 1b 0f
+  * aesop.txt
+    - student   length = 0
+    - reference length = 191943
+    - student:
+    - reference: 41 65 73 70 71 2c 03 26 4a .. 10 05 0b 0b 0f 02 36 1c 11
+==> FAILED
+
+Test 8: check that decode() calls either close() or flush()
+  * amendments.txt.mtf
+    - student   length = 0
+    - reference length = 18369
+    - student:
+    - reference: 41 72 74 69 63 6c 65 20 49 .. 65 72 76 65 6e 65 64 2e 0a
+  * aesop.txt.mtf
+    - student   length = 0
+    - reference length = 191943
+    - student:
+    - reference: 41 65 73 6f 70 27 73 20 46 .. 72 20 73 75 6e 73 3f 22 0a
+==> FAILED
+
+Test 9: check encode() on random inputs
+  * 10 random characters from { A } alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 41 00 00 00 00 00 00 00 00 00
+    - failed on trial 1 of 2
+    - input = 'AAAAAAAAAA'
+
+  * 10 random characters from { A, B } alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 41 42 00 01 01 00 00 00 00 01
+    - failed on trial 1 of 100
+    - input = 'ABBABBBBBA'
+
+  * 10 random characters from { A, T, C, G } alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 54 44 48 00 44 02 01 00 03 02
+    - failed on trial 1 of 100
+    - input = 'TCGGACAATC'
+
+  * 10 random characters from uppercase letter alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 54 4d 54 48 5a 53 50 4d 51 08
+    - failed on trial 1 of 100
+    - input = 'TLSEZPKGMT'
+
+  * 1000 random characters from { A } alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 41 00 00 00 00 00 00 00 00 .. 00 00 00 00 00 00 00 00 00
+    - failed on trial 1 of 100
+
+  * 1000 random characters from { A, B } alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 41 42 00 00 00 00 01 00 00 .. 01 00 01 00 01 00 01 01 00
+    - failed on trial 1 of 100
+
+  * 1000 random characters from { A, T, C, G } alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 41 43 01 00 00 47 02 00 54 .. 02 03 00 00 01 00 01 01 00
+    - failed on trial 1 of 100
+
+  * 1000 random characters from uppercase letter alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 4c 54 47 53 57 02 4f 58 05 .. 03 05 01 14 05 08 18 04 0a
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 10: check encode() on random inputs
+  * 1000 random characters from ASCII alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 7d 49 29 35 32 7b 62 28 05 .. 62 6f 73 21 0b 06 26 2d 7f
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 95 32 1b 80 92 af 2e 50 94 .. 85 ad 40 b2 f0 a7 73 f8 58
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet (excluding 0x00)
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 06 4f 0a d4 c8 46 b0 b2 72 .. c5 ae 48 ab 97 db a6 29 7c
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet (excluding 0xFF)
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: ea 69 a5 e5 ab b7 d3 04 c7 .. 87 a2 a6 fe f1 69 25 a4 76
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 11: check decode() on random inputs
+  * 10 random characters from { A } alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 41 40 3f 3e 3d 3c 3b 3a 39 38
+    - failed on trial 1 of 2
+    - input = 'AAAAAAAAAA'
+
+  * 10 random characters from { A, B } alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 41 40 3f 42 3d 3e 3c 3b 39 38
+    - failed on trial 1 of 100
+    - input = 'AAABABBBAA'
+
+  * 10 random characters from { A, T, C, G } alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 47 54 53 40 3f 3e 3d 3c 44 3a
+    - failed on trial 1 of 100
+    - input = 'GTTCCCCCGC'
+
+  * 10 random characters from uppercase letter alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 4a 53 58 4d 54 47 3e 3c 45 3f
+    - failed on trial 1 of 100
+    - input = 'JSXOULDCKF'
+
+  * 1000 random characters from { A } alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 41 40 3f 3e 3d 3c 3b 3a 39 .. 40 3f 3e 3d 3c 3b 3a 39 38
+    - failed on trial 1 of 100
+
+  * 1000 random characters from { A, B } alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 41 40 3f 3e 42 3c 3b 3d 39 .. 0d 02 0b 05 0a 08 01 13 04
+    - failed on trial 1 of 100
+
+  * 1000 random characters from { A, T, C, G } alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 43 42 47 40 54 45 3d 44 39 .. 02 0c 47 26 0e 27 17 25 06
+    - failed on trial 1 of 100
+
+  * 1000 random characters from uppercase letter alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 54 4d 40 48 4e 3c 59 57 55 .. 08 11 15 30 40 55 2a 50 27
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 12: check decode() on random inputs
+  * 1000 random characters from ASCII alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 08 63 34 27 6a 1c 35 20 5b .. 24 15 54 4c 66 3d 17 75 42
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 96 fe c9 59 c3 12 c5 66 bf .. 13 6e f1 aa 63 c8 47 cb 59
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet (excluding 0x00)
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 6f 1c 85 32 90 3c f7 09 00 .. 7e ac ca 21 9b 0b 34 53 45
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet (excluding 0xFF)
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: db 43 89 19 78 7d b0 e5 66 .. 3c c8 ef ae 4a 6c de 7d fe
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 13: check decode() on random inputs
+         that were encoded with move-to-front
+  * 10 random characters from { A } alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 41 40 3f 3e 3d 3c 3b 3a 39 38
+    - failed on trial 1 of 2
+    - input = 'AAAAAAAAAA'
+
+  * 10 random characters from { A, B } alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 41 40 42 3e 3f 3c 3b 3d 39 3a
+    - failed on trial 1 of 100
+    - input = 'AABABAABAB'
+
+  * 10 random characters from { A, T, C, G } alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 54 40 53 41 45 44 52 3a 51 3b
+    - failed on trial 1 of 100
+    - input = 'TATCGGTATC'
+
+  * 10 random characters from uppercase letter alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 50 46 47 45 52 4d 58 4a 51 4f
+    - failed on trial 1 of 100
+    - input = 'PGHHROXNSS'
+
+  * 1000 random characters from { A } alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 41 40 3f 3e 3d 3c 3b 3a 39 .. 40 3f 3e 3d 3c 3b 3a 39 38
+    - failed on trial 1 of 100
+
+  * 1000 random characters from { A, B } alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 42 41 40 3e 3d 3f 3b 3a 39 .. 0f 11 02 07 05 08 04 42 41
+    - failed on trial 1 of 100
+
+  * 1000 random characters from { A, T, C, G } alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 43 47 3f 54 45 53 52 3c 3b .. 0d 2b 13 37 06 1f 33 0a 40
+    - failed on trial 1 of 100
+
+  * 1000 random characters from uppercase letter alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 45 51 56 4f 48 54 50 43 58 .. 20 37 4c 47 0a 3b 23 00 2d
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 14: check decode() on random inputs
+         that were encoded with move-to-front
+  * 1000 random characters from ASCII alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 0a 57 45 64 34 64 43 50 6e .. 3f 16 7f 3a 05 42 54 68 35
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: e1 c9 d2 e1 db 3e f5 f7 36 .. ba 72 6e 8d 26 58 51 08 a7
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet (excluding 0x00)
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 89 d5 26 69 37 1e 5f a7 7d .. 4d 34 98 b4 ee a5 ae 33 ac
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet (excluding 0xFF)
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: f4 99 6b 7d 40 94 70 3d c0 .. d2 94 64 15 4f b7 d5 9a ec
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 15: check that decode(encode()) = original on random inputs
+  * 10 random characters from { A } alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 41 41 41 41 41 41 41 41 41 41
+    - failed on trial 1 of 2
+    - input = 'AAAAAAAAAA'
+
+  * 10 random characters from { A, B } alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 42 42 42 41 42 41 42 42 41 41
+    - failed on trial 1 of 100
+    - input = 'BBBABABBAA'
+
+  * 10 random characters from { A, T, C, G } alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 47 43 41 54 54 47 54 41 47 47
+    - failed on trial 1 of 100
+    - input = 'GCATTGTAGG'
+
+  * 10 random characters from uppercase letter alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 46 41 51 53 4d 57 53 47 53 55
+    - failed on trial 1 of 100
+    - input = 'FAQSMWSGSU'
+
+  * 100 random characters from { A } alphabet
+    - student   length = 0
+    - reference length = 100
+    - student:
+    - reference: 41 41 41 41 41 41 41 41 41 .. 41 41 41 41 41 41 41 41 41
+    - failed on trial 1 of 2
+
+  * 1000 random characters from { A, B } alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 41 41 41 41 42 42 41 41 42 .. 41 42 42 42 41 41 41 41 41
+    - failed on trial 1 of 100
+
+  * 1000 random characters from { A, T, C, G } alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 54 43 43 47 41 54 43 54 54 .. 54 41 43 54 54 41 47 41 43
+    - failed on trial 1 of 100
+
+  * 1000 random characters from uppercase letter alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 52 4d 4c 4d 4d 42 52 4b 4b .. 59 43 52 53 47 51 55 41 53
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 16: check that decode(encode()) = original on random inputs
+  * 1000 random characters from ASCII alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 1e 4a 1a 64 6a 76 4f 70 4b .. 64 33 59 2f 58 45 1c 53 37
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 1f 6c 91 09 1a ce 94 a8 a4 .. 53 c1 bd 3e 5c 69 3f 18 42
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet (excluding 0x00)
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: e8 a5 c2 0b 9b 95 5c 50 1b .. 8b 5c 6f 5e 11 1a 8f d8 b8
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet (excluding 0xFF)
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: de bf e3 02 3f 1f db 88 a5 .. 1c 2f 9c 7a 18 cf 2a a2 ad
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 17: check encode() on large files
+  * rand100K.bin
+    - student   length = 0
+    - reference length = 100000
+    - student:
+    - reference: 73 fe bf 6f 9f a5 86 ec 66 .. f3 6c 2e 01 64 d8 4c 9b 95
+  * world192.txt
+    - student   length = 0
+    - reference length = 2473400
+    - student:
+    - reference: 2a 00 00 00 54 68 66 24 53 .. 0a 09 0a 0b 1f 18 18 01 01
+==> FAILED
+
+Test 18: check decode() on large files
+  * rand100K.bin.mtf
+    - student   length = 0
+    - reference length = 100000
+    - student:
+    - reference: 73 fe be 6c 9d a3 82 eb 5e .. f5 60 4f 60 99 82 d5 72 38
+  * world192.txt.mtf
+    - student   length = 0
+    - reference length = 2473400
+    - student:
+    - reference: 2a 2a 2a 2a 54 68 65 20 50 .. 72 6c 61 6e 64 0d 0a 0d 0a
+==> FAILED
+
+Test 19: check whether decode(encode()) = original on large files
+  * rand100K.bin
+    - student   length = 0
+    - reference length = 100000
+    - student:
+    - reference: 73 fe be 6c 9d a3 82 eb 5e .. f5 60 4f 60 99 82 d5 72 38
+  * world192.txt
+    - student   length = 0
+    - reference length = 2473400
+    - student:
+    - reference: 2a 2a 2a 2a 54 68 65 20 50 .. 72 6c 61 6e 64 0d 0a 0d 0a
+==> FAILED
+
+
+Total: 0/20 tests passed!
+
+
+================================================================
+********************************************************************************
+*  TESTING CORRECTNESS (substituting reference CircularSuffixArray)
+********************************************************************************
+
+Testing correctness of BurrowsWheeler
+*-----------------------------------------------------------
+Running 25 total tests.
+
+Test 0: check main() on input text files
+  * java BurrowsWheeler - < abra.txt
+    - student   length = 0
+    - reference length = 16
+    - student:
+    - reference: 00 00 00 03 41 52 44 21 52 43 41 41 41 41 42 42
+  * java BurrowsWheeler - < zebra.txt
+    - student   length = 0
+    - reference length = 9
+    - student:
+    - reference: 00 00 00 04 72 65 7a 62 61
+  * java BurrowsWheeler + < abra.txt.bwt
+    - student   length = 0
+    - reference length = 12
+    - student:
+    - reference: 41 42 52 41 43 41 44 41 42 52 41 21
+  * java BurrowsWheeler + < zebra.txt.bwt
+    - student   length = 0
+    - reference length = 5
+    - student:
+    - reference: 7a 65 62 72 61
+==> FAILED
+
+Test 1a: check encode() on text files
+  * abra.txt
+    - student   length = 0
+    - reference length = 16
+    - student:
+    - reference: 00 00 00 03 41 52 44 21 52 43 41 41 41 41 42 42
+  * zebra.txt
+    - student   length = 0
+    - reference length = 9
+    - student:
+    - reference: 00 00 00 04 72 65 7a 62 61
+  * cadabra.txt
+    - student   length = 0
+    - reference length = 16
+    - student:
+    - reference: 00 00 00 08 41 52 44 21 52 43 41 41 41 41 42 42
+  * amendments.txt
+    - student   length = 0
+    - reference length = 18373
+    - student:
+    - reference: 00 00 0e 2b 3a 2e 2e 2e 2e .. 69 69 69 69 69 69 69 69 69
+==> FAILED
+
+Test 1b: check encode() on corner-case text files
+  * alphanum.txt
+    - student   length = 0
+    - reference length = 40
+    - student:
+    - reference: 00 00 00 0a 7a 30 31 32 33 .. 71 72 73 74 75 76 77 78 79
+  * a.txt
+    - student   length = 0
+    - reference length = 5
+    - student:
+    - reference: 00 00 00 00 61
+==> FAILED
+
+Test 2a: check decode() on text files
+  * abra.txt.bwt
+    - student   length = 0
+    - reference length = 12
+    - student:
+    - reference: 41 42 52 41 43 41 44 41 42 52 41 21
+  * zebra.txt.bwt
+    - student   length = 0
+    - reference length = 5
+    - student:
+    - reference: 7a 65 62 72 61
+  * cadabra.txt.bwt
+    - student   length = 0
+    - reference length = 12
+    - student:
+    - reference: 43 41 44 41 42 52 41 21 41 42 52 41
+  * amendments.txt.bwt
+    - student   length = 0
+    - reference length = 18369
+    - student:
+    - reference: 41 72 74 69 63 6c 65 20 49 .. 65 72 76 65 6e 65 64 2e 0a
+==> FAILED
+
+Test 2b: check decode() on corner-case text files
+  * alphanum.txt.bwt
+    - student   length = 0
+    - reference length = 36
+    - student:
+    - reference: 61 62 63 64 65 66 67 68 69 .. 31 32 33 34 35 36 37 38 39
+  * a.txt.bwt
+    - student   length = 0
+    - reference length = 1
+    - student:
+    - reference: 61
+  * stars.txt.bwt
+    - student   length = 0
+    - reference length = 13
+    - student:
+    - reference: 2a 2a 2a 2a 2a 2a 2a 2a 2a 2a 2a 2a 2a
+  * couscous.txt.bwt
+    - student   length = 0
+    - reference length = 8
+    - student:
+    - reference: 63 6f 75 73 63 6f 75 73
+==> FAILED
+
+Test 3a: check that decode(encode()) = original
+  * abra.txt
+    - student   length = 0
+    - reference length = 12
+    - student:
+    - reference: 41 42 52 41 43 41 44 41 42 52 41 21
+  * zebra.txt
+    - student   length = 0
+    - reference length = 5
+    - student:
+    - reference: 7a 65 62 72 61
+  * cadabra.txt
+    - student   length = 0
+    - reference length = 12
+    - student:
+    - reference: 43 41 44 41 42 52 41 21 41 42 52 41
+  * amendments.txt
+    - student   length = 0
+    - reference length = 18369
+    - student:
+    - reference: 41 72 74 69 63 6c 65 20 49 .. 65 72 76 65 6e 65 64 2e 0a
+==> FAILED
+
+Test 3b: check that decode(encode()) = original on corner-case text files
+  * alphanum.txt
+    - student   length = 0
+    - reference length = 36
+    - student:
+    - reference: 61 62 63 64 65 66 67 68 69 .. 31 32 33 34 35 36 37 38 39
+  * a.txt
+    - student   length = 0
+    - reference length = 1
+    - student:
+    - reference: 61
+  * stars.txt
+    - student   length = 0
+    - reference length = 13
+    - student:
+    - reference: 2a 2a 2a 2a 2a 2a 2a 2a 2a 2a 2a 2a 2a
+  * couscous.txt
+    - student   length = 0
+    - reference length = 8
+    - student:
+    - reference: 63 6f 75 73 63 6f 75 73
+==> FAILED
+
+Test 4: check encode() on binary files
+  * us.gif
+    - student   length = 0
+    - reference length = 12404
+    - student:
+    - reference: 00 00 0f 7d 2c 00 41 00 d5 .. 1f 33 ff 00 bf 0a 04 ff d6
+  * CS_bricks.jpg
+    - student   length = 0
+    - reference length = 24571
+    - student:
+    - reference: 00 00 5f f0 01 00 00 00 01 .. 04 08 d9 07 81 0a 1e d8 00
+  * rand10K.bin
+    - student   length = 0
+    - reference length = 10004
+    - student:
+    - reference: 00 00 04 25 c6 6c 5d e4 ce .. d5 1e b8 31 4d 9b 2e fe 08
+==> FAILED
+
+Test 5: check decode() on binary files
+  * us.gif.bwt
+    - student   length = 0
+    - reference length = 12400
+    - student:
+    - reference: 47 49 46 38 39 61 8e 01 01 .. 7f 03 1e 38 cc 41 00 00 3b
+  * CS_bricks.jpg.bwt
+    - student   length = 0
+    - reference length = 24567
+    - student:
+    - reference: ff d8 ff e1 00 16 45 78 69 .. 46 8d 01 a3 46 8d 07 ff d9
+  * rand10K.bin.bwt
+    - student   length = 0
+    - reference length = 10000
+    - student:
+    - reference: 1a de 9d f2 73 73 0c 05 e1 .. 46 04 ae 11 4f d4 bc 2d b4
+==> FAILED
+
+Test 6: check that decode(encode()) = original on binary files
+  * us.gif
+    - student   length = 0
+    - reference length = 12400
+    - student:
+    - reference: 47 49 46 38 39 61 8e 01 01 .. 7f 03 1e 38 cc 41 00 00 3b
+  * CS_bricks.jpg
+    - student   length = 0
+    - reference length = 24567
+    - student:
+    - reference: ff d8 ff e1 00 16 45 78 69 .. 46 8d 01 a3 46 8d 07 ff d9
+  * rand10K.bin
+    - student   length = 0
+    - reference length = 10000
+    - student:
+    - reference: 1a de 9d f2 73 73 0c 05 e1 .. 46 04 ae 11 4f d4 bc 2d b4
+==> FAILED
+
+Test 7: check that encode() calls either close() or flush()
+  * amendments.txt
+    - student   length = 0
+    - reference length = 18373
+    - student:
+    - reference: 00 00 0e 2b 3a 2e 2e 2e 2e .. 69 69 69 69 69 69 69 69 69
+  * aesop.txt
+    - student   length = 0
+    - reference length = 191947
+    - student:
+    - reference: 00 00 b3 3d 20 20 20 20 20 .. 69 69 65 61 61 61 75 75 75
+==> FAILED
+
+Test 8: check that decode() calls either close() or flush()
+  * amendments.txt.bwt
+    - student   length = 0
+    - reference length = 18369
+    - student:
+    - reference: 41 72 74 69 63 6c 65 20 49 .. 65 72 76 65 6e 65 64 2e 0a
+  * aesop.txt.bwt
+    - student   length = 0
+    - reference length = 191943
+    - student:
+    - reference: 41 65 73 6f 70 27 73 20 46 .. 72 20 73 75 6e 73 3f 22 0a
+==> FAILED
+
+Test 9: check encode() on random inputs
+  * 10 random characters from binary alphabet
+    - student   length = 0
+    - reference length = 14
+    - student:
+    - reference: 00 00 00 01 42 41 42 41 41 41 41 42 41 41
+    - failed on trial 1 of 100
+    - input = 'AAABAAABBA'
+
+  * 10 random characters from DNA alphabet
+    - student   length = 0
+    - reference length = 14
+    - student:
+    - reference: 00 00 00 06 54 41 43 41 47 41 47 54 43 43
+    - failed on trial 1 of 100
+    - input = 'GCTAACACTG'
+
+  * 10 random characters from uppercase alphabet
+    - student   length = 0
+    - reference length = 14
+    - student:
+    - reference: 00 00 00 05 4d 41 4a 52 4a 42 48 43 4e 4f
+    - failed on trial 1 of 100
+    - input = 'JJCNORHMAB'
+
+  * 1000 random characters from binary alphabet
+    - student   length = 0
+    - reference length = 1004
+    - student:
+    - reference: 00 00 01 4c 42 41 41 41 42 .. 41 42 41 42 41 42 41 41 41
+    - failed on trial 1 of 100
+
+  * 1000 random characters from DNA alphabet
+    - student   length = 0
+    - reference length = 1004
+    - student:
+    - reference: 00 00 01 8e 54 47 54 54 43 .. 47 43 41 54 41 47 54 47 47
+    - failed on trial 1 of 100
+
+  * 1000 random characters from uppercase alphabet
+    - student   length = 0
+    - reference length = 1004
+    - student:
+    - reference: 00 00 03 7d 4a 4e 41 58 47 .. 41 5a 59 47 4a 5a 52 58 52
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 10: check encode() on random inputs
+  * 1000 random characters from ASCII alphabet
+    - student   length = 0
+    - reference length = 1004
+    - student:
+    - reference: 00 00 01 b8 27 34 05 7f 1b .. 36 00 1e 7f 11 15 14 25 76
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet
+    - student   length = 0
+    - reference length = 1004
+    - student:
+    - reference: 00 00 01 99 94 ef 84 37 eb .. 04 92 7c 11 c6 42 16 2e 80
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet (excluding 0x00)
+    - student   length = 0
+    - reference length = 1004
+    - student:
+    - reference: 00 00 03 9a 9e d9 a5 86 ee .. de 8f b1 6b 78 1c 85 10 a9
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet (excluding 0xFF)
+    - student   length = 0
+    - reference length = 1004
+    - student:
+    - reference: 00 00 02 b5 2c 98 e8 b4 9c .. 9f b1 c4 1b 3b 74 b5 f2 55
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 11: check decode() of Burrows-Wheeler encode on random inputs
+  * 10 random characters from unary alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 41 41 41 41 41 41 41 41 41 41
+    - failed on trial 1 of 2
+    - input = 'AAAAAAAAAA'
+
+  * 10 random characters from binary alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 42 41 42 42 42 42 41 42 41 42
+    - failed on trial 1 of 100
+    - input = 'BABBBBABAB'
+
+  * 10 random characters from DNA alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 41 41 41 41 47 41 54 54 54 54
+    - failed on trial 1 of 100
+    - input = 'AAAAGATTTT'
+
+  * 10 random characters from uppercase alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 58 52 43 53 57 4d 53 4f 43 4c
+    - failed on trial 1 of 100
+    - input = 'XRCSWMSOCL'
+
+  * 100 random characters from unary alphabet
+    - student   length = 0
+    - reference length = 100
+    - student:
+    - reference: 41 41 41 41 41 41 41 41 41 .. 41 41 41 41 41 41 41 41 41
+    - failed on trial 1 of 2
+
+  * 1000 random characters from binary alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 42 41 41 41 41 42 42 41 41 .. 41 41 41 41 41 42 41 42 41
+    - failed on trial 1 of 100
+
+  * 1000 random characters from DNA alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 43 54 41 43 47 47 47 41 43 .. 54 41 43 43 43 47 54 54 54
+    - failed on trial 1 of 100
+
+  * 1000 random characters from uppercase alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 4a 45 4b 50 48 42 4e 41 4e .. 45 57 50 4d 49 44 41 56 49
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 12: check decode() of Burrows-Wheeler encode on random inputs
+  * 1000 random characters from ASCII alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 40 14 62 7c 37 65 76 54 3b .. 36 03 58 19 6d 0d 51 21 32
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 82 5d 80 39 8b eb da cf 61 .. 7c 85 aa 93 d9 6b 61 de 45
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet (excluding 0x00)
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 0a 62 fd 2b a7 80 c5 1f ce .. a1 2e 24 35 70 01 bb 3c 0e
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet (excluding 0xFF)
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 18 f3 b6 05 f0 42 e2 d3 d4 .. 57 0a e4 df a2 d6 be 7f 0c
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 13: check that decode(tranform()) = original on random inputs
+  * 10 random characters from binary alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 42 41 41 42 42 42 42 42 41 41
+    - failed on trial 1 of 100
+    - input = 'BAABBBBBAA'
+
+  * 10 random characters from DNA alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 41 54 41 41 43 54 47 43 47 47
+    - failed on trial 1 of 100
+    - input = 'ATAACTGCGG'
+
+  * 10 random characters from uppercase alphabet
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 4d 49 43 4a 4c 4f 58 49 55 41
+    - failed on trial 1 of 100
+    - input = 'MICJLOXIUA'
+
+  * 1000 random characters from binary alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 41 42 42 42 42 42 41 42 41 .. 42 42 42 42 42 41 41 42 41
+    - failed on trial 1 of 100
+
+  * 1000 random characters from DNA alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 54 41 43 43 54 41 41 41 41 .. 54 43 54 41 43 41 54 54 43
+    - failed on trial 1 of 100
+
+  * 1000 random characters from uppercase alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 53 45 47 52 49 50 55 54 4c .. 4c 4b 54 56 57 45 55 4c 5a
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 14: check that decode(tranform()) = original on random inputs
+  * 1000 random characters from ASCII alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 41 2e 76 7d 1e 7a 06 7d 07 .. 21 12 64 0b 6d 02 14 21 6a
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: c3 71 c5 6d ee 1c 10 d8 06 .. 89 19 e4 cc 23 cc 53 d8 3e
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet (excluding 0x00)
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: 9d 10 ec 4c 3d 5f 2e 76 39 .. 1c 36 d6 aa aa 63 c5 22 43
+    - failed on trial 1 of 100
+
+  * 1000 random characters from extended ASCII alphabet (excluding 0xFF)
+    - student   length = 0
+    - reference length = 1000
+    - student:
+    - reference: b7 e3 82 42 f4 32 fa bd 3f .. b3 bb 6d 4e cf 57 5a c1 14
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 15: check tranform() on random inputs that are circular
+         shifts of themselves
+  * 5 random strings from unary alphabet that are circular shifts of themselves
+    - student   length = 0
+    - reference length = 19
+    - student:
+    - reference: 00 00 00 00 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41
+    - failed on trial 1 of 2
+    - input = 'AAAAAAAAAAAAAAA'
+
+  * 5 random strings from binary alphabet that are circular shifts of themselves
+    - student   length = 0
+    - reference length = 24
+    - student:
+    - reference: 00 00 00 09 42 42 42 42 42 .. 42 42 42 42 42 41 41 41 41
+    - failed on trial 1 of 100
+    - input = 'BBABBBBABBBBABBBBABB'
+
+  * 5 random strings from DNA alphabet that are circular shifts of themselves
+    - student   length = 0
+    - reference length = 19
+    - student:
+    - reference: 00 00 00 04 43 43 43 54 54 54 41 41 41 47 47 47 47 47 47
+    - failed on trial 1 of 100
+    - input = 'CAGGTCAGGTCAGGT'
+
+  * 5 random strings from uppercase alphabet that are circular shifts of themselves
+    - student   length = 0
+    - reference length = 14
+    - student:
+    - reference: 00 00 00 02 51 51 53 53 4f 4f 56 56 49 49
+    - failed on trial 1 of 100
+    - input = 'OQIVSOQIVS'
+
+==> FAILED
+
+Test 16: check that decode(tranform()) = original
+         on random inputs that are circular shifts of themselves
+  * random strings from unary alphabet that are circular shifts of themselves
+    - student   length = 0
+    - reference length = 20
+    - student:
+    - reference: 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41
+    - failed on trial 1 of 2
+    - input = 'AAAAAAAAAAAAAAAAAAAA'
+
+  * random strings from binary alphabet that are circular shifts of themselves
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 41 41 42 41 41 41 41 42 41 41
+    - failed on trial 1 of 100
+    - input = 'AABAAAABAA'
+
+  * random strings from DNA alphabet that are circular shifts of themselves
+    - student   length = 0
+    - reference length = 15
+    - student:
+    - reference: 54 54 43 41 41 54 54 43 41 41 54 54 43 41 41
+    - failed on trial 1 of 100
+    - input = 'TTCAATTCAATTCAA'
+
+  * random strings from uppercase alphabet that are circular shifts of themselves
+    - student   length = 0
+    - reference length = 10
+    - student:
+    - reference: 47 57 52 50 58 47 57 52 50 58
+    - failed on trial 1 of 100
+    - input = 'GWRPXGWRPX'
+
+==> FAILED
+
+Test 17: check that encode() constructs one CircularSuffixArray object
+  * abra.txt.bwt
+    - student   length = 0
+    - reference length = 20
+    - student:
+    - reference: 00 00 00 00 42 00 00 00 44 43 41 41 41 03 42 41 52 52 21 41
+    - constructs 0 CircularSuffixArray objects
+    - it probably should construct exactly 1 CircularSuffixArray object
+
+  * amendments.txt
+    - student   length = 0
+    - reference length = 18373
+    - student:
+    - reference: 00 00 0e 2b 3a 2e 2e 2e 2e .. 69 69 69 69 69 69 69 69 69
+    - constructs 0 CircularSuffixArray objects
+    - it probably should construct exactly 1 CircularSuffixArray object
+
+==> FAILED
+
+Test 18: check that decode() does not construct a CircularSuffixArray object
+  * abra.txt.bwt
+    - student   length = 0
+    - reference length = 12
+    - student:
+    - reference: 41 42 52 41 43 41 44 41 42 52 41 21
+  * amendments.txt.bwt
+    - student   length = 0
+    - reference length = 18369
+    - student:
+    - reference: 41 72 74 69 63 6c 65 20 49 .. 65 72 76 65 6e 65 64 2e 0a
+==> passed
+
+Test 19: check encode() on large files
+  * rand100K.bin
+    - student   length = 0
+    - reference length = 100004
+    - student:
+    - reference: 00 00 b1 0d f1 f8 81 ef d8 .. 8d 94 73 51 51 37 57 cf 91
+  * world192.txt
+    - student   length = 0
+    - reference length = 2473404
+    - student:
+    - reference: 00 09 3a f0 0d 0d 0d 0d 0d .. 41 75 6f 49 20 20 6e 6e 28
+==> FAILED
+
+Test 20: check decode() on large files
+  * rand100K.bin.bwt
+    - student   length = 0
+    - reference length = 100000
+    - student:
+    - reference: 73 fe be 6c 9d a3 82 eb 5e .. f5 60 4f 60 99 82 d5 72 38
+  * world192.txt.bwt
+    - student   length = 0
+    - reference length = 2473400
+    - student:
+    - reference: 2a 2a 2a 2a 54 68 65 20 50 .. 72 6c 61 6e 64 0d 0a 0d 0a
+==> FAILED
+
+Test 21: check that decode(encode()) = original on large files
+  * rand100K.bin
+    - student   length = 0
+    - reference length = 100000
+    - student:
+    - reference: 73 fe be 6c 9d a3 82 eb 5e .. f5 60 4f 60 99 82 d5 72 38
+  * world192.txt
+    - student   length = 0
+    - reference length = 2473400
+    - student:
+    - reference: 2a 2a 2a 2a 54 68 65 20 50 .. 72 6c 61 6e 64 0d 0a 0d 0a
+==> FAILED
+
+
+Total: 1/25 tests passed!
+
+
+================================================================
+********************************************************************************
+*  MEMORY
+********************************************************************************
+
+Analyzing memory of CircularSuffixArray
+*-----------------------------------------------------------
+Running 10 total tests.
+
+Memory usage of a CircularSuffixArray with a random string of length n.
+Maximum allowed memory is 25x the reference.
+
+                 n       student (bytes)    reference (bytes)     ratio
+-----------------------------------------------------------------------
+=> passed       10           16                 96                 0.17
+=> passed       20           16                136                 0.12
+=> passed       50           16                256                 0.06
+=> passed      100           16                456                 0.04
+=> passed      200           16                856                 0.02
+=> passed      500           16               2056                 0.01
+=> passed     1000           16               4056                 0.00
+=> passed     2000           16               8056                 0.00
+=> passed     4000           16              16056                 0.00
+=> passed     8000           16              32056                 0.00
+==> 10/10 tests passed
+
+Total: 10/10 tests passed!
+
+Estimated student   memory (bytes) = 16.00   (R^2 = 1.000)
+Estimated reference memory (bytes) = 4.00 n + 56.00   (R^2 = 1.000)
+================================================================
+
+
+
+********************************************************************************
+*  TIMING
+********************************************************************************
+
+Timing CircularSuffixArray
+*-----------------------------------------------------------
+Running 26 total tests.
+
+Tests 1-13: circular suffix array of n random ASCII characters
+
+Max allowed time per constructor call is 10 seconds and <= 8x reference.
+
+                 n    student  reference      ratio
+---------------------------------------------------
+=> passed     1000       0.00       0.00       6.49
+=> passed     2000       0.00       0.00       0.33
+=> passed     4000       0.00       0.00       0.33
+=> passed     8000       0.00       0.00       0.33
+=> passed    16000       0.00       0.01       0.32
+=> passed    32000       0.00       0.01       0.46
+=> passed    64000       0.00       0.01       0.11
+=> passed   128000       0.00       0.02       0.08
+=> passed   256000       0.00       0.04       0.01
+=> passed   512000       0.00       0.08       0.00
+=> passed  1024000       0.00       0.17       0.00
+=> passed  2048000       0.00       0.38       0.00
+=> passed  4096000       0.00       0.82       0.00
+
+Estimated running time (using last 6 measurements) = 4.31e-05 * n^0.21  (R^2 = 0.11)
+
+
+Tests 14-26: circular suffix array of first n character of dickens.txt
+
+Max allowed time per constructor call is 10 seconds and <= 8x reference.
+
+                 n    student  reference      ratio
+---------------------------------------------------
+=> passed     1000       0.00       0.00       0.05
+=> passed     2000       0.00       0.00       0.02
+=> passed     4000       0.00       0.00       0.01
+=> passed     8000       0.00       0.00       0.01
+=> passed    16000       0.00       0.00       0.01
+=> passed    32000       0.00       0.00       0.00
+=> passed    64000       0.00       0.01       0.00
+=> passed   128000       0.00       0.02       0.00
+=> passed   256000       0.00       0.04       0.00
+=> passed   512000       0.00       0.08       0.00
+=> passed  1024000       0.00       0.17       0.00
+=> passed  2048000       0.00       0
+
+...
+
+WARNING: the grading output was truncated due to excessive length.
+Typically, this is because you have a method that has an unanticipated side effect
+(such as printing to standard output or throwing an exception). A large amount of output
+can also arise from failing many tests.

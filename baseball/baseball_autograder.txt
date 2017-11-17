@@ -1,0 +1,538 @@
+See the Assessment Guide for information on how to interpret this report.
+
+ASSESSMENT SUMMARY
+
+Compilation:  PASSED
+API:          PASSED
+
+Findbugs:     PASSED
+PMD:          PASSED
+Checkstyle:   PASSED
+
+Correctness:  4/15 tests passed
+Memory:       4/4 tests passed
+Timing:       1/1 tests passed
+
+Aggregate score: 56.00%
+[Compilation: 5%, API: 5%, Findbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
+
+ASSESSMENT DETAILS
+
+The following files were submitted:
+----------------------------------
+1.6K Nov 12 20:10 BaseballElimination.java
+
+
+********************************************************************************
+*  COMPILING
+********************************************************************************
+
+
+% javac BaseballElimination.java
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+Checking the APIs of your programs.
+*-----------------------------------------------------------
+BaseballElimination:
+
+================================================================
+
+
+********************************************************************************
+*  CHECKING STYLE AND COMMON BUG PATTERNS
+********************************************************************************
+
+
+% findbugs *.class
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+% pmd .
+*-----------------------------------------------------------
+BaseballElimination.java:8: Avoid unused parameter variables, such as 'filename'. [UnusedFormalParameter]
+PMD ends with 1 warning.
+
+
+================================================================
+
+
+% checkstyle *.java
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+********************************************************************************
+*  TESTING CORRECTNESS
+********************************************************************************
+
+Testing correctness of BaseballElimination
+*-----------------------------------------------------------
+Running 15 total tests.
+
+Test 1: check calls to numberOfTeams()
+  * teams4.txt
+    - student   numberOfTeams() = -1
+    - reference numberOfTeams() = 4
+  * teams5.txt
+    - student   numberOfTeams() = -1
+    - reference numberOfTeams() = 5
+  * teams8.txt
+    - student   numberOfTeams() = -1
+    - reference numberOfTeams() = 8
+  * teams10.txt
+    - student   numberOfTeams() = -1
+    - reference numberOfTeams() = 10
+  * teams29.txt
+    - student   numberOfTeams() = -1
+    - reference numberOfTeams() = 29
+  * teams48.txt
+    - student   numberOfTeams() = -1
+    - reference numberOfTeams() = 48
+==> FAILED
+
+Test 2: check calls to teams()
+  * teams4.txt
+    - number of entries in student   solution: 0
+    - number of entries in reference solution: 4
+    - 4 missing entries in student solution, including: 'Philadelphia'
+  * teams5.txt
+    - number of entries in student   solution: 0
+    - number of entries in reference solution: 5
+    - 5 missing entries in student solution, including: 'Toronto'
+  * teams8.txt
+    - number of entries in student   solution: 0
+    - number of entries in reference solution: 8
+    - 8 missing entries in student solution, including: 'Yale'
+  * teams10.txt
+    - number of entries in student   solution: 0
+    - number of entries in reference solution: 10
+    - 10 missing entries in student solution, including: 'Indiana'
+  * teams29.txt
+    - number of entries in student   solution: 0
+    - number of entries in reference solution: 29
+    - 29 missing entries in student solution, including: 'Washington'
+  * teams48.txt
+    - number of entries in student   solution: 0
+    - number of entries in reference solution: 48
+    - 48 missing entries in student solution, including: 'Team9'
+==> FAILED
+
+Test 3: check calls to wins()
+  * teams4.txt
+    - fails for Atlanta
+    - student   wins = -1
+    - reference wins = 83
+  * teams5.txt
+    - fails for New_York
+    - student   wins = -1
+    - reference wins = 75
+  * teams8.txt
+    - fails for Brown
+    - student   wins = -1
+    - reference wins = 44
+  * teams10.txt
+    - fails for Atlanta
+    - student   wins = -1
+    - reference wins = 0
+  * teams29.txt
+    - fails for Atlanta
+    - student   wins = -1
+    - reference wins = 123
+  * teams48.txt
+    - fails for Team0
+    - student   wins = -1
+    - reference wins = 29
+==> FAILED
+
+Test 4: check calls to losses()
+  * teams4.txt
+    - fails for Atlanta
+    - student   losses = -1
+    - reference losses = 71
+  * teams5.txt
+    - fails for New_York
+    - student   losses = -1
+    - reference losses = 59
+  * teams8.txt
+    - fails for Brown
+    - student   losses = -1
+    - reference losses = 51
+  * teams10.txt
+    - fails for Atlanta
+    - student   losses = -1
+    - reference losses = 0
+  * teams29.txt
+    - fails for Atlanta
+    - student   losses = -1
+    - reference losses = 76
+  * teams48.txt
+    - fails for Team0
+    - student   losses = -1
+    - reference losses = 22
+==> FAILED
+
+Test 5: check calls to remaining()
+  * teams4.txt
+    - fails for Atlanta
+    - student   remaining games = -1
+    - reference remaining games = 8
+  * teams5.txt
+    - fails for New_York
+    - student   remaining games = -1
+    - reference remaining games = 28
+  * teams8.txt
+    - fails for Brown
+    - student   remaining games = -1
+    - reference remaining games = 9
+  * teams10.txt
+    - fails for Atlanta
+    - student   remaining games = -1
+    - reference remaining games = 63
+  * teams29.txt
+    - fails for Atlanta
+    - student   remaining games = -1
+    - reference remaining games = 53
+  * teams48.txt
+    - fails for Team0
+    - student   remaining games = -1
+    - reference remaining games = 15
+==> FAILED
+
+Test 6: check calls to against()
+  * teams4.txt
+    - fails for Atlanta and Atlanta
+    - student   against = -1
+    - reference against = 0
+  * teams5.txt
+    - fails for New_York and New_York
+    - student   against = -1
+    - reference against = 0
+  * teams8.txt
+    - fails for Brown and Brown
+    - student   against = -1
+    - reference against = 0
+  * teams10.txt
+    - fails for Atlanta and Atlanta
+    - student   against = -1
+    - reference against = 0
+  * teams29.txt
+    - fails for Atlanta and Atlanta
+    - student   against = -1
+    - reference against = 0
+  * teams48.txt
+    - fails for Team0 and Team0
+    - student   against = -1
+    - reference against = 0
+==> FAILED
+
+Test 7: check calls to isEliminated()
+  * teams4.txt
+    - fails for Philadelphia
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams4a.txt
+    - fails for Ghaddafi
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams4b.txt
+    - fails for Hufflepuff
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams5.txt
+    - fails for Detroit
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams5a.txt
+    - fails for Detroit
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams5b.txt
+    - fails for Detroit
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams5c.txt
+    - fails for Philadelphia
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams7.txt
+    - fails for Ireland
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams8.txt
+    - fails for Harvard
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams10.txt
+    - fails for Houston
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams12.txt
+    - fails for Japan
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams24.txt
+    - fails for Team4
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams29.txt
+    - fails for Detroit
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams30.txt
+    - fails for Team0
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams32.txt
+    - fails for Team2
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams36.txt
+    - fails for Team17
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams42.txt
+    - fails for Team6
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams48.txt
+    - fails for Team4
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+  * teams12-allgames.txt
+    - fails for Team0
+    - student   isEliminated() = false
+    - reference isEliminated() = true
+==> FAILED
+
+Test 8: check that isEliminated() is consistent with certificateOfElimination()
+  * teams4.txt
+  * teams5.txt
+  * teams8.txt
+  * teams10.txt
+  * teams29.txt
+  * teams48.txt
+==> passed
+
+Test 9: check calls to certificateOfElimination()
+  * teams4.txt
+    - false negative in certificate of elimination for 'Philadelphia'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { Atlanta New_York }
+  * teams4a.txt
+    - false negative in certificate of elimination for 'Ghaddafi'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { CIA Obama }
+  * teams4b.txt
+    - false negative in certificate of elimination for 'Hufflepuff'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { Gryffindor }
+  * teams5.txt
+    - false negative in certificate of elimination for 'Detroit'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { New_York Baltimore Boston Toronto }
+  * teams5a.txt
+    - false negative in certificate of elimination for 'Detroit'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { New_York Baltimore Boston Toronto }
+  * teams5b.txt
+    - false negative in certificate of elimination for 'Detroit'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { New_York }
+  * teams5c.txt
+    - false negative in certificate of elimination for 'Philadelphia'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { Atlanta Florida }
+  * teams7.txt
+    - false negative in certificate of elimination for 'Ireland'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { U.S.A. France Germany }
+  * teams8.txt
+    - false negative in certificate of elimination for 'Harvard'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { Brown Columbia Cornell Dartmouth Penn Princeton }
+  * teams10.txt
+    - false negative in certificate of elimination for 'Houston'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { Indiana }
+  * teams12.txt
+    - false negative in certificate of elimination for 'Japan'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { Poland Russia Brazil Iran }
+  * teams24.txt
+    - false negative in certificate of elimination for 'Team4'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { Team0 }
+  * teams29.txt
+    - false negative in certificate of elimination for 'Detroit'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { Atlanta Boston Chicago Cleveland Dallas Denver Philadelphia }
+  * teams30.txt
+    - false negative in certificate of elimination for 'Team0'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { Team16 }
+  * teams32.txt
+    - false negative in certificate of elimination for 'Team2'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { Team0 }
+  * teams36.txt
+    - false negative in certificate of elimination for 'Team17'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { Team5 }
+  * teams42.txt
+    - false negative in certificate of elimination for 'Team6'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { Team0 Team18 Team19 Team21 }
+  * teams48.txt
+    - false negative in certificate of elimination for 'Team4'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { Team7 }
+  * teams12-allgames.txt
+    - false negative in certificate of elimination for 'Team0'
+    - student   certificate of elimination = null
+    - reference certificate of elimination = { Team1 }
+==> FAILED
+
+Test 10: only 1 team in division
+  * teams1.txt
+    - student   numberOfTeams() = -1
+    - reference numberOfTeams() = 1
+  * teams1.txt
+    - number of entries in student   solution: 0
+    - number of entries in reference solution: 1
+    - 1 missing entry in student solution: 'Turing'
+  * teams1.txt
+    - fails for Turing
+    - student   wins = -1
+    - reference wins = 100
+  * teams1.txt
+    - fails for Turing
+    - student   losses = -1
+    - reference losses = 55
+  * teams1.txt
+    - fails for Turing
+    - student   remaining games = -1
+    - reference remaining games = 0
+  * teams1.txt
+    - fails for Turing and Turing
+    - student   against = -1
+    - reference against = 0
+  * teams1.txt
+==> FAILED
+
+Test 11: check immutability by calling certificateOfElimination() both before
+         and after calling isEliminated() and verifying that the results match
+  * teams4.txt
+  * teams5.txt
+  * teams29.txt
+==> passed
+
+Test 12: check that certificateOfElimination() returns null
+  * teams4.txt
+  * teams5.txt
+==> passed
+
+Test 13: check for invalid arguments
+  * teams4.txt
+    - java.lang.IllegalArgumentException not thrown for wins("Princeton")
+    - java.lang.IllegalArgumentException not thrown for losses("Princeton")
+    - java.lang.IllegalArgumentException not thrown for remaining("Princeton")
+    - java.lang.IllegalArgumentException not thrown for isEliminated("Princeton")
+    - java.lang.IllegalArgumentException not thrown for certificateOfElimination("Princeton")
+    - java.lang.IllegalArgumentException not thrown for against("Princeton", "Tigers")
+    - java.lang.IllegalArgumentException not thrown for against("Princeton", "New_York")
+    - java.lang.IllegalArgumentException not thrown for against("New_York", "Princeton")
+  * teams5.txt
+    - java.lang.IllegalArgumentException not thrown for wins("Princeton")
+    - java.lang.IllegalArgumentException not thrown for losses("Princeton")
+    - java.lang.IllegalArgumentException not thrown for remaining("Princeton")
+    - java.lang.IllegalArgumentException not thrown for isEliminated("Princeton")
+    - java.lang.IllegalArgumentException not thrown for certificateOfElimination("Princeton")
+    - java.lang.IllegalArgumentException not thrown for against("Princeton", "Tigers")
+    - java.lang.IllegalArgumentException not thrown for against("Princeton", "New_York")
+    - java.lang.IllegalArgumentException not thrown for against("New_York", "Princeton")
+==> FAILED
+
+Test 14: check for dependence on reference equality of strings
+==> passed
+
+Test 15: check that two Baseball objects can be created at the same time
+  * teams4.txt and teams5.txt
+    - fails for teams4.txt and teams5.txt
+    - student   number of teams (first object)  = -1
+    - reference number of teams (first object)  = 4
+    - student   number of teams (second object) = -1
+    - reference number of teams (second object) = 5
+  * teams5.txt and teams7.txt
+    - fails for teams5.txt and teams7.txt
+    - student   number of teams (first object)  = -1
+    - reference number of teams (first object)  = 5
+    - student   number of teams (second object) = -1
+    - reference number of teams (second object) = 7
+==> FAILED
+
+
+Total: 4/15 tests passed!
+
+
+================================================================
+********************************************************************************
+*  TIMING
+********************************************************************************
+
+Timing BaseballElimination
+*-----------------------------------------------------------
+Running 1 total tests.
+
+    n   constructor isEliminated() + certificateOfElimination()
+----------------------------------------------------------------
+   30       0.00       0.00
+   36       0.00       0.00
+   42       0.00       0.00
+   48       0.00       0.00
+   54       0.00       0.00
+   60       0.00       0.00
+time = 7.25e+02 * n^-3.85  (R^2 = 0.54)
+
+Total: 1/1 tests passed!
+
+
+================================================================
+
+
+
+********************************************************************************
+*  MEMORY
+********************************************************************************
+
+Analyzing memory of BaseballElimination
+*-----------------------------------------------------------
+Running 4 total tests.
+
+Student   vertices     = 0.50 n^2 - 6.27 n + 20.62   (R^2 = 1.000)
+Reference vertices     = 0.50 n^2 - 0.50 n + 3.00   (R^2 = 1.000)
+=> passed
+
+Student   edges        = 1.50 n^2 - 21.35 n + 74.75   (R^2 = 1.000)
+Reference edges        = 1.50 n^2 - 3.50 n + 2.00   (R^2 = 1.000)
+=> passed
+
+Student   memory of G  = 175.56 n^2 - 2466.67 n + 8592.00   (R^2 = 1.000)
+Reference memory of G  = 176.00 n^2 - 384.00 n + 384.00   (R^2 = 1.000)
+=> passed
+
+Student   memory       = 16.00   (R^2 = 1.000)
+Reference memory       = 3.99 n^2 + 222.25 n + 396.00   (R^2 = 1.000)
+=> passed
+
+Total: 4/4 tests passed!
+
+================================================================

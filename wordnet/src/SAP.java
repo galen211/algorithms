@@ -18,7 +18,7 @@ public class SAP {
 
     private ST<Integer, Integer> iterableCache;
 
-    private final int MAX_CACHE_SIZE = 5000;
+    private static final int MAX_CACHE_SIZE = 5000;
 
     /**
      * constructor takes a digraph (not necessarily a DAG)
