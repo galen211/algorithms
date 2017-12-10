@@ -185,9 +185,24 @@ private ST<Integer, Integer> dfs(int v) {
 
 ![wordnet](img/wordnet.png)
 
-### Assignment 2:
-*Score*: 100%
+### Assignment 2: SeamCarver
+*Score*: 94%
 
-*Example*: `> java  synsets.txt hypernyms.txt`
+*Example*: `> java ResizeDemo HJocean.png`
 
-*Comments*:
+*Comments*: Unsure about the autograder output on this assignment.  I probably could eliminate some memory usage in the instance variables, but I wasn't able to find a way to do this that would maintain performance.  This assignment is about finding a shortest path in an edge weighted acyclic digraph.  Seam carving is a 'content-aware' image resizing technique because it  finds pixels that are connected (one per row or column) and removes the 'minimum energy' row or column of pixels.  This technique effectively minimizes the visual impact of removing pixels from an image from the viewers perspective.  The shortest path algorithms is relatively straightforward, however some of the optimizations can be a bit tricky to implement because working with arrays in Java can be a bit confusing.  One reason for this is that removing pixel values horizontally from a matrix that stores rows is column-major order (i.e. the default access method of the Picture class), will result in a mis-shaped array.  The solution is to use a class variable to keep track of the *original* orientation of the picture as given to the class constructor and implement private methods to handle transposition operations.  An example of this is how the public `energy` method is implemented:
+```java
+public double energy(int col, int row) {
+    if ((col < 0 || col >= width) || (row < 0 || row >= height)) {
+        throw new IllegalArgumentException("Error: Coordinates out of bounds");
+    }
+
+    // must assume the client is calling the picture from perspective of original orientation
+    if (direction == ORIGINAL) {
+        return energy[row][col];
+    } else {
+        return energy[col][row];
+    }
+}
+```
+![seamcarver](img/seam.png)

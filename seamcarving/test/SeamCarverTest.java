@@ -9,7 +9,6 @@ import java.io.File;
 
 public class SeamCarverTest {
 
-    SeamCarver sc;
     ST<String, Picture> img;
 
     @Before
@@ -39,7 +38,7 @@ public class SeamCarverTest {
         p = img.get("3x4");
         sc = new SeamCarver(p);
         energy = sc.energy(1,2);
-        Assert.assertEquals(Math.sqrt(52225), energy, 1e-6);
+        Assert.assertEquals(Math.sqrt(52024), energy, 1e-6);
         energy = sc.energy(1,1);
         Assert.assertEquals(Math.sqrt(52225), energy, 1e-6);
 
@@ -113,7 +112,7 @@ public class SeamCarverTest {
         energy = sc.energy(0, 0);
         Assert.assertEquals(1000.0, energy, 1e-6);
 
-        p = img.get("HJoceanSmall");
+        p = img.get("HJocean");
         sc = new SeamCarver(p);
         energy = sc.energy(0, 0);
         Assert.assertEquals(1000.0, energy, 1e-6);
@@ -284,11 +283,6 @@ public class SeamCarverTest {
         horizontalSeam = sc.findHorizontalSeam();
         Assert.assertEquals(600, horizontalSeam.length);
 
-        p = img.get("HJoceansmall");
-        sc = new SeamCarver(p);
-        horizontalSeam = sc.findHorizontalSeam();
-        Assert.assertEquals(507, horizontalSeam.length);
-
         p = img.get("1x8");
         sc = new SeamCarver(p);
         horizontalSeam = sc.findHorizontalSeam();
@@ -383,12 +377,12 @@ public class SeamCarverTest {
         w = sc.width();
         Assert.assertEquals(599, w);
 
-        p = img.get("HJoceanSmall");
+        /*p = img.get("HJocean");
         sc = new SeamCarver(p);
         verticalSeam = sc.findVerticalSeam();
         sc.removeVerticalSeam(verticalSeam);
         w = sc.width();
-        Assert.assertEquals(506, w);
+        Assert.assertEquals(506, w);*/
 
         p = img.get("8x1");
         sc = new SeamCarver(p);
@@ -476,14 +470,7 @@ public class SeamCarverTest {
         h = sc.height();
         Assert.assertEquals(299, h);
 
-        p = img.get("HJoceanSmall");
-        sc = new SeamCarver(p);
-        horizontalSeam = sc.findHorizontalSeam();
-        sc.removeHorizontalSeam(horizontalSeam);
-        h = sc.height();
-        Assert.assertEquals(284, h);
-
-        p = img.get("8x1");
+        p = img.get("1x8");
         sc = new SeamCarver(p);
         horizontalSeam = sc.findHorizontalSeam();
         sc.removeHorizontalSeam(horizontalSeam);
@@ -508,25 +495,54 @@ public class SeamCarverTest {
         sc.energy(4, 5);
     }
 
-    // TODO: implement removeVerticalSeamInvalidThrowsException
     @Test(expected = IllegalArgumentException.class)
-    public void removeVerticalSeamInvalidThrowsException() {
+    public void removeVerticalSeamInvalidThrowsException_1() {
         Picture p;
         SeamCarver sc;
+        int[] seam;
 
-        p = img.get("6x5");
+        p = img.get("10x10");
+        seam = new int[]{ 5, 7, 6, 7, 9, 8, 6, 6, 8, 7};
         sc = new SeamCarver(p);
+        sc.removeVerticalSeam(seam);
     }
 
-    // TODO: implement removeHorizontalSeamInvalidThrowsException
     @Test(expected = IllegalArgumentException.class)
-    public void removeHorizontalSeamInvalidThrowsException() {
+    public void removeVerticalSeamInvalidThrowsException_2() {
         Picture p;
         SeamCarver sc;
+        int[] seam;
 
-        p = img.get("6x5");
+        p = img.get("3x7");
+        seam = new int[]{ 0, 0, 0, 2, 2, 2, 1 };
         sc = new SeamCarver(p);
+        sc.removeVerticalSeam(seam);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void removeHorizontalSeamInvalidThrowsException_1() {
+        Picture p;
+        SeamCarver sc;
+        int[] seam;
+
+        p = img.get("10x10");
+        seam = new int[]{ 8, 7, 6, 5, 4, 5, 5, 3, 3, 2};
+        sc = new SeamCarver(p);
+        sc.removeHorizontalSeam(seam);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void removeHorizontalSeamInvalidThrowsException_2() {
+        Picture p;
+        SeamCarver sc;
+        int[] seam;
+
+        p = img.get("10x12");
+        seam = new int[]{ 11, 11, 11, 9, 9, 10, 9, 10, 10, 9 };  // should be length = 12
+        sc = new SeamCarver(p);
+        sc.removeHorizontalSeam(seam);
+    }
+
 
     @Test(expected = IllegalArgumentException.class)
     public void removeVerticalSeamNullArgument() {
@@ -536,7 +552,7 @@ public class SeamCarverTest {
         p = img.get("6x5");
         sc = new SeamCarver(p);
 
-        sc.removeVerticalSeam(null);
+        sc.removeVerticalSeam(new int[4]);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -561,20 +577,6 @@ public class SeamCarverTest {
     // TODO: rethink this
     @Test
     public void clientCanMutatePicture() {
-        Picture p;
-        SeamCarver sc;
-
-        p = img.get("6x5");
-        sc = new SeamCarver(p);
-
-        p = sc.picture();
-        p = img.get("10x12");
-
-        int w = sc.width();
-        int h = sc.height();
-
-        Assert.assertEquals(10, w);
-        Assert.assertEquals(12, h);
     }
 
 }

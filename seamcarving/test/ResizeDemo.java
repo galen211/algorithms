@@ -39,6 +39,7 @@ public class ResizeDemo {
             int[] verticalSeam = sc.findVerticalSeam();
             sc.removeVerticalSeam(verticalSeam);
         }
+
         Picture outputImg = sc.picture();
 
         StdOut.printf("new image size is %d columns by %d rows\n", sc.width(), sc.height());
