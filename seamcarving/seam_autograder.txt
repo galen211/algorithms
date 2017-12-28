@@ -5,22 +5,22 @@ ASSESSMENT SUMMARY
 Compilation:  PASSED
 API:          PASSED
 
-Findbugs:     FAILED (3 warnings)
+Findbugs:     PASSED
 PMD:          PASSED
-Checkstyle:   FAILED (0 errors, 5 warnings)
+Checkstyle:   FAILED (0 errors, 6 warnings)
 
-Correctness:  31/31 tests passed
-Memory:       0/6 tests passed
-Timing:       20/17 tests passed
+Correctness:  23/23 tests passed
+Memory:       4/4 tests passed
+Timing:       1/1 tests passed
 
-Aggregate score: 93.53%
+Aggregate score: 100.00%
 [Compilation: 5%, API: 5%, Findbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
 
 ASSESSMENT DETAILS
 
 The following files were submitted:
 ----------------------------------
-9.6K Dec 10 22:04 SeamCarver.java
+7.6K Dec 28 19:35 BaseballElimination.java
 
 
 ********************************************************************************
@@ -28,7 +28,7 @@ The following files were submitted:
 ********************************************************************************
 
 
-% javac SeamCarver.java
+% javac BaseballElimination.java
 *-----------------------------------------------------------
 
 
@@ -37,7 +37,7 @@ The following files were submitted:
 
 Checking the APIs of your programs.
 *-----------------------------------------------------------
-SeamCarver:
+BaseballElimination:
 
 ================================================================
 
@@ -49,10 +49,6 @@ SeamCarver:
 
 % findbugs *.class
 *-----------------------------------------------------------
-H D ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD ST: The instance method or constructor 'SeamCarver(Picture)' writes to the static variable 'direction', which is generally bad style.  At SeamCarver.java:[line 31]
-M C SUA_SUSPICIOUS_UNINITIALIZED_ARRAY SUA: Method SeamCarver.findSeam() returns an array that appears not to be initialized  At SeamCarver.java:[line 244]
-L P UPM_UNCALLED_PRIVATE_METHOD UPM: The private method 'validateCoords()' is never called.  At SeamCarver.java:[lines 381-384]
-Warnings generated: 3
 
 
 ================================================================
@@ -60,9 +56,11 @@ Warnings generated: 3
 
 % pmd .
 *-----------------------------------------------------------
-SeamCarver.java:21: Possible unsafe assignment to a non-final static field in a constructor. [AssignmentToNonFinalStatic]
-SeamCarver.java:380: Avoid unused private methods, such as 'validateCoords(int,int)'. [UnusedPrivateMethod]
-PMD ends with 2 warnings.
+BaseballElimination.java:13: The private instance (or static) variable 'index' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
+BaseballElimination.java:14: The private instance (or static) variable 'teams' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
+BaseballElimination.java:15: The private instance (or static) variable 'topTeam' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
+BaseballElimination.java:22: Can you replace the instance (or static) variable 'numVertices' with a local variable? [SingularField]
+PMD ends with 4 warnings.
 
 
 ================================================================
@@ -70,16 +68,16 @@ PMD ends with 2 warnings.
 
 % checkstyle *.java
 *-----------------------------------------------------------
-[WARN] SeamCarver.java:16:5: Declare static variables before instance variables, constructors, and methods. [DeclarationOrder]
-[WARN] SeamCarver.java:18:5: Declare static variables before instance variables, constructors, and methods. [DeclarationOrder]
-[WARN] SeamCarver.java:19:5: Declare static variables before instance variables, constructors, and methods. [DeclarationOrder]
-[WARN] SeamCarver.java:21:5: Declare static variables before instance variables, constructors, and methods. [DeclarationOrder]
-Checkstyle ends with 0 errors and 4 warnings.
+[WARN] BaseballElimination.java:17:27: To specify an array type, put the square brackets before the variable name, e.g., 'String[] args' instead of 'String args[]'. [ArrayTypeStyle]
+[WARN] BaseballElimination.java:18:29: To specify an array type, put the square brackets before the variable name, e.g., 'String[] args' instead of 'String args[]'. [ArrayTypeStyle]
+[WARN] BaseballElimination.java:19:32: To specify an array type, put the square brackets before the variable name, e.g., 'String[] args' instead of 'String args[]'. [ArrayTypeStyle]
+[WARN] BaseballElimination.java:20:32: To specify an array type, put the square brackets before the variable name, e.g., 'String[] args' instead of 'String args[]'. [ArrayTypeStyle]
+[WARN] BaseballElimination.java:228:14: Use the primitive type instead of the corresponding wrapper type 'Integer'. For example, use 'boolean' instead of 'Boolean'. [WrapperType]
+[WARN] BaseballElimination.java:237:14: Use the primitive type instead of the corresponding wrapper type 'Integer'. For example, use 'boolean' instead of 'Boolean'. [WrapperType]
+Checkstyle ends with 0 errors and 6 warnings.
 
-% custom checkstyle checks for SeamCarver.java
+% custom checkstyle checks for BaseballElimination.java
 *-----------------------------------------------------------
-[WARN] SeamCarver.java:1: Declaring 1 non-final static variables ('direction') suggests poor design in this class. [StaticVariableCount]
-Checkstyle ends with 0 errors and 1 warning.
 
 
 ================================================================
@@ -89,437 +87,230 @@ Checkstyle ends with 0 errors and 1 warning.
 *  TESTING CORRECTNESS
 ********************************************************************************
 
-Testing correctness of SeamCarver
+Testing correctness of BaseballElimination
 *-----------------------------------------------------------
-Running 31 total tests.
+Running 23 total tests.
 
-Test 1a: check energy() with file inputs
-  * 6x5.png
-  * 4x6.png
-  * 10x12.png
-  * 3x7.png
-  * 5x6.png
-  * 7x3.png
-  * 7x10.png
-  * 12x10.png
-  * stripes.png
-  * diagonals.png
-  * chameleon.png
-  * HJoceanSmall.png
-  * 1x8.png
-  * 8x1.png
-  * 1x1.png
+Test 1: check numberOfTeams()
+  * teams4.txt
+  * teams5.txt
+  * teams8.txt
+  * teams10.txt
+  * teams29.txt
+  * teams48.txt
 ==> passed
 
-Test 1b: check energy() with random pictures
-  * 4-by-6
-  * 5-by-5
-  * 6-by-4
-  * 7-by-10
-  * 250-by-250
+Test 2: check teams()
+  * teams4.txt
+  * teams5.txt
+  * teams8.txt
+  * teams10.txt
+  * teams29.txt
+  * teams48.txt
 ==> passed
 
-Test 1c: check energy() with random pictures in which the RGB components
-         of each pixel are in a small range
-  * 4-by-6
-  * 5-by-5
-  * 6-by-4
-  * 7-by-10
-  * 250-by-250
+Test 3: check wins()
+  * teams4.txt
+  * teams5.txt
+  * teams8.txt
+  * teams10.txt
+  * teams29.txt
+  * teams48.txt
 ==> passed
 
-Test 2a: check width() with file inputs
-  * 6x5.png
-  * 4x6.png
+Test 4: check losses()
+  * teams4.txt
+  * teams5.txt
+  * teams8.txt
+  * teams10.txt
+  * teams29.txt
+  * teams48.txt
 ==> passed
 
-Test 2b: check width() with random pictures
-  * 4-by-6
-  * 5-by-5
-  * 6-by-4
-  * 7-by-10
+Test 5: check remaining()
+  * teams4.txt
+  * teams5.txt
+  * teams8.txt
+  * teams10.txt
+  * teams29.txt
+  * teams48.txt
 ==> passed
 
-Test 3a: check height() with file inputs
-  * 6x5.png
-  * 4x6.png
+Test 6: check against()
+  * teams4.txt
+  * teams5.txt
+  * teams8.txt
+  * teams10.txt
+  * teams29.txt
+  * teams48.txt
 ==> passed
 
-Test 3b: check height() with random pictures
-  * 4-by-6
-  * 5-by-5
-  * 6-by-4
-  * 7-by-10
+Test 7a: check isEliminated() when n = 4
+  * teams4.txt
+  * teams4a.txt
+  * teams4b.txt
 ==> passed
 
-Test 4a: check findVerticalSeam() with file inputs
-  * 6x5.png
-  * 4x6.png
-  * 10x12.png
-  * 3x7.png
-  * 5x6.png
-  * 7x3.png
-  * 7x10.png
-  * 12x10.png
-  * stripes.png
-  * diagonals.png
-  * chameleon.png
-  * HJoceanSmall.png
-  * 1x8.png
-  * 8x1.png
-  * 1x1.png
+Test 7b: check isEliminated() when n = 5
+  * teams5.txt
+  * teams5a.txt
+  * teams5b.txt
+  * teams5c.txt
 ==> passed
 
-Test 4b: check findVerticalSeam() with random pictures
-  * 4-by-6
-  * 5-by-5
-  * 6-by-4
-  * 7-by-10
-  * 250-by-250
+Test 7c: check isEliminated() when n = 6 to 19
+  * teams7.txt
+  * teams8.txt
+  * teams10.txt
+  * teams12.txt
+  * teams12-allgames.txt
 ==> passed
 
-Test 4c: check findVerticalSeam() with random pictures in which
-         the RGB values of each pixel are in a small range
-  * 4-by-6
-  * 5-by-5
-  * 6-by-4
-  * 7-by-10
-  * 250-by-250
+Test 7d: check isEliminated() when n = 20 to 30
+  * teams24.txt
+  * teams29.txt
+  * teams30.txt
 ==> passed
 
-Test 5a: check findHorizontalSeam() with file inputs
-  * 6x5.png
-  * 4x6.png
-  * 10x12.png
-  * 3x7.png
-  * 5x6.png
-  * 7x3.png
-  * 7x10.png
-  * 12x10.png
-  * stripes.png
-  * diagonals.png
-  * chameleon.png
-  * HJoceanSmall.png
-  * 1x8.png
-  * 8x1.png
-  * 1x1.png
+Test 7e: check isEliminated() when n = 30 to 50
+  * teams32.txt
+  * teams36.txt
+  * teams42.txt
+  * teams48.txt
 ==> passed
 
-Test 5b: check findHorizontalSeam() with random pictures
-  * 4-by-6
-  * 5-by-5
-  * 6-by-4
-  * 7-by-10
-  * 250-by-250
+Test 8: check that isEliminated() is consistent with certificateOfElimination()
+  * teams4.txt
+  * teams5.txt
+  * teams8.txt
+  * teams10.txt
+  * teams29.txt
+  * teams48.txt
 ==> passed
 
-Test 5c: check findHorizontalSeam() with random pictures in which the RGB
-         components of each pixel are in a small range
-  * 4-by-6
-  * 5-by-5
-  * 6-by-4
-  * 7-by-10
-  * 250-by-250
+Test 9a: check certificateOfElimination() when n = 4
+  * teams4.txt
+  * teams4a.txt
+  * teams4b.txt
 ==> passed
 
-Test 6a: check removeVerticalSeam() with file inputs and optimal seams
-  * 6x5.png
-  * 10x12.png
-  * 3x7.png
-  * 5x6.png
-  * 7x3.png
-  * 7x10.png
-  * 12x10.png
-  * stripes.png
-  * diagonals.png
-  * chameleon.png
-  * HJoceanSmall.png
-  * 8x1.png
+Test 9b: check certificateOfElimination() when n = 5
+  * teams5.txt
+  * teams5a.txt
+  * teams5b.txt
+  * teams5c.txt
 ==> passed
 
-Test 6b: check removeVerticalSeam() with random pictures and optimal seams
-  * 4-by-6
-  * 5-by-5
-  * 6-by-4
-  * 7-by-10
-  * 250-by-250
+Test 9c: check certificateOfElimination() when n = 6 to 20
+  * teams7.txt
+  * teams8.txt
+  * teams10.txt
+  * teams12.txt
+  * teams12-allgames.txt
 ==> passed
 
-Test 6c: check removeVerticalSeam() with file inputs and random seams
-  * 6x5.png
-  * 10x12.png
-  * 3x7.png
-  * 5x6.png
-  * 7x3.png
-  * 7x10.png
-  * 12x10.png
-  * stripes.png
-  * diagonals.png
-  * chameleon.png
-  * HJoceanSmall.png
-  * 8x1.png
+Test 9d: check certificateOfElimination() when n = 20 to 30
+  * teams24.txt
+  * teams29.txt
+  * teams30.txt
 ==> passed
 
-Test 6d: check removeVerticalSeam() with random pictures and random seams
-  * 4-by-6
-  * 5-by-5
-  * 6-by-4
-  * 7-by-10
-  * 250-by-250
+Test 9e: check certificateOfElimination() when n = 30 to 50
+  * teams32.txt
+  * teams36.txt
+  * teams42.txt
+  * teams48.txt
 ==> passed
 
-Test 7a: check removeHorizontalSeam() with file inputs and optimal seams
-  * 6x5.png
-  * 10x12.png
-  * 3x7.png
-  * 5x6.png
-  * 7x3.png
-  * 7x10.png
-  * 12x10.png
-  * stripes.png
-  * diagonals.png
-  * chameleon.png
-  * HJoceanSmall.png
-  * 1x8.png
+Test 10: check methods when n = 1
+  * teams1.txt
+  * teams1.txt
+  * teams1.txt
+  * teams1.txt
+  * teams1.txt
+  * teams1.txt
+  * teams1.txt
 ==> passed
 
-Test 7b: check removeHorizontalSeam() with random pictures and optimal seams
-  * 4-by-6
-  * 5-by-5
-  * 6-by-4
-  * 7-by-10
-  * 250-by-250
+Test 11: check immutability by calling certificateOfElimination() both before
+         and after calling isEliminated() and verifying that the results match
+  * teams4.txt
+  * teams5.txt
+  * teams29.txt
 ==> passed
 
-Test 7c: check removeHorizontalSeam() with file inputs and random seams
-  * 6x5.png
-  * 10x12.png
-  * 3x7.png
-  * 5x6.png
-  * 7x3.png
-  * 7x10.png
-  * 12x10.png
-  * stripes.png
-  * diagonals.png
-  * chameleon.png
-  * HJoceanSmall.png
-  * 1x8.png
+Test 12: check that certificateOfElimination() returns null for eliminated teams
+  * teams4.txt
+  * teams5.txt
 ==> passed
 
-Test 7d: check removeHorizontalSeam() with random pictures and random seams
-  * 4-by-6
-  * 5-by-5
-  * 6-by-4
-  * 7-by-10
-  * 250-by-250
+Test 13: check for invalid arguments
+  * teams4.txt
+  * teams5.txt
 ==> passed
 
-Test 8: check energy() with invalid arguments
-  * picture = 6x5.png, call energy(-1, 4)
-  * picture = 6x5.png, call energy(6, 4)
-  * picture = 6x5.png, call energy(5, 5)
-  * picture = 6x5.png, call energy(4, -1)
-  * picture = 6x5.png, call energy(4, 5)
+Test 14: check for dependence on reference equality of strings
 ==> passed
 
-Test 9a: check removeVerticalSeam() with invalid seam
-  * picture = 10x10.png
-  * picture = 3x7.png
-  * picture = 7x3.png
-  * picture = 10x12.png
-  * picture = 12x10.png
-  * picture = 1x8.png
-  * picture = 8x1.png
-  * picture = 1x1.png
-==> passed
-
-Test 9b: check removeHorizontalSeam() with invalid seam
-  * picture = 10x10.png
-  * picture = 3x7.png
-  * picture = 7x3.png
-  * picture = 10x12.png
-  * picture = 12x10.png
-  * picture = 1x8.png
-  * picture = 8x1.png
-  * picture = 1x1.png
-==> passed
-
-Test 9c: check removeHorizontalSeam() and removeVerticalSeam() with null arguments
-  * picture = 6x5.png
-  * picture = 3x7.png
-==> passed
-
-Test 10a: check that client can mutate the Picture object that is passed to the constructor
-==> passed
-
-Test 10b: check that client can mutate the Picture object that is returned by picture()
-==> passed
-
-Test 11: check constructor with null argument
-==> passed
-
-Test 12a: check intermixed calls to findHorizontalSeam(), findVerticalSeam(),
-          removeHorizontalSeam(), and removeVerticalSeam(), width(), height(),
-          energy(), and picture() made with probabilities p1, p2, p3, p4, p5,
-          p6, p7, and p8, respectively with optimal seams
-  * random 5-by-6 image with p = (0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.5)
-  * random 6-by-5 image with p = (0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.5)
-  * random 6-by-6 image with p = (0.1, 0.1, 0.2, 0.2, 0.0, 0.0, 0.0, 0.4)
-  * random 6-by-6 image with p = (0.2, 0.2, 0.0, 0.0, 0.2, 0.2, 0.2, 0.0)
-  * random 6-by-6 image with p = (0.1, 0.1, 0.2, 0.2, 0.1, 0.1, 0.1, 0.1)
-  * random 100-by-110 image with p = (0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.5)
-  * random 110-by-100 image with p = (0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.5)
-  * random 110-by-110 image with p = (0.1, 0.1, 0.2, 0.2, 0.0, 0.0, 0.0, 0.4)
-  * random 100-by-100 image with p = (0.2, 0.2, 0.0, 0.0, 0.1, 0.1, 0.2, 0.2)
-  * random 110-by-110 image with p = (0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.2)
-==> passed
-
-Test 12b: check intermixed calls to findHorizontalSeam(), findVerticalSeam(),
-          removeHorizontalSeam(), and removeVerticalSeam(), width(), height(),
-          energy(), and picture() made with probabilities p1, p2, p3, p4, p5,
-          p6, p7, and p8, respectively with random seams
-  * random 5-by-6 image with p = (0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.5)
-  * random 6-by-5 image with p = (0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.5)
-  * random 6-by-6 image with p = (0.1, 0.1, 0.2, 0.2, 0.0, 0.0, 0.0, 0.4)
-  * random 6-by-6 image with p = (0.2, 0.2, 0.0, 0.0, 0.2, 0.2, 0.2, 0.0)
-  * random 6-by-6 image with p = (0.1, 0.1, 0.2, 0.2, 0.1, 0.1, 0.1, 0.1)
-  * random 100-by-110 image with p = (0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.5)
-  * random 110-by-100 image with p = (0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.5)
-  * random 110-by-110 image with p = (0.1, 0.1, 0.2, 0.2, 0.0, 0.0, 0.0, 0.4)
-  * random 100-by-100 image with p = (0.2, 0.2, 0.0, 0.0, 0.1, 0.1, 0.2, 0.2)
-  * random 110-by-110 image with p = (0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.2)
-==> passed
-
-Test 12c: check intermixed calls to findHorizontalSeam(), findVerticalSeam(),
-          removeHorizontalSeam(), and removeVerticalSeam(), width(), height(),
-          energy(), and picture() made with probabilities p1, p2, p3, p4, p5,
-          p6, p7, and p8, respectively with optimal seams
-          (tests corner cases when width = 1 and/or height = 1)
-  * random 1-by-8 image with p = (0.1, 0.1, 0.2, 0.0, 0.1, 0.1, 0.2, 0.2)
-  * random 8-by-1 image with p = (0.1, 0.1, 0.0, 0.2, 0.1, 0.1, 0.2, 0.2)
-  * random 1-by-1 image with p = (0.2, 0.2, 0.0, 0.0, 0.1, 0.1, 0.2, 0.2)
+Test 15: check that two Baseball objects can be created at the same time
+  * teams4.txt and teams5.txt
+  * teams5.txt and teams7.txt
 ==> passed
 
 
-Total: 31/31 tests passed!
+Total: 23/23 tests passed!
 
 
 ================================================================
-********************************************************************************
-*  MEMORY
-********************************************************************************
-
-Analyzing memory of SeamCarver
-*-----------------------------------------------------------
-Running 6 total tests.
-
-Memory usage of a SeamCarver after removing 2 horizontal
-and 2 vertical seams from an n-by-n image.
-
-Maximum allowed memory is ~ 12 n^2 bytes.
-
-                 n       student (bytes)
--------------------------------------------
-=> FAILED       16        13544
-=> FAILED       32        59624
-=> FAILED       64       250088
-=> FAILED      128      1024232
-=> FAILED      256      4145384
-=> FAILED      512     16678520
-==> 0/6 tests passed
-
-Total: 0/6 tests passed!
-
-Estimated student memory (bytes) = 64.00 n^2 - 190.81 n + 191.70   (R^2 = 1.000)
-================================================================
-
-
-
 ********************************************************************************
 *  TIMING
 ********************************************************************************
 
-Timing SeamCarver
+Timing BaseballElimination
 *-----------------------------------------------------------
-Reference solution is unoptimized.
+Running 1 total tests.
 
-Running 17 total tests.
+    n   constructor isEliminated() + certificateOfElimination()
+----------------------------------------------------------------
+   30       0.01       0.95
+   36       0.01       1.31
+   42       0.00       2.57
+   48       0.00       5.08
+   54       0.00       9.16
+   60       0.00      15.58
+time = 5.08e-07 * n^4.18  (R^2 = 0.97)
 
-Test 1: create a SeamCarver object for a given 736-by-584 picture;
-        then call findHorizontalSeam(), removeHorizontalSeam(),
-        findVerticalSeam(), removeVerticalSeam(), and picture()
-        one each; count total number of calls to methods in Picture
-  * constructor calls        = 1
-  * get()    calls per pixel = 1.0
-  * set()    calls per pixel = 1.0
-  * getRGB() calls per pixel = 0.0
-  * setRGB() calls per pixel = 0.0
-==> passed
+Total: 1/1 tests passed!
 
-Test 2: create a SeamCarver object for a given 736-by-584 picture;
-        then call findHorizontalSeam(), removeHorizontalSeam(),
-        findVerticalSeam(), and removeVerticalSeam(), and picture();
-        once each; count total number of calls to methods in Color
-  * constructor calls per pixel = 1.0
-  * getRed()    calls per pixel = 4.0
-  * getGreen()  calls per pixel = 4.0
-  * getBlue()   calls per pixel = 4.0
-  * getRGB()    calls per pixel = 0.0
-  * equal number of calls to getRed(), getGreen(), and getBlue()
-==> passed
 
-Tests 3a-3c: time removeVerticalSeam() for a given 736-by-584 picture
-  * student   solution calls per second:    1241.48
-  * reference solution calls per second:      51.58
-  * reference / student ratio:                 0.04
+================================================================
 
-=> passed      student <= 150.0x reference
-=> passed      student <=  15.0x reference
-=> passed      student <=   4.5x reference
 
-Tests 4a-4c: time findVerticalSeam() and removeVerticalSeam()
-             for a given 736-by-584 picture
-  * student   solution calls per second:     262.95
-  * reference solution calls per second:       8.39
-  * reference / student ratio:                 0.03
 
-=> passed      student <= 150.0x reference
-=> passed      student <=  15.0x reference
-=> passed      student <=   2.3x reference
+********************************************************************************
+*  MEMORY
+********************************************************************************
 
-Tests 5a-5c: time removeHorizontalSeam() for a given 736-by-584 picture
-  * student   solution calls per second:    1133.84
-  * reference solution calls per second:      14.54
-  * reference / student ratio:                 0.01
+Analyzing memory of BaseballElimination
+*-----------------------------------------------------------
+Running 4 total tests.
 
-=> passed      student <= 150.0x reference
-=> passed      student <=  15.0x reference
-=> passed      student <=   4.5x reference
+Student   vertices     = 0.50 n^2 - 0.50 n + 2.00   (R^2 = 1.000)
+Reference vertices     = 0.50 n^2 - 0.50 n + 3.00   (R^2 = 1.000)
+=> passed
 
-Tests 6a-6c: time findHorizontalSeam() and removeHorizontalSeam()
-             for a given 736-by-584 picture
-  * student   solution calls per second:     251.57
-  * reference solution calls per second:       5.09
-  * reference / student ratio:                 0.02
+Student   edges        = 1.50 n^2 - 3.50 n + 2.00   (R^2 = 1.000)
+Reference edges        = 1.50 n^2 - 3.50 n + 2.00   (R^2 = 1.000)
+=> passed
 
-=> passed      student <= 150.0x reference
-=> passed      student <=  15.0x reference
-=> passed      student <=   2.3x reference
+Student   memory of G  = 176.00 n^2 - 384.00 n + 344.00   (R^2 = 1.000)
+Reference memory of G  = 176.00 n^2 - 384.00 n + 384.00   (R^2 = 1.000)
+=> passed
 
-Tests 7a-7c: time findHorizontalSeam(), removeHorizontalSeam(), findVerticalSeam(),
-             and removeVerticalSeam() for a given 736-by-584 picture
-  * student   solution calls per second:      46.67
-  * reference solution calls per second:       3.62
-  * reference / student ratio:                 0.08
+Student   memory       = 4.00 n^2 + 212.00 n + 440.00   (R^2 = 1.000)
+Reference memory       = 3.99 n^2 + 222.25 n + 396.00   (R^2 = 1.000)
+=> passed
 
-=> passed      student <= 150.0x reference
-=> passed      student <=  15.0x reference
-=> passed      student <=   1.5x reference
-=> optimized   student <=   0.8x reference
-=> optimized   student <=   0.3x reference
-=> optimized   student <=   0.1x reference
-
-Total: 20/17 tests passed!
-
+Total: 4/4 tests passed!
 
 ================================================================

@@ -190,7 +190,7 @@ private ST<Integer, Integer> dfs(int v) {
 
 *Example*: `> java ResizeDemo HJocean.png`
 
-*Comments*: Unsure about the autograder output on this assignment.  I probably could eliminate some memory usage in the instance variables, but I wasn't able to find a way to do this that would maintain performance.  This assignment is about finding a shortest path in an edge weighted acyclic digraph.  Seam carving is a 'content-aware' image resizing technique because it  finds pixels that are connected (one per row or column) and removes the 'minimum energy' row or column of pixels.  This technique effectively minimizes the visual impact of removing pixels from an image from the viewers perspective.  The shortest path algorithms is relatively straightforward, however some of the optimizations can be a bit tricky to implement because working with arrays in Java can be a bit confusing.  One reason for this is that removing pixel values horizontally from a matrix that stores rows is column-major order (i.e. the default access method of the Picture class), will result in a mis-shaped array.  The solution is to use a class variable to keep track of the *original* orientation of the picture as given to the class constructor and implement private methods to handle transposition operations.  An example of this is how the public `energy` method is implemented:
+*Comments*: Unsure about the autograder output on this assignment.  I probably could eliminate some memory usage in the instance variables, but I wasn't able to find a way to do this that would maintain performance.  This assignment is about finding a shortest path in an edge-weighted acyclic digraph.  Seam carving is a 'content-aware' image resizing technique because it  finds pixels that are connected (one per row or column) and removes the 'minimum energy' row or column of pixels.  This technique effectively minimizes the visual impact of removing pixels from an image from the viewers perspective.  The shortest path algorithm is relatively straightforward, however some of the optimizations can be a bit tricky to implement because working with arrays in Java can be a bit confusing.  One reason for this is that removing pixel values horizontally from a matrix that stores rows is column-major order (i.e. the default access method of the Picture class), will result in a mis-shaped array.  The solution is to use a class variable to keep track of the *original* orientation of the picture as given to the class constructor and implement private methods to handle transposition operations.  An example of this is how the public `energy` method is implemented:
 ```java
 public double energy(int col, int row) {
     if ((col < 0 || col >= width) || (row < 0 || row >= height)) {
@@ -206,3 +206,88 @@ public double energy(int col, int row) {
 }
 ```
 ![seamcarver](img/seam.png)
+
+### Assignment 3: BaseballElimination
+*Score*: 100%
+
+*Example*: `> java BaseballElimination teams4.txt`
+
+*Comments*: The trick to figuring out this assignment is setting up the flow network correctly.  Since the `FlowNetwork` does not include the team being queried, the vertices have to be carefully connected so that the `FlowEdge` objects point to the correct vertices.  One hack I used was to keep track of the team vertices by putting them into a symbol table.  It's not the neatest solution, but I found that keeping track of which game vertices were pointing to which team vertices was too complex otherwise.  I used a class variable called `subset` to keep track of which teams will eliminate R given the min s-t cut (or by trivial elimination).  I include the code for `createFlowNetwork` below:
+
+```java
+private FlowNetwork createFlowNetwork(int idx) {
+
+        // n choose 2 (excluding the team with index idx)
+        int numGames = 0;
+        for (int i = 0; i < numTeams; i++) {
+            if (i == idx) continue;
+            for (int j = (i + 1); j < numTeams; j++) {
+                if (j == idx) continue;
+                numGames++;
+            }
+        }
+
+        // set source vertex and sink vertex
+        numVertices = numGames + (numTeams - 1) + 2;
+        int source = 0;
+        int sink = numVertices - 1;
+
+        // set team vertices by index
+        ST<Integer, Integer> vertex = new ST<>(); // ST<Team Number, Vertex>
+        int c = 1 + numGames; // beginning index of team vertices
+        for (int i = 0; i < numTeams; i++) {
+            if (i == idx) continue;
+            vertex.put(i, c++);
+        }
+
+        // initialize flow network with vertices
+        FlowNetwork network = new FlowNetwork(numVertices);
+
+        FlowEdge gameEdge;  // source -> game edges
+        FlowEdge r1;        // result 1 -> team
+        FlowEdge r2;        // result 2 -> team
+        FlowEdge teamEdge;  // team vertices -> sink edge
+
+        c = 1;              // current index of the game vertices
+        for (int i = 0; i < numTeams; i++) {
+            if (i == idx) continue;
+            for (int j = i + 1; j < numTeams; j++) {
+                if (j == idx) continue;
+
+                // gameEdge between teams i and j
+                gameEdge = new FlowEdge(source, c, against[i][j]);
+                network.addEdge(gameEdge);
+
+                // assign possible results to network
+                int w = vertex.get(i); // index of team i vertex
+                int y = vertex.get(j); // index of team j vertex
+
+                r1 = new FlowEdge(c, w, Double.POSITIVE_INFINITY);
+                network.addEdge(r1);
+
+                r2 = new FlowEdge(c, y, Double.POSITIVE_INFINITY);
+                network.addEdge(r2);
+
+                c++; // increment game pair counter
+            }
+        }
+
+        for (Integer j : vertex.keys()) {
+            int w = vertex.get(j);
+            teamEdge = new FlowEdge(w, sink, (wins[idx] + remaining[idx] - wins[j]));
+            network.addEdge(teamEdge);
+        }
+
+        FordFulkerson ff = new FordFulkerson(network, 0, numVertices - 1);
+
+        subset = new SET<>();
+        for (Integer t : vertex.keys()) {
+            int v = vertex.get(t);
+            if (ff.inCut(v)) {
+                subset.add(teams[t]);
+            }
+        }
+        return network;
+}
+```
+![seamcarver](img/baseball.png)

@@ -1,3 +1,4 @@
+import edu.princeton.cs.algs4.SET;
 import edu.princeton.cs.algs4.ST;
 import edu.princeton.cs.algs4.Stack;
 import org.junit.Assert;
@@ -23,6 +24,19 @@ public class BaseballEliminationTest {
             BaseballElimination be = new BaseballElimination(name);
             baseballST.put(key[0], be);
         }
+    }
+
+    @Test
+    public void correctlyPrintTeam5() {
+
+        BaseballElimination be;
+        int numTeams;
+
+        be = baseballST.get("teams5");
+        numTeams = be.numberOfTeams();
+        Assert.assertEquals(5, numTeams);
+
+        be.isEliminated("Detroit");
     }
 
     @Test
@@ -369,8 +383,88 @@ public class BaseballEliminationTest {
         Assert.assertEquals(true, eliminated);
     }
 
-    // TODO: Implement checkCertificateOfElimination test
+    @Test
     public void checkCertificateOfElimination() {
+        BaseballElimination be;
+        String team;
+        Iterable<String> subset;
+        SET<String> set;
+
+        // teams4
+        be = baseballST.get("teams4");
+        team = "Philadelphia";
+        subset = be.certificateOfElimination(team);
+        set = new SET<>();
+        for (String s : subset) {
+            set.add(s);
+        }
+        Assert.assertTrue(set.contains("Atlanta"));
+        Assert.assertTrue(set.contains("New_York"));
+        Assert.assertTrue(set.size() == 2);
+
+        // teams4a
+        be = baseballST.get("teams4a");
+        team = "Ghaddafi";
+        subset = be.certificateOfElimination(team);
+        set = new SET<>();
+        for (String s : subset) {
+            set.add(s);
+        }
+        Assert.assertTrue(set.contains("CIA"));
+        Assert.assertTrue(set.contains("Obama"));
+        Assert.assertTrue(set.size() == 2);
+
+        // teams4b
+        be = baseballST.get("teams4b");
+        team = "Hufflepuff";
+        subset = be.certificateOfElimination(team);
+        set = new SET<>();
+        for (String s : subset) {
+            set.add(s);
+        }
+        Assert.assertTrue(set.contains("Gryffindor"));
+        Assert.assertTrue(set.size() == 1);
+
+        // teams7
+        be = baseballST.get("teams7");
+        team = "China";
+        subset = be.certificateOfElimination(team);
+        set = new SET<>();
+        for (String s : subset) {
+            set.add(s);
+        }
+        Assert.assertTrue(set.contains("France"));
+        Assert.assertTrue(set.size() == 1);
+
+        // teams8
+        be = baseballST.get("teams8");
+        team = "Harvard";
+        subset = be.certificateOfElimination(team);
+        set = new SET<>();
+        for (String s : subset) {
+            set.add(s);
+        }
+        Assert.assertTrue(set.contains("Brown"));
+        Assert.assertTrue(set.contains("Columbia"));
+        Assert.assertTrue(set.contains("Cornell"));
+        Assert.assertTrue(set.contains("Dartmouth"));
+        Assert.assertTrue(set.contains("Penn"));
+        Assert.assertTrue(set.contains("Princeton"));
+        Assert.assertTrue(set.size() == 6);
+
+        // teams12
+        be = baseballST.get("teams12");
+        team = "Japan";
+        subset = be.certificateOfElimination(team);
+        set = new SET<>();
+        for (String s : subset) {
+            set.add(s);
+        }
+        Assert.assertTrue(set.contains("Poland"));
+        Assert.assertTrue(set.contains("Russia"));
+        Assert.assertTrue(set.contains("Brazil"));
+        Assert.assertTrue(set.contains("Iran"));
+        Assert.assertTrue(set.size() == 4);
 
     }
 
