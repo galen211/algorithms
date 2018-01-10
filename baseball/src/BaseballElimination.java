@@ -264,6 +264,7 @@ public class BaseballElimination {
     }
 
     public static void main(String[] args) {
+
         BaseballElimination division = new BaseballElimination(args[0]);
 
         for (int i = 0; i < division.numberOfTeams(); i++) {
@@ -271,7 +272,7 @@ public class BaseballElimination {
             StdOut.println("Team " + division.teams[i]);
             FlowNetwork network = division.createFlowNetwork(i);
             StdOut.println(network.toString());
-            StdOut.println("-------------");
+            StdOut.println();
         }
 
         StdOut.println("---- Certificate of Elimination ----");

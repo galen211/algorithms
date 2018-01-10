@@ -1,5 +1,4 @@
 import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.SET;
 import edu.princeton.cs.algs4.ST;
 import edu.princeton.cs.algs4.Stack;
 import org.junit.Assert;
@@ -41,6 +40,27 @@ public class BoggleSolverTest {
         String[] words;
         words = in.readAllStrings();
         return words;
+    }
+
+    @Test
+    public void testCreateRandom() {
+
+        BoggleBoard board = new BoggleBoard();
+
+        assert board != null;
+    }
+
+    @Test
+    public void test4x4Example() {
+
+        String[] dict = dictionaryST.get("dictionary-algs4");
+        BoggleSolver bs = new BoggleSolver(dict);
+        BoggleBoard board;
+
+        board = boardST.get("board4x4");
+        Iterable<String> validWords = bs.getAllValidWords(board);
+
+
     }
 
     // TODO: implement checkGetAllValidWords once have chosen Iterable type.
