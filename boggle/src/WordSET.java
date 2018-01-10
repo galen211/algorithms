@@ -74,10 +74,15 @@ public class WordSET {
         return results;
     }
 
-    // private method to see if there are any words in set with a given prefix
-    private void collect(Node x, StringBuilder prefix, boolean b) {
-        if (x == null) {
-        }
+    /**
+     * Determines whether there are any words that have the given prefix
+     * @param prefix
+     * @return
+     */
+    public boolean hasWordsWithPrefix(String prefix) {
+        Node x = get(root, prefix, 0);
+        if (x == null) return false;
+        return true;
     }
 
     // private method to compute all words in set with a given prefix

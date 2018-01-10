@@ -59,8 +59,6 @@ public class BoggleSolverTest {
 
         board = boardST.get("board4x4");
         Iterable<String> validWords = bs.getAllValidWords(board);
-
-
     }
 
     // TODO: implement checkGetAllValidWords once have chosen Iterable type.
@@ -136,7 +134,7 @@ public class BoggleSolverTest {
         board = boardST.get("board-points0");
         bs = new BoggleSolver(dict);
         validWords = bs.getAllValidWords(board);
-        // should not be any entries
+
 
         dict = dictionaryST.get("dictionary-2letters");
         board = boardST.get("board-points4410");

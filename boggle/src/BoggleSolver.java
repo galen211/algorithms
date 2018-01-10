@@ -1,12 +1,14 @@
+import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.SET;
+import edu.princeton.cs.algs4.StdOut;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class BoggleSolver {
 
     private WordSET dict;
-
-    private static boolean[][] marked;
+    private SET<String> wordsInBoard;
 
     /**
      * Initializes the data structure using the given array of strings as the dictionary. (You can assume each word in
@@ -31,30 +33,46 @@ public class BoggleSolver {
      */
     public Iterable<String> getAllValidWords(BoggleBoard board) {
 
-        SET<String> validWords = new SET<>();
+        wordsInBoard(board);
 
-        Iterator<String> itr = dict.iterator();
-        String word;
-        while (itr.hasNext()) {
-            word = itr.next();
-            if (wordInBoard(board, word)) {
-                validWords.add(word);
+        return wordsInBoard;
+    }
+
+    private void wordsInBoard(BoggleBoard board) {
+
+        wordsInBoard = new SET<>();
+
+        for (int i = 0; i < board.rows(); i++) {
+            for (int j = 0; j < board.cols(); j++) {
+                boolean[][] marked = new boolean[board.rows()][board.cols()];
+                dfs(board, i, j, marked, new StringBuilder(""));
             }
         }
-
-        return validWords;
     }
 
-    private boolean wordInBoard(BoggleBoard board, String word) {
+    private void dfs(BoggleBoard board, int row, int col, boolean[][] marked, StringBuilder sb) {
+        if ((row < 0 || row >= board.rows()) || (col < 0 || col >= board.cols())) return; // out of bounds
+        else if (marked[row][col]) return; // already visited
 
-        int c = 0;
-        while (c <= word.length()) {
-            char x = word.charAt(c++);
+        char c = board.getLetter(row, col);
+        if (c == 'Q') sb.append("QU");
+        else sb.append(c);
 
+        String word = sb.toString();
+        if (!dict.hasWordsWithPrefix(word)) return;
+        if (word.length() >= 3 && dict.contains(word)) {
+            wordsInBoard.add(word);
         }
-        return false;
-    }
 
+        for (int i = -1; i <= 1; i++) { // up to down
+            if ((i + row <= 0) || (i + row) >= board.rows()) continue;
+            for (int j = -1; j <= 1; j++) { // left to right
+                if ((j + col <= 0) || (j + col >= board.cols())) continue;
+                if (marked[i + row][j + col]) continue;
+                dfs(board, i + row, j + col, marked.clone(), new StringBuilder(word));
+            }
+        }
+    }
 
     /**
      * Returns the score of the given word if it is in the dictionary, zero otherwise. (You can assume the word contains
@@ -85,5 +103,20 @@ public class BoggleSolver {
         } else {
             return 0;
         }
+    }
+
+    // main method for testing
+    public static void main(String[] args) {
+        In in = new In(args[0]);
+        String[] dictionary = in.readAllStrings();
+        BoggleSolver solver = new BoggleSolver(dictionary);
+        BoggleBoard board = new BoggleBoard(args[1]);
+        int score = 0;
+        for (String word : solver.getAllValidWords(board)) {
+            StdOut.println(word);
+            score += solver.scoreOf(word);
+        }
+        StdOut.println("------------------");
+        StdOut.println("Score =" + score);
     }
 }
