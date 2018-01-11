@@ -43,22 +43,21 @@ public class BoggleSolverTest {
     }
 
     @Test
-    public void testCreateRandom() {
-
-        BoggleBoard board = new BoggleBoard();
-
-        assert board != null;
-    }
-
-    @Test
     public void test4x4Example() {
 
         String[] dict = dictionaryST.get("dictionary-algs4");
         BoggleSolver bs = new BoggleSolver(dict);
         BoggleBoard board;
+        int count = 0;
+
 
         board = boardST.get("board4x4");
         Iterable<String> validWords = bs.getAllValidWords(board);
+        for (String word : validWords) {
+            count++;
+        }
+        Assert.assertEquals(29, count);
+
     }
 
     // TODO: implement checkGetAllValidWords once have chosen Iterable type.

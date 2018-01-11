@@ -5,23 +5,23 @@ ASSESSMENT SUMMARY
 Compilation:  PASSED
 API:          PASSED
 
-Findbugs:     PASSED
+Findbugs:     FAILED (1 warning)
 PMD:          PASSED
-Checkstyle:   PASSED
+Checkstyle:   FAILED (0 errors, 6 warnings)
 
-Correctness:  1/13 tests passed
-Memory:       0/3 tests passed
-Timing:       4/9 tests passed
+Correctness:  0/13 tests passed
+Memory:       3/3 tests passed
+Timing:       8/9 tests passed
 
-Aggregate score: 23.50%
+Aggregate score: 37.78%
 [Compilation: 5%, API: 5%, Findbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
 
 ASSESSMENT DETAILS
 
 The following files were submitted:
 ----------------------------------
-1.4K Nov 12 19:04 BoggleBoard.java
- 853 Nov 12 19:04 BoggleSolver.java
+3.6K Jan 11 02:44 BoggleSolver.java
+3.0K Jan 11 02:44 WordSET.java
 
 
 ********************************************************************************
@@ -50,6 +50,8 @@ BoggleSolver:
 
 % findbugs *.class
 *-----------------------------------------------------------
+M P SPP_STRINGBUFFER_WITH_EMPTY_STRING SPP: Method BoggleSolver.wordsInBoard(BoggleBoard) passes an empty string to StringBuffer of StringBuilder constructor  At BoggleSolver.java:[line 48]
+Warnings generated: 1
 
 
 ================================================================
@@ -57,7 +59,7 @@ BoggleSolver:
 
 % pmd .
 *-----------------------------------------------------------
-BoggleSolver.java:10: Avoid unused parameter variables, such as 'dictionary'. [UnusedFormalParameter]
+BoggleSolver.java:10: The private instance (or static) variable 'dict' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
 PMD ends with 1 warning.
 
 
@@ -66,6 +68,13 @@ PMD ends with 1 warning.
 
 % checkstyle *.java
 *-----------------------------------------------------------
+[WARN] BoggleSolver.java:5:8: Unused import statement for 'java.util.Arrays'. [UnusedImports]
+[WARN] BoggleSolver.java:6:8: Unused import statement for 'java.util.Iterator'. [UnusedImports]
+[WARN] WordSET.java:57:29: '{' is not preceded with whitespace. [WhitespaceAround]
+[WARN] WordSET.java:58:17: '==' is not preceded with whitespace. [WhitespaceAround]
+[WARN] WordSET.java:58:19: '==' is not followed by whitespace. [WhitespaceAround]
+[WARN] WordSET.java:61:39: '{' is not preceded with whitespace. [WhitespaceAround]
+Checkstyle ends with 0 errors and 6 warnings.
 
 
 ================================================================
@@ -85,417 +94,485 @@ Running 13 total tests.
 
 Test 1: check getAllValidWords() on two fixed 4-by-4 boards given in assignment
   * dictionary = dictionary-algs4.txt; board = board4x4.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 24
     - number of entries in reference solution: 29
-    - 29 missing entries in student solution, including: 'YOU'
+    - 12 extra entries in student solution, including: 'USES'
+    - 17 missing entries in student solution, including: 'YET'
+         4 4
+         A  T  E  E
+         A  P  Y  O
+         T  I  N  U
+         E  D  S  E
+
   * dictionary = dictionary-algs4.txt; board = board-q.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 14
     - number of entries in reference solution: 29
-    - 29 missing entries in student solution, including: 'TRIES'
+    - 3 extra entries in student solution, including: 'TITLE'
+    - 18 missing entries in student solution, including: 'TRIES'
+         4 4
+         S  N  R  T
+         O  I  E  L
+         E  Qu T  T
+         R  S  A  T
+
 ==> FAILED
 
 Test 2: check getAllValidWords() on fixed 4-by-4 boards
   * dictionary = dictionary-yawl.txt; board = board4x4.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 269
     - number of entries in reference solution: 204
-    - 204 missing entries in student solution, including: 'YUS'
+    - 180 extra entries in student solution, including: 'YIPPY'
+    - 115 missing entries in student solution, including: 'YITE'
+         4 4
+         A  T  E  E
+         A  P  Y  O
+         T  I  N  U
+         E  D  S  E
+
   * dictionary = dictionary-yawl.txt; board = board-points1.txt
     - number of entries in student   solution: 0
     - number of entries in reference solution: 1
     - 1 missing entry in student solution: 'TWP'
+         4 4
+         P  W  J  N
+         T  N  N  T
+         T  M  P  D
+         L  G  N  X
+
   * dictionary = dictionary-yawl.txt; board = board-points2.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 4
     - number of entries in reference solution: 2
-    - 2 missing entries in student solution, including: 'PHT'
+    - 2 extra entries in student solution, including: 'PHPHT'
+         4 4
+         V  R  H  T
+         J  M  L  N
+         S  D  T  T
+         F  T  P  H
+
   * dictionary = dictionary-yawl.txt; board = board-points3.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 1
     - number of entries in reference solution: 3
-    - 3 missing entries in student solution, including: 'TYG'
+    - 2 missing entries in student solution, including: 'STY'
+         4 4
+         H  S  Y  J
+         W  T  C  T
+         T  F  G  H
+         N  Y  T  L
+
   * dictionary = dictionary-yawl.txt; board = board-points4.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 2
     - number of entries in reference solution: 4
-    - 4 missing entries in student solution, including: 'VLY'
+    - 1 extra entry in student solution: 'ESS'
+    - 3 missing entries in student solution, including: 'VLY'
+         4 4
+         Y  L  V  E
+         T  J  S  N
+         T  F  N  X
+         P  M  D  N
+
   * dictionary = dictionary-yawl.txt; board = board-points5.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 3
     - number of entries in reference solution: 5
-    - 5 missing entries in student solution, including: 'UTS'
+    - 1 extra entry in student solution: 'PSST'
+    - 3 missing entries in student solution, including: 'TUTS'
+         4 4
+         U  T  G  W
+         L  T  N  T
+         P  S  R  N
+         B  C  X  C
+
 ==> FAILED
 
 Test 3: check getAllValidWords() on more fixed 4-by-4 boards
   * dictionary = dictionary-yawl.txt; board = board-points100.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 135
     - number of entries in reference solution: 78
-    - 78 missing entries in student solution, including: 'ROM'
+    - 95 extra entries in student solution, including: 'VROOM'
+    - 38 missing entries in student solution, including: 'ROLFED'
+         4 4
+         X  E  H  E
+         J  L  F  V
+         D  E  R  L
+         I  M  M  O
+
   * dictionary = dictionary-yawl.txt; board = board-points200.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 116
     - number of entries in reference solution: 129
-    - 129 missing entries in student solution, including: 'VEXT'
+    - 75 extra entries in student solution, including: 'XENON'
+    - 88 missing entries in student solution, including: 'VENTRED'
+         4 4
+         H  O  C  N
+         E  R  X  V
+         D  T  N  E
+         R  I  O  F
+
   * dictionary = dictionary-yawl.txt; board = board-points300.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 160
     - number of entries in reference solution: 166
-    - 166 missing entries in student solution, including: 'VETS'
+    - 90 extra entries in student solution, including: 'TSARS'
+    - 96 missing entries in student solution, including: 'VETS'
+         4 4
+         E  E  V  E
+         B  T  R  D
+         T  S  R  A
+         T  M  A  T
+
   * dictionary = dictionary-yawl.txt; board = board-points400.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 236
     - number of entries in reference solution: 211
-    - 211 missing entries in student solution, including: 'TSAR'
+    - 143 extra entries in student solution, including: 'TATT'
+    - 118 missing entries in student solution, including: 'TES'
+         4 4
+         E  S  A  I
+         L  T  C  C
+         T  G  A  H
+         E  S  I  R
+
   * dictionary = dictionary-yawl.txt; board = board-points500.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 279
     - number of entries in reference solution: 281
-    - 281 missing entries in student solution, including: 'ULANS'
+    - 155 extra entries in student solution, including: 'SNIGGING'
+    - 157 missing entries in student solution, including: 'ULANS'
+         4 4
+         T  A  S  L
+         R  S  N  G
+         L  A  I  D
+         G  U  H  O
+
   * dictionary = dictionary-yawl.txt; board = board-points750.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 413
     - number of entries in reference solution: 361
-    - 361 missing entries in student solution, including: 'TSORES'
+    - 287 extra entries in student solution, including: 'TOSSES'
+    - 235 missing entries in student solution, including: 'TSORES'
+         4 4
+         E  N  N  E
+         T  O  S  D
+         S  E  R  L
+         I  P  N  A
+
   * dictionary = dictionary-yawl.txt; board = board-points1000.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 1075
     - number of entries in reference solution: 460
-    - 460 missing entries in student solution, including: 'TSORES'
+    - 803 extra entries in student solution, including: 'TSETSES'
+    - 188 missing entries in student solution, including: 'TORN'
+         4 4
+         T  S  M  E
+         N  O  S  N
+         E  R  E  T
+         A  P  L  A
+
   * dictionary = dictionary-yawl.txt; board = board-points1250.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 660
     - number of entries in reference solution: 590
-    - 590 missing entries in student solution, including: 'TSORES'
+    - 384 extra entries in student solution, including: 'TROTS'
+    - 314 missing entries in student solution, including: 'TSORES'
+         4 4
+         R  D  C  E
+         S  E  O  S
+         I  P  R  T
+         T  I  A  R
+
   * dictionary = dictionary-yawl.txt; board = board-points1500.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 167
     - number of entries in reference solution: 524
-    - 524 missing entries in student solution, including: 'TSAR'
+    - 67 extra entries in student solution, including: 'TETTER'
+    - 424 missing entries in student solution, including: 'TSAR'
+         4 4
+         P  I  S  T
+         S  E  E  A
+         N  E  R  R
+         D  T  C  O
+
   * dictionary = dictionary-yawl.txt; board = board-points2000.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 376
     - number of entries in reference solution: 703
-    - 703 missing entries in student solution, including: 'TINSELS'
+    - 181 extra entries in student solution, including: 'TASSES'
+    - 508 missing entries in student solution, including: 'TINSELS'
+         4 4
+         L  I  N  S
+         T  A  E  G
+         E  S  L  O
+         R  E  S  C
+
 ==> FAILED
 
 Test 4: check getAllValidWords() on random Hasbro boards
   * dictionary = dictionary-yawl.txt; board = 10 random Hasbro boards
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 210
-    - 210 missing entries in student solution, including: 'SPOOLED'
+    - number of entries in student   solution: 104
+    - number of entries in reference solution: 75
+    - 58 extra entries in student solution, including: 'TROTTOIRS'
+    - 29 missing entries in student solution, including: 'TRIOSES'
     - failed on trial 1 of 10
          4 4
-         N  E  G  D
-         E  L  E  I
-         O  O  N  I
-         H  D  P  S
+         V  N  H  X
+         E  P  Z  T
+         S  S  R  T
+         I  I  O  Y
 
   * dictionary = dictionary-yawl.txt; board = 50 random Hasbro boards
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 177
-    - 177 missing entries in student solution, including: 'ZETA'
+    - number of entries in student   solution: 97
+    - number of entries in reference solution: 132
+    - 53 extra entries in student solution, including: 'YAFF'
+    - 88 missing entries in student solution, including: 'YEW'
     - failed on trial 1 of 50
          4 4
-         A  T  M  Z
-         I  R  E  A
-         T  Y  R  H
-         P  N  M  U
+         B  N  W  Y
+         E  T  A  E
+         L  L  U  F
+         V  T  T  I
 
   * dictionary = dictionary-yawl.txt; board = 100 random Hasbro boards
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 187
-    - 187 missing entries in student solution, including: 'WOT'
+    - number of entries in student   solution: 226
+    - number of entries in reference solution: 230
+    - 142 extra entries in student solution, including: 'WOW'
+    - 146 missing entries in student solution, including: 'WOMEN'
     - failed on trial 1 of 100
          4 4
-         D  S  O  T
-         I  P  W  L
-         M  N  L  E
-         E  M  S  N
+         T  A  N  E
+         I  R  S  E
+         U  H  M  O
+         B  S  A  W
 
 ==> FAILED
 
 Test 5: check getAllValidWords() on high-scoring n-by-n boards
   * dictionary = dictionary-yawl.txt; board = board-points4410.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 754
     - number of entries in reference solution: 1360
-    - 1360 missing entries in student solution, including: 'TIS'
+    - 496 extra entries in student solution, including: 'TIRR'
+    - 1102 missing entries in student solution, including: 'TIS'
+         4 4
+         S  T  N  G
+         E  I  A  E
+         D  R  L  S
+         S  E  P  O
+
   * dictionary = dictionary-yawl.txt; board = board-points4527.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 1179
     - number of entries in reference solution: 1414
-    - 1414 missing entries in student solution, including: 'TRES'
+    - 764 extra entries in student solution, including: 'TITTING'
+    - 999 missing entries in student solution, including: 'TRES'
+         4 4
+         S  E  R  S
+         P  A  T  G
+         L  I  N  E
+         S  E  R  S
+
   * dictionary = dictionary-yawl.txt; board = board-points13464.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 4415
     - number of entries in reference solution: 3123
-    - 3123 missing entries in student solution, including: 'TSORIS'
+    - 2990 extra entries in student solution, including: 'TSIMMESES'
+    - 1698 missing entries in student solution, including: 'TSORIS'
+         5 5
+         R  S  C  L  S
+         D  E  I  A  E
+         G  N  T  R  P
+         I  A  E  S  O
+         L  M  I  D  C
+
   * dictionary = dictionary-yawl.txt; board = board-points26539.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 8953
     - number of entries in reference solution: 5248
-    - 5248 missing entries in student solution, including: 'TSORIS'
+    - 5285 extra entries in student solution, including: 'TSORRISS'
+    - 1580 missing entries in student solution, including: 'TSAR'
+         6 6
+         D  S  R  O  D  G
+         T  E  M  E  N  S
+         R  A  S  I  T  O
+         D  G  N  T  R  P
+         R  E  I  A  E  S
+         T  S  C  L  P  D
+
 ==> FAILED
 
 Test 6: check getAllValidWords() on exotic boards
   * dictionary = dictionary-yawl.txt; board = board-dodo.txt
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 5
-    - 5 missing entries in student solution, including: 'ODD'
   * dictionary = dictionary-yawl.txt; board = board-noon.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 4
     - number of entries in reference solution: 3
-    - 3 missing entries in student solution, including: 'OON'
+    - 1 extra entry in student solution: 'NON'
+         4 4
+         N  O  O  N
+         O  O  O  O
+         O  O  O  O
+         N  O  O  N
+
   * dictionary = dictionary-yawl.txt; board = board-couscous.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 31
     - number of entries in reference solution: 12
-    - 12 missing entries in student solution, including: 'SOUS'
+    - 19 extra entries in student solution, including: 'SUSUS'
+         4 4
+         C  O  U  S
+         S  U  O  C
+         C  O  U  S
+         S  U  O  C
+
   * dictionary = dictionary-yawl.txt; board = board-rotavator.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 28
     - number of entries in reference solution: 25
-    - 25 missing entries in student solution, including: 'VAV'
+    - 3 extra entries in student solution, including: 'TORR'
+         9 9
+         R  O  T  A  V  A  T  O  R
+         O  O  T  A  V  A  T  O  O
+         T  T  T  A  V  A  T  T  T
+         A  A  A  A  V  A  A  A  A
+         V  V  V  V  V  V  V  V  V
+         A  A  A  A  V  A  A  A  A
+         T  T  T  A  V  A  T  T  T
+         O  O  T  A  V  A  T  O  O
+         R  O  T  A  V  A  T  O  R
+
   * dictionary = dictionary-yawl.txt; board = board-estrangers.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 49
     - number of entries in reference solution: 50
-    - 50 missing entries in student solution, including: 'STRANGERS'
+    - 1 missing entry in student solution: 'SESS'
+         10 10
+         E  S  T  R  A  N  G  E  R  S
+         S  S  T  R  A  N  G  E  R  S
+         T  T  T  R  A  N  G  E  R  S
+         R  R  R  R  A  N  G  E  R  S
+         A  A  A  A  A  N  G  E  R  S
+         N  N  N  N  N  N  G  E  R  S
+         G  G  G  G  G  G  G  E  R  S
+         E  E  E  E  E  E  E  E  R  S
+         R  R  R  R  R  R  R  R  R  S
+         S  S  S  S  S  S  S  S  S  S
+
   * dictionary = dictionary-yawl.txt; board = board-antidisestablishmentarianisms.txt
     - number of entries in student   solution: 0
     - number of entries in reference solution: 40
     - 40 missing entries in student solution, including: 'TID'
+         1 29
+         A  N  T  I  D  I  S  E  S  T  A  B  L  I  S  H  M  E  N  T  A  R  I  A  N  I  S  M  S
+
   * dictionary = dictionary-yawl.txt; board = board-dichlorodiphenyltrichloroethanes.txt
     - number of entries in student   solution: 0
     - number of entries in reference solution: 27
     - 27 missing entries in student solution, including: 'THANES'
+         32 1
+         S
+         E
+         N
+         A
+         H
+         T
+         E
+         O
+         R
+         O
+         L
+         H
+         C
+         I
+         R
+         T
+         L
+         Y
+         N
+         E
+         H
+         P
+         I
+         D
+         O
+         R
+         O
+         L
+         H
+         C
+         I
+         D
+
   * dictionary = dictionary-yawl.txt; board = board-pneumonoultramicroscopicsilicovolcanoconiosis.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 147
     - number of entries in reference solution: 65
-    - 65 missing entries in student solution, including: 'XIS'
+    - 87 extra entries in student solution, including: 'UMM'
+    - 5 missing entries in student solution, including: 'VOLCANO'
+         10 10
+         X  X  X  X  X  X  X  X  X  X
+         P  N  E  U  M  O  N  O  U  X
+         X  X  X  X  X  X  X  X  X  L
+         X  O  R  C  I  M  A  R  T  X
+         S  X  X  X  X  X  X  X  X  X
+         X  C  O  P  I  C  S  I  L  X
+         X  X  X  X  X  X  X  X  X  I
+         X  N  A  C  L  O  V  O  C  X
+         O  X  X  X  X  X  X  X  X  X
+         X  C  O  N  I  O  S  I  S  X
+
 ==> FAILED
 
 Test 7: check getAllValidWords() on boards with a Q
   * dictionary = dictionary-yawl.txt; board = board-qwerty.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 6
     - number of entries in reference solution: 22
-    - 22 missing entries in student solution, including: 'ZANZE'
+    - 3 extra entries in student solution, including: 'TAZZA'
+    - 19 missing entries in student solution, including: 'ZANZE'
+         4 4
+         Qu W  E  R
+         N  Z  Z  T
+         Z  A  Z  Y
+         T  R  Z  Z
+
   * dictionary = dictionary-yawl.txt; board = board-quinquevalencies.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 114
     - number of entries in reference solution: 130
-    - 130 missing entries in student solution, including: 'XIS'
+    - 69 extra entries in student solution, including: 'VIVE'
+    - 85 missing entries in student solution, including: 'XENIAL'
+         4 4
+         Qu L  E  N
+         I  A  X  C
+         N  V  I  E
+         Qu E  X  S
+
   * dictionary = dictionary-yawl.txt; board = board-inconsequentially.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 396
     - number of entries in reference solution: 273
-    - 273 missing entries in student solution, including: 'YETIS'
+    - 275 extra entries in student solution, including: 'YETTS'
+    - 152 missing entries in student solution, including: 'YELL'
+         4 4
+         I  N  C  O
+         L  A  I  N
+         L  N  T  S
+         Y  E  Qu E
+
   * dictionary = dictionary-yawl.txt; board = board-qaimaqam.txt
-    - number of entries in student   solution: 0
+    - number of entries in student   solution: 8
     - number of entries in reference solution: 8
-    - 8 missing entries in student solution, including: 'QUIM'
+    - 6 extra entries in student solution, including: 'MAMMA'
+    - 6 missing entries in student solution, including: 'QUIM'
+         4 4
+         Qu A  I  Qu
+         Qu Qu Qu M
+         Qu Qu Qu A
+         M  A  Qu Qu
+
   * dictionary = dictionary-yawl.txt; board = board-aqua.txt
     - number of entries in student   solution: 0
     - number of entries in reference solution: 1
     - 1 missing entry in student solution: 'QUA'
+         4 4
+         Qu U  I  T
+         X  X  X  X
+         X  X  X  X
+         A  Qu U  A
+
   * dictionary = dictionary-yawl.txt; board = 100 random Hasbro boards
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 104
-    - 104 missing entries in student solution, including: 'YOW'
+    - number of entries in student   solution: 72
+    - number of entries in reference solution: 73
+    - 47 extra entries in student solution, including: 'WUSSES'
+    - 48 missing entries in student solution, including: 'WUDS'
     - failed on trial 1 of 100
          4 4
-         E  N  Y  W
-         I  J  O  H
-         M  S  Y  Qu
-         K  O  T  A
+         T  S  P  X
+         N  V  D  Qu
+         O  E  U  W
+         N  E  E  S
 
   * dictionary = dictionary-16q.txt; board = board-9q.txt
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 8
-    - 8 missing entries in student solution, including: 'QUQUQUQUQUQUQUQUQU'
-  * dictionary = dictionary-16q.txt; board = board-16q.txt
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 15
-    - 15 missing entries in student solution, including: 'QUQUQUQUQUQUQUQUQUQUQUQUQUQUQUQU'
-==> FAILED
-
-Test 8: check getAllValidWords() on random m-by-n boards
-  * dictionary = dictionary-common.txt; board = 100 random 3-by-3 boards
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 18
-    - 18 missing entries in student solution, including: 'TOE'
-    - failed on trial 1 of 100
-         3 3
-         T  O  F
-         E  H  E
-         E  S  N
-
-  * dictionary = dictionary-common.txt; board = 100 random 4-by-4 boards
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 47
-    - 47 missing entries in student solution, including: 'WHET'
-    - failed on trial 1 of 100
-         4 4
-         U  R  A  G
-         H  E  D  N
-         W  H  T  D
-         E  T  L  R
-
-  * dictionary = dictionary-common.txt; board = 100 random 5-by-5 boards
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 180
-    - 180 missing entries in student solution, including: 'WATTLE'
-    - failed on trial 1 of 100
-         5 5
-         S  C  T  O  W
-         A  T  G  A  D
-         L  L  U  N  T
-         T  D  E  T  O
-         E  I  H  C  A
-
-  * dictionary = dictionary-common.txt; board = 20 random 5-by-10 boards
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 215
-    - 215 missing entries in student solution, including: 'WROTE'
-    - failed on trial 1 of 20
-         5 10
-         N  H  N  T  U  T  E  N  A  O
-         A  H  C  I  S  T  O  O  H  R
-         R  O  I  U  S  E  E  P  I  M
-         W  T  E  R  S  I  H  T  I  S
-         T  E  E  R  D  E  A  W  R  P
-
-  * dictionary = dictionary-common.txt; board = 20 random 10-by-5 boards
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 195
-    - 195 missing entries in student solution, including: 'WIVE'
-    - failed on trial 1 of 20
-         10 5
-         R  B  E  I  A
-         E  T  S  F  N
-         U  L  O  I  D
-         N  R  T  I  I
-         O  T  O  E  W
-         E  S  G  H  E
-         H  H  L  N  E
-         R  A  V  R  C
-         D  W  M  V  U
-         D  I  I  E  P
-
-==> FAILED
-
-Test 9: check getAllValidWords() on random m-by-n boards
-  * dictionary = dictionary-common.txt; board = 10 random 2-by-2 boards
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 4
-    - 4 missing entries in student solution, including: 'SPA'
-    - failed on trial 1 of 10
-         2 2
-         A  P
-         I  S
-
-  * dictionary = dictionary-common.txt; board = 10 random 1-by-10 boards
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 1
-    - 1 missing entry in student solution: 'ASH'
-    - failed on trial 1 of 10
-         1 10
-         O  A  V  A  S  H  P  H  R  E
-
-  * dictionary = dictionary-common.txt; board = 10 random 10-by-1 boards
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 2
-    - 2 missing entries in student solution, including: 'PEN'
-    - failed on trial 2 of 10
-         10 1
-         D
-         I
-         C
-         P
-         E
-         N
-         O
-         U
-         D
-         H
-
-  * dictionary = dictionary-common.txt; board = 10 random 1-by-1 boards
-  * dictionary = dictionary-common.txt; board = 10 random 1-by-2 boards
-  * dictionary = dictionary-common.txt; board = 10 random 2-by-1 boards
-==> FAILED
-
-Test 10: check getAllValidWords() on boards with no valid words
-  * dictionary = dictionary-nursery.txt; board = board-points0.txt
-  * dictionary = dictionary-2letters.txt; board = board-points4410.txt
-==> passed
-
-Test 11: mutating dictionary[] after passing to BoggleSolver constructor
-  * dictionary = dictionary-algs4.txt
-  * dictionary = dictionary-algs4.txt; board = board4x4.txt
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 29
-    - 29 missing entries in student solution, including: 'YOU'
-  * dictionary = dictionary-algs4.txt; board = 10 random Hasbro boards
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 16
-    - 16 missing entries in student solution, including: 'TURN'
-    - failed on trial 1 of 10
-         4 4
-         E  T  R  I
-         O  U  N  W
-         A  T  N  E
-         T  S  R  I
-
-   - student implementation did not make a defensive copy of dictionary[]
-==> FAILED
-
-Test 12: create more than one BoggleSolver object at a time
-         [ BoggleSolver object 1 uses dictionary-algs4.txt   ]
-         [ BoggleSolver object 2 uses dictionary-nursery.txt ]
-  * dictionary = dictionary-algs4.txt; board = 10 random Hasbro boards
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 13
-    - 13 missing entries in student solution, including: 'WEB'
-    - failed on trial 1 of 10
-         4 4
-         I  S  B  E
-         K  O  W  A
-         S  L  T  L
-         H  R  O  I
-
-  * dictionary = dictionary-nursery.txt; board = 10 random Hasbro boards
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 16
-    - 16 missing entries in student solution, including: 'YET'
-    - failed on trial 1 of 10
-         4 4
-         T  E  Y  E
-         N  S  C  A
-         G  U  W  B
-         H  E  R  C
-
-  * dictionary = dictionary-algs4.txt; board = 10 random Hasbro boards
-    - number of entries in student   solution: 0
-    - number of entries in reference solution: 10
-    - 10 missing entries in student solution, including: 'WHO'
-    - failed on trial 1 of 10
-         4 4
-         T  P  I  S
-         E  D  E  E
-         T  T  E  O
-         L  W  H  J
-
-==> FAILED
-
-Test 13: check scoreOf() on various dictionaries
-  * dictionary = dictionary-algs4.txt
-    - failed on trial 1 of 1000
-    - word = WINGS
-    - student   score = -1
-    - reference score = 0
-  * dictionary = dictionary-common.txt
-    - failed on trial 1 of 5000
-    - word = DESERVE
-    - student   score = -1
-    - reference score = 5
-  * dictionary = dictionary-shakespeare.txt
-    - failed on trial 1 of 10000
-    - word = DINGHY
-    - student   score = -1
-    - reference score = 0
-  * dictionary = dictionary-nursery.txt
-    - failed on trial 1 of 100
-    - word = FA
-    - student   score = -1
-    - reference score = 0
-  * dictionary = dictionary-yawl.txt
-    - failed on trial 1 of 20000
-    - word = NEPHEW
-    - student   score = -1
-    - reference score = 3
-==> FAILED
 
 
-Total: 1/13 tests passed!
-
-
+Total: 0/13 tests passed: Could not complete tests, which results in a reported score of 0.
 ================================================================
 ********************************************************************************
 *  MEMORY
@@ -505,29 +582,29 @@ Analyzing memory of BoggleSolver
 *-----------------------------------------------------------
 Running 3 total tests.
 
-    java.lang.NullPointerException
+Test 1: memory with dictionary-algs4.txt (must be <= 2x reference solution)
+  * memory of dictionary[]           = 494472 bytes
+  * memory of student   BoggleSolver = 4694832 bytes
+  * memory of reference BoggleSolver = 5135408 bytes
+  * student / reference              = 0.91
+==> passed
 
-    MemoryOfBoggleSolver.testDictionary(MemoryOfBoggleSolver.java:30)
-    MemoryOfBoggleSolver.main(MemoryOfBoggleSolver.java:57)
+Test 2: memory with dictionary-shakespeare.txt (must be <= 2x reference solution)
+  * memory of dictionary[]           = 1925392 bytes
+  * memory of student   BoggleSolver = 15757624 bytes
+  * memory of reference BoggleSolver = 17476992 bytes
+  * student / reference              = 0.90
+==> passed
 
-==> FAILED
-
-    java.lang.NullPointerException
-
-    MemoryOfBoggleSolver.testDictionary(MemoryOfBoggleSolver.java:30)
-    MemoryOfBoggleSolver.main(MemoryOfBoggleSolver.java:58)
-
-==> FAILED
-
-    java.lang.NullPointerException
-
-    MemoryOfBoggleSolver.testDictionary(MemoryOfBoggleSolver.java:30)
-    MemoryOfBoggleSolver.main(MemoryOfBoggleSolver.java:61)
-
-==> FAILED
+Test 3: memory with dictionary-yawl.txt (must be <= 2x reference solution)
+  * memory of dictionary[]           = 22597368 bytes
+  * memory of student   BoggleSolver = 159155304 bytes
+  * memory of reference BoggleSolver = 179328240 bytes
+  * student / reference              = 0.89
+==> passed
 
 
-Total: 0/3 tests passed!
+Total: 3/3 tests passed!
 
 ================================================================
 
@@ -546,43 +623,47 @@ Running 9 total tests.
 
 Test 1: timing constructor (must be <= 5x reference solution)
  *  dictionary-algs4.txt
-    - student   solution time (in seconds): 0.00
+    - student   solution time (in seconds): 0.01
     - reference solution time (in seconds): 0.01
-    - ratio:                                0.21
+    - ratio:                                1.04
 
 ==> passed
 
  *  dictionary-enable2k.txt
-    - student   solution time (in seconds): 0.00
-    - reference solution time (in seconds): 0.09
-    - ratio:                                0.00
+    - student   solution time (in seconds): 0.13
+    - reference solution time (in seconds): 0.12
+    - ratio:                                1.02
 
 ==> passed
 
  *  dictionary-yawl.txt
-    - student   solution time (in seconds): 0.00
-    - reference solution time (in seconds): 0.11
-    - ratio:                                0.00
+    - student   solution time (in seconds): 0.03
+    - reference solution time (in seconds): 0.05
+    - ratio:                                0.67
 
 ==> passed
 
  *  dictionary-zingarelli2005.txt
-    - student   solution time (in seconds): 0.00
+    - student   solution time (in seconds): 0.22
     - reference solution time (in seconds): 0.07
-    - ratio:                                0.00
+    - ratio:                                3.37
 
 ==> passed
 
 Test 2: timing getAllValidWords() for 5.0 seconds using dictionary-yawl.txt
         (must be <= 2x reference solution)
-    java.lang.NullPointerException: getAllValidWords() returns null
+    - reference solution calls per second: 7371.39
+    - student   solution calls per second: 1909.73
+    - reference / student ratio:           3.86
 
-    TimeBoggleSolver.callsPerSecond(TimeBoggleSolver.java:62)
-    TimeBoggleSolver.test2(TimeBoggleSolver.java:130)
-    TimeBoggleSolver.main(TimeBoggleSolver.java:181)
+=> passed    student <= 10000x reference
+=> passed    student <=    25x reference
+=> passed    student <=    10x reference
+=> passed    student <=     5x reference
+=> FAILED    student <=     2x reference
 
 
-Total: 4/9 tests passed!
+Total: 8/9 tests passed!
 
 
 ================================================================
