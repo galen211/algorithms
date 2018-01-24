@@ -24,6 +24,7 @@ public class WordSET {
 
     /**
      * Does set contain the given word?
+     *
      * @param word
      * @return
      */
@@ -35,6 +36,7 @@ public class WordSET {
 
     /**
      * Add the given word to the set
+     *
      * @param word
      */
     public void add(String word) {
@@ -44,6 +46,7 @@ public class WordSET {
 
     /**
      * The number of words in the set
+     *
      * @return
      */
     public int size() {
@@ -52,18 +55,20 @@ public class WordSET {
 
     /**
      * If the set is empty
+     *
      * @return
      */
-    public boolean isEmpty(){
-        return n==0;
+    public boolean isEmpty() {
+        return n == 0;
     }
 
-    public Iterator<String> iterator(){
+    public Iterator<String> iterator() {
         return wordsWithPrefix("").iterator();
     }
 
     /**
      * Get words starting with prefix
+     *
      * @param prefix
      * @return iterable of words in the set
      */
@@ -76,6 +81,7 @@ public class WordSET {
 
     /**
      * Determines whether there are any words that have the given prefix
+     *
      * @param prefix
      * @return
      */

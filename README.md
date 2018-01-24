@@ -291,3 +291,43 @@ private FlowNetwork createFlowNetwork(int idx) {
 }
 ```
 ![seamcarver](img/baseball.png)
+
+### Assignment 4: BoggleSolver
+*Score*: 98%
+
+*Example*: `> java BoggleSolver dictionary-algs4.txt board4x4.txt`
+
+*Comments*: The `WordSET` class is an adaptation of `TrieSET`, which is contained in the `algs4` package.  Since Boggle die are limited to capital english letters, we only need 26 nodes per branch.  I implemented an additional `hasWordsWithPrefix` method because this simplified the `dfs` method for depth first search in the `BoggleSolver` class.  The private method used for depth first search is shown below and includes the optimization that stops the depth first search if there are no words with a matching prefix.  Another critical piece of this method is the code that resets the value of `marked` back from *true* to *false*.  This is necessary because as the recursive calls to `dfs` complete, the next path should not be constrained by previously searched paths starting from the same prefix.  The code for the private `dfs` method is provided below.  Each cell on the `BoggleBoard` must complete the `dfs` (cells can be thought of as representing all words that begin with the letter on the boggle die).
+
+```java
+private void dfs(BoggleBoard board, int row, int col,       boolean[][] marked, StringBuilder sb) {
+
+        char c = board.getLetter(row, col);
+        if (c == 'Q') sb.append("QU");
+        else sb.append(c);
+
+        marked[row][col] = true;
+
+        String word = sb.toString();
+        if (!dict.hasWordsWithPrefix(word)) {
+            marked[row][col] = false;
+            return;
+        }
+        if (word.length() >= 3 && dict.contains(word)) {
+            wordsInBoard.add(word);
+        }
+
+        for (int i = -1; i <= 1; i++) { // up to down
+            int k = row + i;
+            if ((k < 0) || (k >= board.rows())) continue;
+            for (int j = -1; j <= 1; j++) { // left to right
+                int l = col + j;
+                if ((l < 0) || (l >= board.cols())) continue;
+                if (marked[k][l]) continue;
+                dfs(board, k, l, marked, new StringBuilder(word));
+            }
+        }
+        marked[row][col] = false;
+}
+```
+![boggle](img/boggle.png)

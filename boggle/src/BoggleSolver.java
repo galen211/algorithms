@@ -2,9 +2,6 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.SET;
 import edu.princeton.cs.algs4.StdOut;
 
-import java.util.Arrays;
-import java.util.Iterator;
-
 public class BoggleSolver {
 
     private WordSET dict;
@@ -42,36 +39,43 @@ public class BoggleSolver {
 
         wordsInBoard = new SET<>();
 
+        boolean[][] marked;
         for (int i = 0; i < board.rows(); i++) {
             for (int j = 0; j < board.cols(); j++) {
-                boolean[][] marked = new boolean[board.rows()][board.cols()];
+                marked = new boolean[board.rows()][board.cols()];
                 dfs(board, i, j, marked, new StringBuilder(""));
             }
         }
     }
 
     private void dfs(BoggleBoard board, int row, int col, boolean[][] marked, StringBuilder sb) {
-        if ((row < 0 || row >= board.rows()) || (col < 0 || col >= board.cols())) return; // out of bounds
-        else if (marked[row][col]) return; // already visited
 
         char c = board.getLetter(row, col);
         if (c == 'Q') sb.append("QU");
         else sb.append(c);
 
+        marked[row][col] = true;
+
         String word = sb.toString();
-        if (!dict.hasWordsWithPrefix(word)) return;
+        if (!dict.hasWordsWithPrefix(word)) {
+            marked[row][col] = false;
+            return;
+        }
         if (word.length() >= 3 && dict.contains(word)) {
             wordsInBoard.add(word);
         }
 
         for (int i = -1; i <= 1; i++) { // up to down
-            if ((i + row <= 0) || (i + row) >= board.rows()) continue;
+            int k = row + i;
+            if ((k < 0) || (k >= board.rows())) continue;
             for (int j = -1; j <= 1; j++) { // left to right
-                if ((j + col <= 0) || (j + col >= board.cols())) continue;
-                if (marked[i + row][j + col]) continue;
-                dfs(board, i + row, j + col, marked.clone(), new StringBuilder(word));
+                int l = col + j;
+                if ((l < 0) || (l >= board.cols())) continue;
+                if (marked[k][l]) continue;
+                dfs(board, k, l, marked, new StringBuilder(word));
             }
         }
+        marked[row][col] = false;
     }
 
     /**
@@ -117,6 +121,6 @@ public class BoggleSolver {
             score += solver.scoreOf(word);
         }
         StdOut.println("------------------");
-        StdOut.println("Score =" + score);
+        StdOut.println("Score = " + score);
     }
 }

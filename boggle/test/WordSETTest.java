@@ -45,4 +45,27 @@ public class WordSETTest {
 
     }
 
+    /**
+     * Tests that every word (and prefix of the word) in a dictionary is contained in the WordSET dict
+     */
+    @Test
+    public void testAllInDictionary() {
+
+        String file = "dictionary-algs4.txt";
+        In in = new In(file);
+
+        String line;
+        while (in.hasNextLine()) {
+            line = in.readLine();
+            char c;
+            StringBuilder sb = new StringBuilder("");
+            for (int i = 0; i < line.length(); i++) {
+                 c = line.charAt(i);
+                 sb.append(c);
+                 Assert.assertTrue(dict.hasWordsWithPrefix(sb.toString()));
+            }
+            Assert.assertTrue(dict.contains(line));
+        }
+    }
+
 }
