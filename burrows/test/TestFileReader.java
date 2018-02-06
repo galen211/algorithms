@@ -39,7 +39,7 @@ public class TestFileReader {
         return s;
     }
 
-    protected void closeInputStream() {
+    protected static void closeInputStream() {
         try {
             inputStream.close();
         } catch (IOException e) {

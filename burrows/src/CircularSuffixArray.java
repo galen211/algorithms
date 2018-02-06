@@ -23,32 +23,6 @@ public class CircularSuffixArray {
         sort(s,0,s.length() - 1, 0);
     }
 
-    private void printSuffixes(String s) {
-        StdOut.println(" i       Original Suffixes           Sorted Suffixes         index[i]");
-        StdOut.println("--    -----------------------     -----------------------    --------");
-        for (int i = 0; i < index.length; i++) {
-            StdOut.print(" " + i + "    ");
-            printSuffix(s, i);
-            StdOut.print("     ");
-            printSuffix(s, index[i]);
-            StdOut.print("    " + index[i] + "\n");
-        }
-    }
-
-    // print suffix i
-    private void printSuffix(String s, int offset) {
-        char[] array = new char[index.length];
-
-        for (int j = 0; j < s.length(); j++) {
-            array[j] = s.charAt((j + offset) % s.length());
-        }
-
-        for (int i = 0; i < array.length; i++) {
-            StdOut.print(array[i] + " ");
-        }
-    }
-
-    // sort suffixes
 
     /**
      *

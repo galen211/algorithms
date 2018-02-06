@@ -45,9 +45,26 @@ public class CircularSuffixArrayTest {
     @Test
     public void testAesop() {
 
-        String s = TestFileReader.runFileToString("testfiles/aesop.txt");
+        try {
+            TestFileReader.runFile("testfiles/aesop.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        CircularSuffixArray.main(new String[]{s});
+        CircularSuffixArray.main(null);
+
+    }
+
+    @Test
+    public void testSpecification() {
+
+        try {
+            TestFileReader.runFile("testfiles/specification.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CircularSuffixArray.main(null);
 
     }
 
